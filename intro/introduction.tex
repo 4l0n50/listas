@@ -1,0 +1,16 @@
+We consider the following problem: given commitments $c_1,\ldots,c_n$ to values $x_1,\ldots,x_n$, prove in zero-knowledge that each of $x_1,\ldots,x_n$ belongs to some set $S$. We distinguish two types of sets: an integer interval $S=\{0,1,\ldots,|S|-1\}$, and a poly-sized subset of $\Z_q$ or a poly-sized subset of $\GG_1$ or $\GG_2$, where $\GG_1$ and $\GG_2$ are bilinear groups.
+  
+We construct a Non-Interactive Zero-Knowledge argument for this problem with the following characteristics:
+\begin{itemize}
+\item It is based on the SXDH plus the Split Simultaneous Double Pairing Assumption  (SSDP, introduced in \cite{AC:GonHevRaf15}) assumptions in Type III bilinear groups, and only on the Decisional Linear (DLin) assumption in Type I bilinear groups.
+\item The proof size is independent of the number of commitments. Specifically, the proof size is $\Theta(\log|S|)$ when $S$ is an integer interval, and $\Theta(|S|)$ when $S$ is a subset of $\Z_q,\GG_1,$ or $\GG_2$.
+\item The computational cost of the prover is dominated by the cost of $\Theta(n)$ exponentiations ({\color{red} Chequear!}).
+\item The computational cost of the verifier is dominated by the cost of $\Theta(|S|+n)$ pairing computations ({\color{red} Chequear!}). 
+\end{itemize}
+
+As application of our NIZK argument we construct the most efficient argument of \emph{Correctness of a Shuffle} and the most efficient \emph{Range Argument}, under standard and falsifiable assumptions.
+
+An argument of Correctness of a Shuffle is an essential tool in the construction of \emph{Mix-nets} \cite{Chaum81}. A Mix-net consists of a series of \emph{mixers}, each of which receives as input a set of ciphertexts and  outputs a \emph{shuffle} of the input ciphertexts. That is, a \emph{rerandomization} of the set of ciphertexts obtained after applying a \emph{random permutation} to the input set of ciphertexts. To enforce the honest behavior of mixers they are required to produce a zero-knowledge argument that the shuffle was correctly computed. As a first application of our set membership argument we construct a shuffle argument with improved efficiency and security.
+
+A Range argument is a tool often required in e-voting and e-cash scenarios, with the purpose of showing that the opening $y$ of some commitment $c$ is an integer in some interval $[A,B]$. For simplicity, the range considered is usually $[0,2^n-1]$ since the proof in the original range can be reduced to a proof in this range with only a small overhead. As a second application of our of our set membership argument, we construct a Range argument with improved efficiency and security.
+%whose size is $2k\log n+\frac{n}{k\log n}+11$ elements of $\GG_1$ and $10$ elements of $\GG_2$, for any arbitrarily chosen $k\in\mathbb{N}$.

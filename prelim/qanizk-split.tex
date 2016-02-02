@@ -1,0 +1,15 @@
+
+In this section we recall two constructions of QA-NIZK arguments of membership in linear subspaces of $\GG_1^m\times\GG_2^n$ given by XXX, for the languages:
+$$\mathcal{L}_{[\matr{M}]_1,[\matr{N}]_2,+}:=\{ ([\vecb{x}]_1,[\vecb{y}]_2) \in \Gr^{m} \times \Hr^{m} :  \exists \vecb{w} \in \Z_q^{t}, \  \vecb{x}+\vecb{y}=(\matr{M}+\matr{N}) \vecb{w}\},$$
+which is called the \textit{Sum in Subspace} Language, 
+and for the \textit{Equal Commitment Opening} language
+$$\mathcal{L}_{\mathsf{com},[\matr{U}]_1,[\matr{V}]_2,\nu}:=\Big\{([\vecb{c}]_1,[\vecb{d}]_2) \in \Gr^{m} \times \Hr^{n}:  \exists (\vecb{w},\vecb{r},\vecb{s}),  
+[\vecb{c}]_1= [\matr{U}]_1 \begin{pmatrix} \vecb{w}\\ 
+ \vecb{r} \end{pmatrix}, [\vecb{d}]_2=[\matr{V}]_2 \begin{pmatrix} \vecb{w} \\ \vecb{s} \end{pmatrix}\Big\},$$
+where $[\matr{U}]_1\in \Gr^{m \times \tilde{m}}$, 
+$[\matr{V}]_2 \in \Hr^{n \times \tilde{n}}$
+and $\vecb{w} \in \Z_q^{\nu}$. The witness is 
+ $(\vecb{w},\vecb{r},\vecb{s}) \in \Z_q^{\nu} \times \Z_q^{\tilde{m}-\nu} \times \Z_q^{\tilde{n}-\nu}$. This language is interesting because it can express the fact that 
+$([\vecb{c}]_1,[\vecb{d}]_2)$ are commitments to the same vector 
+$\vecb{w} \in \Z_q^{\nu}$ in different groups.
+

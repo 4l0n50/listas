@@ -1,0 +1,147 @@
+In order to prove soundness of our scheme, we need to consider the following definitions and the lemma below.
+
+\begin{definition}
+Let $\algK_1,\algP,$ and $\algV$ the algorithms defined exactly as algorithms $\algK_1,\algP,$ and $\algV$, respectively, in the proof system from XXX but with the following differences:
+\begin{description}
+\item[$\algK_1$:] It does not receive $\hmatr{U}$ as input (and is not part of the CRS), instead receives a positive integer $m$. Also, $\cvecb{a}$ and $\cvecb{a}_\Delta$ are discarded, and $\llck_i := \gamma_i\llck_{m+1}$, where $\gamma_i\gets\Z_q$, for all $i\in[m]$.
+\item[$\algP$:] It does not receive $\hvecb{c}$ as input and $\hvecb{c}_\Delta$ and $\cvecb{d}$ are renamed as $\cgrkb{\alpha}$ and $\cgrkb{\beta}$ respectively.
+\item[$\algV$:] It does not receive $\hvecb{c}$ as input and the first check ($\hvecb{c}^\top\hvecb{a}=\cvecb{c}_\Delta^\top\cvecb{a}$) is omitted.
+\end{description}
+
+Additionally, define define algorithm $\widetilde{\algK}_1$ exactly as the algorithm $\algK_1$ defined above, with the following differences:
+\begin{enumerate}[label=(\alph*)]
+\item It receives as additional input an integer $i^*\in[m]$.
+\item $\llck_{i^*}\gets\Z_q^2$ and $\lrck_{i^*}\gets\Z_q^2$.
+\item It outputs $(\widetilde{\crs}_\sfbits,\tau)$, where $\widetilde{\crs}_\sfbits$ is equal to $\crs_\sfbits$ from $\algK_1$ (but with the change mentioned above), and the trapdoor $\tau:=(\Llck,\Lrck)$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}
+For all $i^*\in[m]$, all PPT adversary $\advA$, and all PPT distinguisher $\advD$ there exists soundness adversaries $\algP_1^*,\algP^*_2$ for $\QANIZKsum$ and $\QANIZKcomms$, $\mathcal{U}_1\mbox{-}\mddh_\Gr$ adversary $\advB_1$, and $\mathcal{U}_1\mbox{-}\mddh_\Hr$ adversary $\advB_2$ such that
+\begin{enumerate}[label=(\roman*)]
+\item If $(\Lck,\Rck,\widetilde{\crs}'_{\sfbits},\tau)\gets\widetilde{\algK}_1(\Gamma,m,i^*)$, where $\Gamma\gets\algK_0(1^\lambda)$, then $\lck_{i^*}$ and $\rck_{i^*}$ are linearly independent from $\{\lck_{i}:i\neq i^*\}$ and $\{\rck_{i}:i\neq i^*\}$, respectively, with probability at least $1-4/q$.
+\item $\adv_{\mathsf{dist}}(\advD,i^*)\leq \adv_{\mathcal{U}_1\mbox{-}\mddh_\Gr}(\advB_1)+\adv_{\mathcal{U}_1\mbox{-}\mddh_\Hr}(\advB_2)$, where $$\adv_{\mathsf{dist}}(\advD,i^*):=
+\left|\begin{matrix*}[l]
+    \Pr[\crs_\sfbits\gets\algK_1(\Gamma,m):\advD(\Gamma,\crs_\sfbits)=1]-\\
+    \Pr[(\widetilde{\crs}_\sfbits,\tau)\gets\widetilde{\algK}_1(\Gamma,m,i^*):\advD(\Gamma,\widetilde{\crs}_\sfbits)=1]
+\end{matrix*}\right|.$$
+\item $\adv_{\mathsf{sound}}(\advA,i^*) \leq 4/q + \adv_\QANIZKsum(\algP_1^*)+\adv_\QANIZKcomms(\algP_2^*)$, where $$
+\adv_{\mathsf{sound}}(\advA,i^*):=
+\Pr\begin{bmatrix*}[l]
+        (\widetilde{\crs}_\sfbits,\tau)\gets\widetilde{\algK}_1(\Gamma,m,i^*);
+        (\hgrkb{\alpha},\cgrkb{\beta},\pi')\gets\advA(\Gamma,\widetilde{\crs}_\sfbits,\tau):\\
+            \algV(\widetilde{\crs}_\sfbits,(\hgrkb{\alpha},\cgrkb{\beta},\pi'))=1\text{ and }\\
+            \neg\begin{pmatrix*}[l]
+                \exists b_{i^*}\in\bits,\overline{w}_g,\overline{w}_h\in\Z_q\text{ s.t. }\\
+                \hgrkb{\alpha}=b_{i^*}\lck_{i^*}+\overline{w}_g\lck_{m+1},\cgrkb{\beta}=b_{i^*}\rck_{i^*}+\overline{w}_h\rck_{m+1}
+            \end{pmatrix*}
+      \end{bmatrix*}
+       .$$
+\end{enumerate}
+\label{lemma:spc-sound}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}[label=(\roman*)]
+\item Given that $\lck_i=\gamma_i\lck_{m+1}$ and $\rck_i=\epsilon_i\rck_{m+1}$ for all $i\neq i^*$, the probability that $\lck_{i^*}$ and $\rck_{i^*}$ are linearly dependent from $\{\lck_i:i\neq i^*\}$ and $\{\rck_i:i\neq i^*\}$, respectively, is
+\begin{eqnarray*}
+\Pr[\lck_{i^*}\text{ is l.d. from }\lck_{m+1}\vee\lck_{i^*}\text{ is l.d. from }\lck_{m+1}] & \leq & 2\Pr[\lck_{i^*}\text{ is l.d. from }\lck_{m+1}]\\
+& = & 2\Pr[\det((\lck_{i^*}||\lck_{m+1}))=0]\\
+& \leq & 4/q.
+\end{eqnarray*}
+
+\item The proof follows from the indistinguishability of three games
+\begin{itemize}
+\item[$\sfGame_1$:] In this game $\crs_\sfbits$ is sampled from $\algK_1(\Gamma,m)$.
+\item[$\sfGame_2$:] This game is exactly as the previous but now $\lck_{i^*}\gets\Z_q^2$.
+\item[$\sfGame_3$:] In this game $\crs_\sfbits$ is sampled from $\widetilde{\algK}_1(\Gamma,m,i^*)$.
+\end{itemize}
+Note that with this definitions $\adv_{\mathsf{dist}}(\advD,i^*)=|\Pr[\sfGame_1(\advD)=1]-\Pr[\sfGame_3(\advD)=1]|$
+
+\begin{lemma} There exists a $\mathcal{U}_1$-$\mddh_\Gr$ adversary $\advB$ such that
+$|\Pr\left[\mathsf{Game}_{1}(\advA)=1\right]$ $-\Pr\left[\mathsf{Game}_{2}(\advA)=1\right]|$ $\leq
+    \mathsf{Adv}_{\mathcal{U}_1,\Gr}(\advB).$
+\label{lemma:bits2}
+\end{lemma}
+\begin{proof}
+%The simulator starts by picking a random $\matr{B} \leftarrow \distlin{2}-\mddh$,  $\matr{B} \in \Z_q^{3 \times 2}$. 
+The adversary $\advB$ receives an instance of the $\mathcal{U}_1$-$\mddh_\Gr$ problem, which is a pair
+$(\hvecb{s}, \hvecb{t})$, where $\hvecb{s}$ is a uniform vector 
+of $\Gr^{2}$ and $\hvecb{t}$ is either a uniform vector in $\Gr^2$ or 
+$\hvecb{t}=\gamma\hvecb{s}$, for random $\gamma\in\Z_q$.
+ 
+Adversary $\advB$ defines
+$\lck_{m+1}:= \hvecb{s}$ and the rest of the columns of $\Lck$ are honestly sampled
+with the sole exception of $\lck_{i^*}$, which is set to $\hvecb{t}$.
+
+Given that adversary $\advB$ can only compute $\lck_{i}\lrck_j^\top\in\Gr^{2\times2}$,
+it defines $\hmatr{C}_{i,j} := \lck_{i}\lrck_j^\top - \hmatr{T}_{i,j}$ and
+$\cmatr{D}_{i,j}:=\cmatr{T}_{i,j}$, for $\matr{T}_{i,j}\gets\Z_q^{2\times 2}$ and $(i,j)\in\indexSet{m}{1}$. Note 
+that this does not change the distribution of $(\cmatr{D}_{i,j},\hmatr{C}_{i,j})$, which is the uniform one conditioned
+on $\matr{C}_{i,j}+\matr{D}_{i,j}= \llck_i\lrck_j^\top.$ The rest of the parameters, $\crs_\QANIZKcomms$ and $\crs_\QANIZKsum$, are generated honestly.
+
+It is immediate to see that adversary $\advB$ perfectly simulates $\sfGame_1$ when $\hvecb{t}=\gamma\cvecb{s}$ and $\sfGame_2$ when $\hvecb{t}$ is uniform.  
+\end{proof}
+
+\begin{lemma} There exists a $\mathcal{U}_1$-$\mddh_\Hr$ adversary $\advB$ such that
+$|\Pr\left[\mathsf{Game}_{2}(\advA)=1\right]$ $-\Pr\left[\mathsf{Game}_{3}(\advA)=1\right]|$ $\leq
+\mathsf{Adv}_{\mathcal{U}_1,\Hr}(\advB).$
+\label{lemma:bits3}
+\end{lemma}
+
+\begin{proof}
+%The simulator starts by picking a random $\matr{B} \leftarrow \distlin{2}-\mddh$,  $\matr{B} \in \Z_q^{3 \times 2}$. 
+The adversary $\advB$ receives an instance of the $\mathcal{U}_1$-$\mddh_\Hr$ problem, which is a pair
+$(\cvecb{s}, \cvecb{t})$, where $\cvecb{s}$ is a uniform vector 
+of $\Hr^{2}$ and $\cvecb{t}$ is either a uniform vector in $\Hr^2$ or 
+$\cvecb{t}=\gamma\cvecb{s}$, for random $\gamma\in\Z_q$.      
+ 
+Adversary $\advB$ defines 
+$\rck_{m+1}:= \cvecb{s}$ and the rest of the columns of $\Rck$ are honestly sampled
+with the sole exception of $\rck_{i^*}$, which is set to $\cvecb{t}$.
+
+Given that adversary $\advB$ can only compute $\llck_{i}\rck_j^\top\in\Hr^{2\times2}$,
+it defines $\cmatr{D}_{i,j} := \llck_{i}\rck_j^\top - \cmatr{T}_{i,j}$ and
+$\hmatr{C}_{i,j}:=\hmatr{T}_{i,j}$, for $\matr{T}_{i,j}\gets\Z_q^{2\times 2}$ and $(i,j)\in\indexSet{m}{1}$. Note 
+that this does not change the distribution of $(\cmatr{D}_{i,j},\hmatr{C}_{i,j})$, which is the uniform one conditioned
+on $\matr{C}_{i,j}+\matr{D}_{i,j}= \llck_i\lrck_j^\top.$ The rest of the parameters, $\crs_\QANIZKcomms$ and $\crs_\QANIZKsum$,
+are generated honestly.
+
+It is immediate to see that adversary $\advB$ perfectly simulates $\sfGame_2$ when $\cvecb{t}=\gamma\cvecb{s}$ and $\sfGame_3$ when $\cvecb{t}$ is uniform.  
+\end{proof}
+
+\item By (i), with probability at least $1-4/q$, $\llck_{i^*}\lrck_{i^*}^\top$ is linearly independent from
+$\{\llck_{i}\lrck_j^\top:(i,j)\in[m+1]^2\setminus\{(i^*, i^*)\}\}$ which implies that $\llck_{i^*}\lrck_{i^*}^\top\notin\Span(\{\matr{C}_{i,j}+\matr{D}_{i,j}:(i,j)\in\indexSet{m}{1}\}\})$. Since $\{\lck_{i^*},\lck_{m+1}\}$ and $\{\rck_{i^*},\rck_{m+1}\}$ are basis of $\Gr^2$ and $\Hr^2$, respectively,
+we can define $b_{i^*},\overline{w}_g,\overline{w}_h,\overline{b}_{i^*}$ as the unique coefficients in $\Z_q$ such that $\hgrkb{\alpha}=b_{i^*}\lck_{i^*} + \overline{w}_g \lck_{m+1}$ and $\cgrkb{\beta}= \bb_{i^*} \rck_{i^*} + \overline{w}_h \rck_{m+1}$.
+
+Additionally  $\sfGame_3(\advA)=1$ implies either $b_{i^*}\neq\bb_{i^*}$ or $b_{i^*} \notin \{0,1\}$,
+while the verifier accepts the proof
+$ (
+        \hgrkb{\alpha}, \cgrkb{\beta},
+        (\hmatr{\Theta}_{b(\overline{b}-1)}, \cmatr{\Pi}_{b(\overline{b}-1)}), 
+        \{(\hat{\boldsymbol \rho}_{X}, \check{\boldsymbol \sigma}_{X})\}_{X \in \{b(\overline{b}-1), b-\overline{b}\}} )$
+  produced by $\advA$.
+We distinguish two cases:
+\begin{itemize}
+\item[1)] If $b_{i^*} \neq \overline{b}_{i^*}$. Given that $(b_{i}\llck_{i^*},\bar{b}_{i^*}\lrck_{i^*})$ is linearly independent from $\{(\llck_{i^*},\lrck_{i^*}),(\llck_{m+1},\lrck_{m+1})\}$
+whenever $b_{i^*}\neq\bar{b}_{i^*}$, an adversary
+$\advSound_2$ against $\QANIZKcomms$
+outputs the pair $(\hgrkb{\rho}_{b-\overline{b}},
+\cgrkb{\sigma}_{b-\overline{b}})
+$ which is a fake proof for 
+$(\hgrkb{\alpha},\cgrkb{\beta})$.
+\item[2)] If $b_{i^*} = \overline{b}_{i^*}$ but 
+$b_{i^*}(\overline{b}_{i^*} -1) \neq 0$.
+If we express $\matr{\Theta}_{b(\overline{b}-1)}+\matr{\Pi}_{b(\overline{b}-1)}$
+as a linear combination of $\{\llck_{i}\lrck_{j}^{\top}:i,j\in[m+1]\}$, the coordinate of
+$\llck_{i^*}\lrck_{i^*}^\top$ is $b_{i^*}(\overline{b}_{i^*}-1)\neq 0$ and thus $\matr{\Theta}_{b(\overline{b}-1)}+\matr{\Pi}_{b(\overline{b}-1)}\notin\Span(\{\matr{C}_{i,j}+\matr{D}_{i,j}:(i,j)\in\indexSet{m}{1}\})$.
+The adversary $\advSound_1$ against $\QANIZKsum$  outputs the pair
+$(\hgrkb{\rho}_{b(\overline{b}-1)},$ $\cgrkb{\sigma}_{b(\overline{b}-1)})$
+which is a fake proof for $(\hmatr{\Theta}_{b(\overline{b}-1)}, \cmatr{\Pi}_{b(\overline{b}-1)})$.
+
+{\color{red} HAY QUE DECIR QUE \cite[Theorem~2]{EC:KilWee15} A\'UN ES V\'ALIDO SI EL ADV CONOCE LOS LOGARITMOS DISCRETOS DE $\matr{M}$}
+\end{itemize}
+
+\end{enumerate}
+\end{proof}
+

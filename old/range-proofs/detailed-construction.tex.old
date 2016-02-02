@@ -1,0 +1,65 @@
+For convenience, given $d\in\mathbb{N}$, $m:=\log d$, $l:=n/m$, we note that $x=\sum_{i\in[n]}b_i 2^{i-1}$ can be equivalently written as
+\begin{align*}
+x=\vecb{2}_l^m \matr{B} \vecb{2}_m^\top,
+\text{ where }\vecb{2}_m := (2^0,2^1,\ldots,2^{m-1}),\vecb{2}^m_l:=(2^0,2^m,\ldots,2^{m(l-1)}),
+\end{align*}
+and $\matr{B}\in\bits^{l\times m}$ is the matrix whose $i,j$ th entry is $b_{m(i-1)+j}$.
+From this observation we get that
+$$
+\Lang_{[\matr{V}]_2,[0,2^n-1]}=\{[\vecb{d}]_2\in\GG_1^2: \exists \matr{B}\in\bits^{l\times m},r\in\Z_q \text{ s.t. } [\vecb{d}]_2 = \GS.\Com_{[\matr{V}]_2}(\vecb{2}_l^m \matr{B} \vecb{2}_m^\top;r)\}
+$$
+We provide a QA-NIZK proof system for $\Lang_{[\matr{V}]_2,[0,2^n-1]}$ with proof size $\Theta(\frac{n}{\log d})$ whenever $d=\poly(n)$.
+
+\begin{description}
+
+\item[$\algK_0(1^\lambda)$:]  Return $\Gamma := (q,\Gr,\Hr,\T,e,\hat{g},\check{h}) \leftarrow \ggen_a(1^{\lambda})$.
+
+\item[$\dist_\Gamma$:] The distribution $\dist_\Gamma$ over $\N\times\GG_2^{2\times 2}$ is some witness samplable distribution which defines the relation $\R_\Gamma = \{\R_{n,[\matr{V}]_2}\} \subseteq \GG_2^2\times(\bits^{l\times m}\times \Z_q)$,
+where $(n,[\matr{V}]_2)\gets\dist_\Gamma$,
+such that $([\vecb{d}]_2,\langle \matr{B},r\rangle)\in\R_{n,[\matr{V}]_2}$ iff
+$[\vecb{d}]_2=\GS.\Com_{[\matr{V}]_2}(\vecb{2}_l^m\matr{B}\vecb{2}_m;r)$. The relation $\R_{par}$ consists of pairs $([\matr{V}]_2,\matr{V})$ where $(n,[\matr{V}]_2) \gets \dist_{\Gamma}$.
+\item[{$\algK_1(\Gamma, (n,[\matr{V}]_2),d)$}:]
+Define $m:=\log d$ and $l:=n/m$. Pick $\vecb{g}_{l+1}\gets\Z_q^2,\grkb{\mu}\gets\Z_q^l$ and define $\matr{G}_1:=\vecb{g}_{l+1}\grkb{\mu}^\top,\matr{G}:=(\matr{G}_1||\vecb{g}_{l+1})$. Let $\Psi_\sfbits$ the proof system described in Sect. \ref{sec:bits} and pick $\crs_\sfbits\gets\Psi_\sfbits.\algK_1(\Gamma,[\matr{G}]_1,l)$. 
+Pick also $\crs_\GS\gets\GS.\algK_1(\Gamma)$. 
+
+The common reference string is given by $\mathsf{crs} := (n,[\matr{V}]_2,l,m,\crs_\sfbits)$
+
+\item[{$\algP(\mathsf{crs}, [\vecb{d}]_2, \langle \matr{B},r \rangle)$}:] The proof $([\matr{C}]_1,\{\pi_\sfbits^j:j\in[m]\},\pi_{\eq_1},\pi_{\eq_2})$ is computed as follows:
+\begin{enumerate}
+\item $[\matr{C}]_1:=\MP.\Com_{[\matr{G}]_1}(\matr{B};\vecb{w}^\top)$, $\vecb{w}\gets\Z_q^m$.
+\item For each $j\in[m]$, $\pi_\sfbits^j\gets\Psi_\sfbits.\algP(\crs_\sfbits,[\vecb{c}_j]_1,\langle \vecb{b}_j,w_j\rangle)$, where $[\vecb{c}_j]_1$ and $\vecb{b}_j$ are the $j$ ht column of $[\matr{C}]_1$ and $\matr{B}$, respectively.
+\item $\pi_{\eq_1}\gets\GS.\algP(\crs_\GS,\eq_1,\varvecy,\varz_1)$, where  $\eq_1:=[\matr{G}_1]_1\varvecy^\top-[\matr{C}]_1\vecb{2}_m^\top = [\vecb{g}_{l+1}]_1\varz_1$, $\varvecy:=\vecb{2}_m\matr{B}^\top$, and $\varz_1:=-\vecb{2}_m\vecb{w}$.
+\item $\pi_{\eq_2}\gets\GS.\algP(\crs_\GS,\eq_2,\varz_2)$, where $\eq_2:= [\vecb{d}]_2-[\Lcom]_2(\vecb{2}_l^m)^\top=\varz_2[\vecb{v}_2]_2$, $[\Lcom]_2=\GS.\Com(\varvecy;\vecb{s}^\top)$ is part of $\pi_{\eq_1}$, and $\varz_2 := r-\vecb{2}^m_l\vecb{s}$.
+\end{enumerate}
+
+\item[
+${\algV(
+    \crs,
+    [\vecb{d}]_2,
+    (
+        [\matr{C}]_1,
+        \{\pi_\sfbits^j:j\in[m]\},
+        \pi_{\eq_1},\pi_{\eq_2}
+    ))}$
+:]
+If any of the following checks fails, the verifier outputs 0, else it outputs 1:
+%   
+\begin{enumerate}
+\item For all $j\in[m]$, $\Psi_\sfbits.\algV(\crs_\sfbits, [\vecb{c}_j]_1,\pi_\GS)=1$. 
+\item $\GS.\algV(\crs_\GS,\eq_1,\pi_{\eq_1})=1$, where $\eq_1:= [\matr{G}_1]_1\varvecy^\top-[\matr{C}]_1\vecb{2}_m^\top = [\vecb{g}_{l+1}]_1\varz_1$.
+\item $\GS.\algV(\crs_\GS,\eq_2,\pi_{\eq_2})=1$, where $\eq_2:= [\vecb{d}]_2-[\Lcom]_2(\vecb{2}_l^m)^\top=\varz_2[\vecb{v}_2]_2$, and $[\Lcom]_2=\GS.\Com(\varvecy)$ is part of $\pi_{\eq_1}$.
+\end{enumerate}
+
+\item[{$\mathsf{S}_1(\Gamma,(n,[\matr{V}]_2),d))$}:] It generates and outputs the CRS in the same way as $\algK_1$, but additionally it also  outputs the simulation trapdoor 
+$\tau=\left(\grkb{\mu}, \tau_\GS, \tau_\sfbits \right),$
+where $\tau_\GS$, $\tau_\sfbits$ are $\GS$'s and $\Psi_\sfbits$'s simulation trapdoors, respectively, and
+$\matr{G}_1=\vecb{g}_{l+1}\grkb{\mu}^\top$.
+\item[{$\mathsf{S}_2(\crs,[\vecb{d}]_2,\tau)$}:]  The proof $([\matr{C}]_1,\{\pi_\sfbits^j:j\in[m]\},\pi_{\eq_1},\pi_{\eq_2})$ is simulated as follows:
+\begin{enumerate}
+\item $[\matr{C}]_1:=\MP.\Com_{[\matr{G}]_1}(\matr{0}_{l\times m};\vecb{w}^\top)$, $\vecb{w}\gets\Z_q^m$.
+\item For each $j\in[m]$, $\pi_j\gets\Psi_\sfbits.\algS_2(\crs_\sfbits,[\vecb{c}_j]_1,\tau_\sfbits)$.
+\item $\pi_{\eq_1}\gets\GS.\algS_2(\crs_\GS,\eq_1,\tau_\GS)$, where $\eq_1:=[\matr{G}_1]_1\varvecy^\top-[\matr{C}]_1\vecb{2}_m^\top = [\vecb{g}_{l+1}]_1\varz_1$.
+\item $\pi_{\eq_2}\gets\GS.\algS_2(\crs_\GS,\eq_2,\tau_\GS)$, where $\eq_2:= [\vecb{d}]_2-[\Lcom]_2(\vecb{2}_l^m)^\top=\varz_2[\vecb{v}_2]_2$, and $[\Lcom]_2=\GS.\Com(\varvecy)$ is part of $\pi_{\eq_1}$.
+\end{enumerate}
+\end{description}
+

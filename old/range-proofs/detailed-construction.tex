@@ -1,0 +1,51 @@
+\begin{figure} 
+$$
+\begin{array}{ll}
+\begin{array}{l}
+\algK_1(\Gamma,[\vecb{u}]_1,[\vecb{u}_2]_1,n)\quad (\mathsf{S}_1(\Gamma,[\vecb{u}_1]_1,[\vecb{u}_2]_1,n))\\
+\hline
+d:=\log n^k, m:=\log d, \ell := n/m\\
+\crs_\GS\gets\GS.\algK_1(\Gamma)\\
+{\crs_\sfbin\gets\Pi_\sfbin.\algK_1(\Gamma,[\matr{M}]_1,[\matr{N}]_1,n)}\\
+\text{Return } \ \crs:=([\vecb{u}_1]_1,[\vecb{u}_2]_1,\crs_\GS,\crs_\sfbin).\\
+(\tau_\GS\gets\GS.\algS_1(\Gamma)\\
+\tau_\sfbin\gets\Pi_\sfbin.\algS_1(\Gamma,[\matr{M}]_1,[\matr{N}]_1,n).\\
+\tau := (\matr{S},\tau_\GS,\tau_\sfbin)).\\
+\\
+\end{array}
+&
+\begin{array}{l}
+{\algP(\crs, [\matr{c}]_1, \langle y, r\rangle)}\\
+\hline
+\vvar{Y}\in\Z_q^{\ell\times1} \text{ is s.t. } y=\sum_{i\in[\ell]}\vvar{y}_id^{i-1}\\
+\vvar{z}:=r\\
+\pi_\GS\gets\GS.\algP(\crs_\GS,\eq,\vvar{Y},\vvar{z})\\
+\pi_\sfbin \gets \Pi_\sfbin.\algP(\crs_\sfbin, [\matr{X}]_1,\langle\vvar{Y},\matr{R}\rangle)\\
+//{[\matr{X}]_1} = \GS.\Com_{\crs_\GS}(\vvar{Y};\matr{R})\\
+\text{Return } \  (\pi_\GS,\pi_\sfbin). \\
+\\
+\\
+\end{array}\\
+\begin{array}{l}
+{\algV(\crs,[\vecb{c}]_1,(\pi_\GS,\pi_\sfbin))}\\
+\hline
+\mathsf{ans}_1 \gets \GS.\algV(\crs_\GS,\eq,\pi_\GS)\\
+\mathsf{ans}_2 \gets \Pi_\sfbin.\algV(\crs_\sfbin,[\matr{X}]_1,\pi_\sfbin)\\
+\text{Return } \ \mathsf{ans}_1\wedge\mathsf{ans}_2.
+\\
+\\
+\end{array}
+&
+\begin{array}{l}
+{\mathsf{S}_2(\crs,[\vecb{c}]_1,\tau)}\\
+\hline
+\pi_\GS\gets \GS.\algS_2(\crs_\GS,\eq,\tau_\GS)\\
+\pi_\sfbin\gets \Pi_\sfbin.\algS_2(\crs_\sfbin,[\matr{X}]_1,\tau_\sfbin)\\
+//{[\matr{X}]_1=\GS.\Com_{\crs_\GS}(\vvar{Y};\matr{R})}\\
+\text{Return }  (\pi_\GS,\pi_\sfbin).
+\end{array}
+\end{array}$$
+\caption{The proof system $\Pi_\mathsf{range-proof}$ for the language $\Lang_{[0,2^n-1],\vecb{u}'_1,\vecb{u}'_2}$. The matrices $\matr{M},\matr{N}$ are defined as $\matr{M}:=\vecb{u}'_1(2^0,2^1,\ldots,2^{m-q}),\matr{N}:=\vecb{u}'_2$, where $\vecb{u}'_1,\vecb{u}'_2$ are the GS commitment keys from $\crs_\GS$ ({\color{red} Parece q, estupidamente, hay q usar otras claves de commitment.}). The equation $\eq$ is defined as $[\vecb{c}]_1-\sum_{i\in[\ell]}\vvar{y}_id^{i-1}[\vecb{u}_2]_1=\vvar{z}[\vecb{u}_2]_1$.
+\label{fig:rp}}
+\end{figure}
+

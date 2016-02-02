@@ -1,0 +1,47 @@
+\textbf{Observation}. $[(x_1,\ldots, x_n)]_2$ is a vector of elements in a list $L$ if and only if there exists a matrix 
+$\matrB=(b_{i,j})\in \{0,1\}^{m \times n}$, whose rows are denoted by 
+$\vecb{b}_1,\ldots,\vecb{b}_m$, such that, 
+ $[(x_1,\ldots, x_n)]_2= [(l_1,\ldots, l_m)]_2 \begin{pmatrix} b_{1,1} & \ldots & b_{1,n} \\
+\vdots & & \vdots  
+\\
+b_{m,1} & \ldots & b_{m,n}
+\end{pmatrix} = \sum_{i \in [m]} [l_i]_2 \vecb{b}_i $, and $\sum_{i\in[m]}\vecb{b}_i=(1,1,\ldots,1)$. 
+
+\begin{example} If  $[(x_1,x_2,x_3, x_4)]_2=
+[(l_1,l_3,l_2,l_1)]_2$ and $L=\{[l_1]_2,[l_2]_2,[l_3]_2\}$, then 
+$$[(x_1,x_2,x_3, x_4)]_2 = [(l_1,l_2,l_3)]_2\begin{pmatrix} 1 & 0 & 0 & 1\\
+	0 & 0 & 1 & 0\\
+	0 & 1 & 0 & 0
+\end{pmatrix}= [l_1]_2 \begin{pmatrix} 1 & 0 & 0 & 1
+\end{pmatrix} + [l_2]_2  \begin{pmatrix} 0 & 0 & 1 & 0
+\end{pmatrix} + [l_3]_2 \begin{pmatrix} 0 & 1 & 0 & 0
+\end{pmatrix}.$$
+
+\end{example} 
+
+We conclude that the language can be equivalently defined as
+$$
+\Lang_{[\matr{V}]_2,L,n}:=\left\{[\Lcom]_2\in\GG_2^{2\times n}:\exists\matr{B}\in\bits^{m\times n},\matr{R}\in\Z_q^{2\times n} \text{ s.t. }
+    \begin{array}{l}
+    \matr{1}_{1\times m}\matr{B}=\matr{1}_{1\times n}\wedge\\
+    {[\Lcom]}_2=\GS.\Com_{[\matr{V}]_2}([\vecb{l}]_2\matr{B};\matr{R})
+    \end{array}
+    \right\},
+$$
+where $[\vecb{l}]_2=[l_1,\ldots, l_m]_2$.
+
+\textbf{Trivial Approach}.  This suggests the following trivial approach. Commit to the row vectors $\vecb{b}_i\in\bits^{1\times n}$ for all $i\in[m]$ using GS commitments and show that: a) $\vecb{b}_i\in\bits^{1\times n}$, for each $i\in[m]$, b) $\sum_{i\in[m]}\vecb{b}_i=\vecb{1}_{1\times m}$, and c) $[\Lcom]_2-[\matr{L}]_2\matr{B}=[\matr{V}]_2\grkb{\gamma}$, for some $\grkb{\gamma}\in\Z_q^2$. Although one can get a proof of size $\Theta(m)$ for a) using constant-size proofs from XXX, these proofs require binding commitments to each $\vecb{b}_j$ and thus the total proof size is $\Omega(nm)$.
+
+\textbf{Our Approach}.
+To get a proof whose size is independent of $n$, we use the QA-NIZK argument of memebership from Sect. \ref{sec:bits}. Although the proof system from Sect. \ref{sec:bits} provides a weak form of soudness, we show that it suffices for proving the ``full'' soundness of our scheme.
+
+For the CRS generation, pick $\vecb{g}_{n+1}\gets\Z_q^{2}$ and $\grkb{\mu}\gets\Z_q^{n}$ and define $\matr{G}:=(\vecb{g}_{n+1}\grkb{\mu}^\top||\vecb{g}_{n+1})$. Using $[\matr{G}]_1$ compute the CRS of the proof system from Sect. \ref{sec:bits}.
+
+The prover computes Multi-Pedersen commitments $[\vecb{c}_1]_1:=\MP.\Com_{[\matr{G}]_1}(\vecb{b}_1^\top),\ldots,[\vecb{c}_m]_1:=\MP.\Com_{[\matr{G}]_1}(\vecb{b}_{m}^\top)$, and a) For each $i\in[m]$, show that $[\vecb{c}_i]_1,\in\Lang_{[\matr{G}]_1,\sfbits}$ using the proof system from Sect. \ref{sec:bits}, b) show that $\sum_{i\in[m]}[\vecb{c}_i]_1-\sum_{j\in[n]}[\vecb{g}_j]_1=[\vecb{g}_{n+1}]_1\varz$, for some $\varz\in\Z_q$, and c)  compute proofs $[\grkb{\pi}]_2$
+and $[\matr{\Theta}]_1$ such that $\prod_{j\in[n]}e([\vecb{g}_j]_1,[\lcom_j]_2^\top)/\prod_{i\in[m]}e([\vecb{c}_i]_1,[l_i, 0]_2)=e([\vecb{g}_{n+1}]_2,[\grkb{\pi}]_2^\top)\cdot e([\matr{\Theta}]_1,[\matr{V}]_2^\top)$.
+
+\subsubsection{Soundness Intuition.}
+We briefly sketch the proof of soundness. Pick $j^*\gets[n]$ and, if the adversary produces commitments such that $[x_{j^*}]_2\in L$, abort. In another game, compute the CRS in a computationally indistinguishable way such that $\vecb{g}_{j^*}$ is linearly independent from $\{\vecb{g}_{j}:j\neq j^*\}$. Note that in this game there exists some $\grkb{\nu}\in\Z_q^2$ such that $\grkb{\nu}^\top\vecb{g}_{j^*}=1$ and $\grkb{\nu}^\top\vecb{g}_{j}=0$ for all $j\neq j^*$.
+
+With the previously defined CRS it holds that $[\vecb{c}_1]_1,\ldots,[\vecb{c}_m]_1$ defines a unique column of $\matr{B}$, $b_{1,j^*},\ldots,b_{m,j^*}$, which, by the \emph{1-coordinate Soundness} property, must be in $\bits^m$. If we multiply the equation from b) by $\grkb{\nu}^\top$ on the left we get that $\sum_{i\in[m]}b_{i,j^*}=1$. Therefore, there exists a unique $i^*\in[n]$ such that $b_{i^*,j^*}=1$. Finally, if we multiply the verification equation from c) by $\grkb{\nu}^\top$ on the left, we get that $[\lcom_{j^*}]_2 = \sum_{i\in[m]}b_{i,j^*}[l_i, 0]_2^\top+[\matr{V}]_2\matr{\Theta}^\top\grkb{\nu}$ which implies that necessarily $[x_{j^*}]_2 = [l_{i^*}]_2$.
+

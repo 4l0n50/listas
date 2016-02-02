@@ -1,0 +1,106 @@
+As applications of the aggregated set membership NIZK argument we show how to construct efficient Shuffle and Range arguments under standard assumptions.
+%For concreteness, assume that $ck$ defines perfectly binding Groth-Sahai (GS) commitments to scalars in the SXDH instantiation. That is, a commitment to $x$ using randomness $r$ is  $[\vecb{c}]_1:=\GS.\Com_{ck}(x;r)\in\GG_1^2$, which implies that $\Lang_{ck,S}^n\subseteq\GG^{2\times n}_1$. 
+
+\begin{description}
+\item[Range Argument:]
+Let $n,d\in\mathbb{N}$, $m:=\log d$, and $\ell:=n/m$.
+Commitment $c$ opens to a integer in the range $[0,2^n-1]$ iff $(c_1,\ldots,c_n)^\top\in\Lang_{ck,[0,d-1]}^\ell$ such that $c-\sum_{i\in[\ell]}d^{i-1}c_i=\Com_{ck}(0;r)$, for some $r\in\Z_q$. Indeed, let $x$ the opening of $c$ and $x_i$ the opening of $c_i$, $i\in[\ell]$. If $(c_1,\ldots,c_n)^\top\in\Lang_{ck,[0,d-1]}^\ell$ then $x_i\in[0,d-1]$, $i\in[\ell]$, and then $c-\sum_{i\in[\ell]}d^{i-1}c_i=\Com_{ck}(x-\sum_{i\in[\ell]}x_id^{i-1})=\Com(0;r)$ implies that
+\begin{eqnarray*}
+x & = & \sum_{i\in[\ell]} x_id^{i-1}
+   \in  [0,d^\ell-1]  =  [0,(d^{1/\log d})^n-1] = [0,2^n-1].
+\end{eqnarray*}
+
+\item[Shuffle Argument:] We first construct a proof that a commitment opens to a permutation of the elements of a set $S\subseteq\GG_1$ from a proof of membership in $\Lang_{ck,S}^n$. In Sect. \ref{sec:shuffle} we show how to use this proof to construct a proof of correctness of a shuffle.
+
+Let $[\vecb{s}]_1=([s_1]_1,\ldots,[s_n]_1)^\top\in\GG_1^n$ such that it is infeasible to find $[\vecb{k}]_2\in\GG_2^n\setminus\{\vecb{0}_{n\times 1}\}$ such that $e([\matr{s}]_1^\top,[\vecb{k}]_2)=1_T$ (a \emph{Kernel Diffie Hellman assumption} \cite{EPRINT:MorRafVil15}). Let $f_1:=\Com([x_1]_1;r_1)$, $\ldots$, $f_n:=\Com_{ck}([x_n]_1;r_n)$. If $(f_1,\ldots,f_n)^\top\in\Lang_{ck,S}^n$ and $\sum_{i\in[n]}f_i-\sum_{i\in[n]}\Com([s_i]_1;0)=\Com_{ck}([0]_1;r)$, for some $r\in\Z_q$, then $(f_1,\ldots,f_n)$ opens to a permutation of $S=\{[s_1]_1,\ldots,[s_n]_1\}$.
+Indeed, if $(f_1,\ldots,f_n)^\top\in\Lang_{ck,S}^n$, then $\sum_{i\in[n]}[x_i]_1=\sum_{j\in[n]}\ell_j[s_j]_1$, where $\ell_j\in[n]$ is the number of $[x_i]_1$'s equal to $[s_j]_1$, and $\sum_{i\in[n]}f_i-\sum_{j\in[n]}\Com_{ck}([s_j]_1;0)=\Com_{ck}([0]_1;r)$ implies that
+$$
+\sum_{i\in[n]}[x_i]_1 - \sum_{j\in[n]}[s_j]_1 = \sum_{j\in[n]}\ell_j[s_j]_1 - \sum_{j\in[n]}[s_j]_1 = \sum_{j\in[n]} (l_j-1)[s_j]_1 = [0]_1.
+$$
+Therefore, $e([\matr{s}]_1^\top,[\vecb{k}]_2)=1_T$, where $[\vecb{k}]_2:=(\ell_1-1,\ell_2-1,\ldots,\ell_n-1)^\top\mathcal{P}_2$ and $\mathcal{P}_2$ is the generator of $\GG_2$, and, unless $[\vecb{k}]_2$ allows to break the Kernel Diffie Hellman Assumption, $\ell_1=\ell_2=\ldots=\ell_n=1$ and thus $([x_1]_1,\ldots,[x_n]_1)$ is a permutation of $([s_1]_1,\ldots,[s_n]_1)$.
+\end{description}
+%
+%\subsubsection{1-coordinate Soundness.}
+%We construct a constant size QA-NIZK argument of membership in the language
+%
+%$$
+%\Lang_{[\matr{G}]_1,\sfbits} := \{[\vecb{c}]_1\in\GG_1^k : \exists \vecb{b}\in\bits^n,\vecb{w}\in\Z_q^m \text{ s.t. } \vecb{c} = \matr{G}_1\vecb{b}+\matr{G}_2\vecb{w}\},
+%$$
+%
+%where $\matr{G}=\matr{G}_1||\matr{G}_2\in\GG_1^{k\times n}\times\GG_1^{k\times m}$. Unlike [AC:Losotros15], we do not require $k>n$ (perfectly binding commitments) and in fact $k=2$ suffices. When $k=2$ and $m=1$, $\matr{G}$ defines a natural variant of the \emph{length-reducing Pedersen Commitments}  widely used in the literature \cite{EPRINT:Groth09a,C:FurSak01,CCS:Neff01,SCN:KiaZho06,ManualAC:Lipmaa03}. For simplicity, from here onwards we stick to the case when $k=2$ and $m=1$, and we define $\MP.\Com_{[\matr{G}]_1}(\vecb{b};w):=[\matr{G}]_1\vecb{b}+w\vecb{g}_{n+1}$.
+%
+%However, we are no longer able to prove Soundness but only a relaxed (but still useful) notion which we call \emph{1-coordinate Soundness}.\footnote{The statement $[\vecb{c}]_1\in\Lang_{[\matr{G}]_1,\sfbits}$, when $\matr{G}\in\GG_1^{2\times (n+1)}$, seems to be not efficiently falsifiable even with access to the discrete logarithm of $[\matr{G}]_1$. In fact the only approach approach to falsify $[\vecb{c}]_1\in\Lang_{[\matr{G}],\sfbits}$ we are aware of is to use brute-force to iterate over the $2^n$ witnesses. This should be looked as an  indication that we can not prove full soundness under falsifiable assumptions.
+%%Although is not clear if $\Lang_{[\matr{G}]_1,\sfbits}$ is a NP-hard language, which will gather the impossibility results from \cite{STOC:GenWic11}, a conservative perspective will be to suppose that there is no proof $o(n)$ under falsifiable assumptions.
+%}
+%Intuitively, this relaxed notion of soundness means that, if one can program $\matr{G}$ such that commitments are perfectly binding for coordinate $i^*$, then the adversary can not produce a valid proof for $[\vecb{c}]_1=\MP.\Com_{[\matr{G}]_1}(\vecb{b};w)$ if $b_{i^*}\notin\bits$. More specifically, the \emph{Completeness} and \emph{Zero-Knowlege} properties remains exactly as for QA-NIZK, and \emph{Soundness} is relaxed as follows:
+%
+%\begin{definition}[$1$-coordinate Soundness] If $\vecb{g}_{n+1}\neq\vecb{0}$ and there exists an index $i^*$ such that $\vecb{g}_{i^*} \notin \mathsf{Span}(\{\vecb{g}_{i} : i \neq i^*\})$, then:
+%$$
+%\Pr\left[
+%    \begin{array}{l}
+%        \crs\gets\algK_1(\gk,[\matr{G}]_1);\\
+%        ([\vecb{c}]_1,\mathsf{proof}) \gets \advA(\mathsf{crs})
+%    \end{array}:
+%    \begin{array}{l}
+%%    \exists b_{i^*}\in\Z_q, \vecb{w}\in\Z_q^n\text{ s.t. } b_{i^*} \notin \{0,1\} \wedge\\
+%%        \vecb{c}= b_{i^*} \vecb{g}_{i^*} + \sum_{j \in [n+1], j\neq i^*} w_{j} \vecb{g}_{j}  \wedge
+%        \algV(\mathsf{crs},[\vecb{c}]_1,\mathsf{proof})=1\wedge \exists \vecb{b}\in\Z_q^n,w\in\Z_q\text{ s.t. }\\
+%        {[\vecb{c}]_1=\MP.\Com_{[\matr{G}]_1}(\vecb{b};w)\wedge b_{i^*}\notin\bits}
+%    \end{array}
+%    \right]\leq\negl(\lambda).$$
+%\end{definition}
+%
+%We illustrate the usefulness of 1-coordinate soundness by describing, at a high level, how it can be used to construct a QA-NIZK proof system for $\Lang_{[\matr{U}]_1,\sfbits}$with ``full'' soundness, when $[\matr{U}]_1$ defines perfectly binding commitments, similarly as done in XXX.
+%
+%\begin{example}
+% The proof system combines two proof systems: one for showing equal openings of commitments computed with $[\matr{U}]_1$ and $[\matr{G}]_1:=[\matr{G}_1||\vecb{g}_{n+1}]_1$ as commitments keys, where $\matr{G}_1:=(\mu_1\vecb{g}_{n+1}||\ldots||\mu_n\vecb{g}_{n+1})$ and $\mu_1,\ldots,\mu_n\gets\Z_q$, and another proof system for showing membership in $\Lang_{[\matr{G}]_1,\sfbits}$ with 1-coordinate soundness.
+%
+%Given $[\vecb{c}]_1\in\GG_1^{n+m}$, $\vecb{b}\in\bits^n$, and $\vecb{w}\in\Z_q^m$ such that $\vecb{c}=\matr{U}_1\vecb{b}+\matr{U}_2\vecb{w}$ , the prover computes an additional commitment $[\vecb{c}']_1\gets\MP.\Com_{[\matr{G}]_1}(\vecb{b})$ and show that: a) $[\vecb{c}]_1$ and $[\vecb{c}']_1$ opens to the same value and b) $[\vecb{c}']_1\in\Lang_{[\matr{G}]_1,\sfbits}$ with 1-coordinate soundness.
+%\end{example}
+%
+%We briefly show why 1-coordinate soundness for the proof of membership in $\Lang_{[\matr{G}]_1,\sfbits}$ implies full soundness for the proof of membership in $\Lang_{[\matr{U}]_1,\sfbits}$.
+%
+%Recall that each $\vecb{c}$ defines a unique witness $\vecb{b}\in\Z_q^n$, which can be extracted with knowledge of the discrete logarithm of $[\matr{U}]_1$, and that $[\vecb{c}]_1\in\Lang_{\matr{U},\sfbits}$ iff $ b_i\in\bits$ for all $i\in[n]$. We consider three games:
+%\begin{description}
+%\item[$\mathsf{Real}$:] The adversary wins if produces a valid proof for some $[\vecb{c}]_1\notin\Lang_{[\matr{U}]_1,\sfbits}$.
+%\item[$\sfGame_0$:] Exactly as the real soundness game but $\matr{U}$ is internally sampled and used to check if $b_{i^*}\in\bits$ for a random $i^*\in[n]$. Abort if this is not the case.
+%\item[$\sfGame_1$:] Exactly as $\sfGame_1$ but now $\vecb{g}_{i^*}\gets\Z_q^2$.
+%\end{description}
+%
+%Given that an adversary wins only if $[\vecb{c}]_1\notin\Lang_{[\matr{U}]_1,\sfbits}$, is not hard to see that $\Pr[\mathsf{Real}(\advA)=1] \leq n\Pr[\sfGame_0(\advA)=1]$.
+%Additionally, using a decisional assumption in $\GG_1$, one can prove that $\Pr[\sfGame_0(\advA)=1]\approx\Pr[\sfGame_1(\advA)=1]$.
+% 
+%Note that in $\sfGame_1$ with overwhelming probability $\vecb{g}_{i^*}\notin\Span(\{\vecb{g}_i:i\neq i^*\})$. Therefore, with overwhelming probability, there is a unique $x_{i^*}$ such that $\vecb{c}'=x_{i^*}\vecb{g}_{i^*}+\sum_{i\neq i^*}x_i\vecb{g}_i$, a) implies that necessarily $x_{i^*}=b_{i^*}$ were $b_{i^*}$ is $i$ th coordinate of the unique opening of $\vecb{c}$. Given that the game aborts if $b_{i^*}\in\bits$, then a sucessfull adversary should be breaking the 1-coordinate Soundness property.
+%
+%\subsubsection{The power of 1-Coordinate Soundness.}
+%Lets interpret the previous proof in a more abstract way. Given that the statement $[\vec{c}]_1\in\Lang_{[\matr{U}]_1,\sfbits}$ can be equivalently expressed as the set of statements $\{\stmnt_i:i\in[n]\}$, where $\stmnt_i:=b_i\in\bits$, in $\sfGame_0$ it is checked if a random statement, $\stmnt_{i^*}$, do not hold. If the verifier accept the proof that $[\vecb{c}]_1$ and $[\vecb{c}']$ open to the same value in $\sfGame_1$, if $\stmnt_{i^*}$ do not hold, then 1-coordinate soundness also don not hold. Now we will see how to apply the same idea to solve different problems.
+%
+%\subsubsection{Range Proofs.}
+%In a range proof, one wants to prove that some commitment $\Com(x;r)$ is such that $x\in[0,2^n-1]$ for some $n\in\mathbb{N}$, which can be equivalent expressed as $x=\sum_{i\in[l]}x_id^{i-1}$, where $l=n/\log d$, and $\{\stmnt_i:i\in[n]\}$, where $\stmnt_i:=x_i\in[0,d-1]$. Now we need to give a proof such that $\neg\stmnt_{i^*}$ implieas a violation of 1-coordinate soundness. Note that $x_i\in[0,d-1]$ iff $x_i=\sum_{i\in[\log d]}b_{i,j}2^{i-1}$, therefore we compute $d\gets\Com(\vecb{x})$ and $[\vecb{c}_i]_1:=\MP.\Com(\vecb{b}_i)$, for each $i\in[\log d]$, and show that a) $d$ and $\sum_{i\in[\log d]}[\vecb{c}_i]_12^{i-1}$ open to the same value, b) $[\vecb{c}_i]_1\in\Lang_{[\matr{G}]_1,\sfbits}$, for each $i\in[n]$, and c) $x=\sum_{i\in[l]}x_id^{i-1}$.
+%
+%%In the abstract, the proof for $\Lang_{\matr{U},\sfbits}$ works because the following conditions holds
+%%\begin{enumerate}
+%%\item There exists a set of equations $\{\eq_i(b_i,b'_i):i\in[n]\}$, in variables $\vecb{b}$ and $\vecb{b}'$ and where $n=\poly(\lambda)$, such that $[\vecb{c}]\notin\Lang_{\matr{U},\sfbits}$ implies that there is some $i\in[n]$ such that $\eq_i$ does not hold. (In the specific case of $\Lang_{\matr{U},\sfbits}$, $\eq_i(b_i,b'_i):=\{b_i(b_i-1)=0,b_i=b_i'\}$).
+%%\item $\MP.\Com_{[\matr{G}]_1}(\vecb{b}')\in\Lang_{[\matr{G}],\sfbits}$ with 1-coordinate soundness.
+%%\item If $[\vecb{c}]_1\notin\Lang_{[\matr{U}]_1,\sfbits}$, then, for any $i\in[n]$, there is way to check if $\eq_i(b_i,b'_i)$ holds without knowledge of $\matr{G}$.
+%%\item For any $i\in[n]$, if $\eq_i$ does not holds, then $b'_i\notin\bits$ (perhaps because otherwise some computational assumption might be broken, as in the case of $\Lang_{[\matr{U}]_1,\sfbits}$).
+%%\end{enumerate}
+%%
+%%Condition 1 allows to reduce the statement $x\in\Lang$ to a random check of a single equation with only a small security loss. Condition 2 allows to randomly check a single equation independent of how $[\matr{G}]_1$ is sampled, say if $\hvecb{g}_{i^*}\in\Span(\{\vecb{g}_i: i\neq i^*\})$ or not. 
+%%
+%%Next we show that this three requirements
+%%The statement $[\vecb{c}']_1\in\Lang_{[\matr{G}]_1,\sfbits}$, when $\matr{G}\in\GG_1^{2\times (n+1)}$, seems to be not efficiently falsifiable even with access to the discrete logarithm of $[\matr{G}]_1$. In fact the only approach approach to falsify $[\vecb{c}']_1\in\Lang_{[\matr{C}]}$ we are aware of is to use brute-force to iterate over the $2^n$ witnesses. Although is not clear if $\Lang_{[\matr{G}]_1,\sfbits}$ is a NP-hard language, which will gather the impossibility results from \cite{STOC:GenWic11}, a conservative perspective will be to suppose that there is no proof $o(n)$ under falsifiable assumptions.
+%
+%%The proof system for  can be reinterpreted as  
+%%Intuitively, 1-coordinate soundness allows to show the satisfiability of a set of quadratic use length-reducing commitments
+%
+%\subsubsection{QA-NIZK argument with 1-coordinate soundness for $\Lang_{\matr{G},\sfbits}^n$.}
+%We give a QA-NIZK argument, with 1-coordinate soundness, of membership in the language 
+%$$
+%\Lang_{\matr{G},\sfbits}^n := \{[\matr{C}]_1\in\GG_1^{2\times n} : \exists \matr{B}\in\bits^{m\times n},\vecb{w}\in\Z_q^{n} \text{ s.t. } \matr{C} = \matr{G}_1\matr{B}+\vecb{g}_{n+1}\vecb{w}^\top\},
+%$$
+%Is easy to construct a proof system for $\Lang_{\matr{G},\sfbits}^n$, with communication $\Theta(n)$, from a proof system for $\Lang_{[\matr{G}]_1,\sfbits}$.
+%Indeed, $n$ proofs for $[\vecb{c}_i]_1\in\Lang_{[\matr{G}]_1,\sfbits}$ are a proof for  $[\matr{C}]\in\Lang^n_{[\matr{G}],\sfbits}$. Further, in Sect. XXX we show how to construct a constant size proof for this language, which allows us to construct more efficient Range and Shuffle arguments.
+%
+%\subsubsection{$\Theta(\log n)$ proof of membership in a Set.}
+%For our Shuffle argument is useful to prove that $n$ commitments opens to values in some set $\{[a]_1,\ldots,[a]_n\}$. We show how to construct a single proof of size $\Theta(\log n)$ whenever $[a]_1,\ldots,[a]_n$ are fixed in advance. 

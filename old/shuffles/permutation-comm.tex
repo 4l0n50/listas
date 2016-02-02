@@ -1,0 +1,51 @@
+Given $\matr{A}\gets\dist_{1,n}$ we want to show that a set of GS commitment $[\vecb{p}_1]_1\GS.\Com([x_1]_1),\ldots,[\vecb{p}_n]_1\GS.\Com([x_n]_1)$ defines a permutations of the elements of $[\matr{A}]_1$. That is, there is a permutation $\pi\in S_n$ such that $[\vecb{a}]_1=([x_{\pi(1)}]_1,\ldots,[x_{\pi(n)}])$. For simplicity, focus first in the case when $\pi$ is just a function $\pi:[n]\to[n]$,that is, there could exist $i,j\in[n]$ such that $\pi(i)=\pi(j)$ and thus $x_{\pi(i)}=x_{\pi(j)}$. In that case one can write
+\begin{equation}
+[x_1]_i = [\matr{A}]_1\vecb{b}_i \text{ for each } i\in[n],\text{ and } \sum_{i\in[n]} \vecb{b}_i=\vecb{1}_{n\times 1} \label{eq:list}
+\end{equation}
+
+If Eq (\ref{eq:list}), $\pi$ is not a permutation if $([x_1]_1,\ldots,[x_n]_1)$ contains a repeated element from $[\matr{A}]_1$. That is, there there exist $i,j,k\in[n]$ such that $b_{i,k}=b_{j,k}=1$, or equivalently, there is some $k\in[n]$ such that $\sum_{j\in[n]}b_{j,k}\neq 0$. To avoid this situation we also show that $\sum_{i\in[n]}[a_i]_1=\sum_{i\in[n]}[\matr{A}]_1\vecb{b}_i$. Note that $\sum_{i\in[n]}[\matr{A}]_1\vecb{b}_i=\sum_{i\in[n]}[a_i]_1\sum_{j\in[n]}b_{i,j}$ and thus it must hold that $\matr{A}(\sum_{j\in[n]}b_{1,j}-1,\ldots,\sum_{j\in[n]}b_{n,j}-1)^\top=0$. Therefore, unless $(\sum_{j\in[n]}b_{1,j}-1,\ldots,\sum_{j\in[n]}b_{n,j}-1)$ is a solution to the $\dist_{1,n}-\kermdh$ Assumption, it must hold that $\sum_{j\in[n]b_{i,j}=1}$ for each $j\in[n]$.
+
+We can write the previous equations in the \emph{standard matrix form} introduce in Sect XXX. as follows
+
+\begin{equation}
+\begin{bmatrix}
+{\vecb{p}_1}\\\vdots\\{\vecb{p}_n}\\\hline
+ 1\\\vdots\\1\\\hline
+ \sum_{i\in[n]}a_i\\\hline
+ {\vecb{c}_1}\\\vdots\\{\vecb{c}_n}
+\end{bmatrix}_1
+=
+\left[\begin{array}{ccc|ccc|c}
+\smatri{{\matr{A}}\\{\matr{0}_{1\times n}}} &        & \vecb{0}                                    & \matr{U} &        & \vecb{0} & \vecb{0} \\
+                                            & \ddots &                                             &          & \ddots &          & \vdots   \\
+\vecb{0}                                    &        & \smatri{{\matr{A}}\\{\matr{0}_{1\times n}}} & \vecb{0} &        & \matr{U} & \vecb{0} \\
+\hline
+\vecb{1}_{1\times n}                        &        & \vecb{0}                                    & \vecb{0} & \ldots & \vecb{0} & \vecb{0} \\
+                                            & \ddots &                                             & \vdots   & \ddots & \vdots   & \vdots   \\
+\vecb{0}                                    &        & \vecb{1}_{1\times n}                        & \vecb{0} & \ldots & \vecb{0} & \vecb{0} \\
+\hline
+\matr{A}                                    & \ldots & \matr{A}                                    & \vecb{0} & \ldots & \vecb{0} & \vecb{0} \\
+\hline
+%
+%\smatri{\vecb{g}_1 & \quad  &\vecb{0}} &        & \smatri{\vecb{g}_n & \quad  &\vecb{0}   } & \vecb{0} & \ldots & \vecb{0} & \smatri{\vecb{g}_{n+1} & \quad  &\vecb{0}   } \\
+%\smatri{           & \ddots &        } & \ldots & \smatri{           & \ddots &           } & \vdots   & \ddots & \vdots   & \smatri{               & \ddots &           } \\
+%\smatri{\vecb{0} & \quad & \vecb{g}_1} &        & \smatri{\vecb{0}   & \quad  & \vecb{g}_n} & \vecb{0} & \ldots & \vecb{0} & \smatri{\vecb{0}   & \quad  & \vecb{g}_{n+1}}
+%& \ldots & 
+\smatri{\vecb{g}_1 &        & \vecb{0}  \\       & \ddots & \\\vecb{0} &        & \vecb{g}_1} & \cdots & \smatri{\vecb{g}_n & & \vecb{0}\\ &\ddots& \\\vecb{0} & & \vecb{g}_n} &
+\smatri{\vecb{0}\\\vdots\\\vecb{0}}&\smatri{\ldots\\\ddots\\\ldots}&\smatri{\vecb{0}\\\vdots\\\vecb{0}} & \smatri{\vecb{g}_{n+1} & & \vecb{0}\\ &\ddots& \\\vecb{0} & & \vecb{g}_{n+1}}\\
+\end{array}\right]_1
+\begin{pmatrix}
+\vecb{b}_1\\\vdots\\\vecb{b}_n\\\hline
+\vecb{r}\\\hline
+\vecb{w}
+\end{pmatrix}
+\end{equation}
+
+Now the soundness proof is as outlined in Sect. XXX. The proof follows the indistinguishability of the following games
+
+\begin{description}
+\item[$\mathsf{Real}$:] This is the real game. The adversary wins if there $([x_1]_1,\ldots,[x_n]_1)$ is not a permutation of the entries of $[\matr{A}]_1$.
+\item[$\sfGame_0$:] This game is exactly as $\mathsf{Real}$ except that that algorithm $\algK_1$ does not receive $[\matr{U}]_1$ as input but it samples $([\matr{U}]_1, \matr{U}) \in \mathcal{R}_{par}$ according to $\dist_\Gamma$.
+\item[$\sfGame_1$:] This game is exactly as $\sfGame_0$ except that the simulator uses $\matr{U}$ to trapdoor open $[\vecb{p}_1]_1,\ldots,[\vecb{p}_n]_1$. The simulator aborts if $[x_i]_1\in\{[a_1]_1,\ldots,[a_n]_1\}$ for each $i\in[n]$ but there some $i,j\in[n]$, $i\neq j$, such that $[x_i]_1=[x_j]_1$.
+\item[$\sfGame_2$:] This game is exactly as $\sfGame_1$ except that the simulator also aborts if there is some $[x_i]_1\notin\{[a_1]_1,\ldots,[a_n]_1\}$.
+\end{description} 
