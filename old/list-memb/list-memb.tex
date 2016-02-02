@@ -1,8 +1,0 @@
-We wish to prove that $n$ Groth-Sahai commitments, $[\lcom_1]_2:=\GS.\Com_{[\matr{V}]_2}([x_1]_2;\vecb{r}_1),\ldots,[\lcom_n]_2:=\GS.\Com_{[\matr{V}]_2}([x_n]_2;\vecb{r}_n)$, open to some value in the list $L:=\{[l_1]_2,\ldots,[l_m]_2\}$ (but not necessarily the same value). Specifically, we wish to prove membership in the language
-$$
-\Lang_{[\matr{V}]_2,L,n}:=\left\{[(\lcom_1,\ldots,\lcom_n)]_2\in\GG_2^{2\times n}:\forall i\in[n]\exists\vecb{r}_i\in\Z_q^2\text{ s.t. }\begin{array}{l}{[x_i]_2}\in L\wedge\\ {[\lcom_i]_2=\GS.\Com_{[\matr{V}]_2}([x_i]_2;\vecb{r}_i)}\end{array}\right\}.
-$$
-where the witness for membership in the language are the pairs  $(\vecb{r}_i,[x_i]_2)$. Below, we provide a proof whose communication is $\Theta(m)$, regardless of $n$. 
-
-We note in particular that such a proof also works when $[\lcom_i]_2$ is an ElGamal ciphertext or the encryption scheme based on the $\lin{2}$ Assumption due to XXX --- which are special  cases of GS commitments where some randomness is set to $0$ --- for different instantiations of GS 
-
