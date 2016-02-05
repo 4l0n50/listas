@@ -19,8 +19,8 @@ $[\vecb{d}]_2$ to $\vecb{b}$.
 The last step guarantees that 
 $b_i(b_i-1)=0$ for all $i \in [m]$. Indeed, 
 $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
-\vecb{h}_j)^\top$ can be written as a linear combination of the vectors $\{\vecb{g}_i\vecb{h}_j^\top\}$ where the coefficient of $\vecb{g}_i\vecb{h}_i^{\top}$ is $b_i(b_i-1)$. Intuitively, we will be able to prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
-\vecb{h}_j)^\top$ are in the span of the vectors  $\{\vecb{g}_i\vecb{h}_j^\top\}$ without those pairs where $i=j$ only if $b_i(b_i-1)=0$ for all $i \in [m]$. 
+\vecb{h}_j)^\top$ can be written as a linear combination of the vectors $\{\vecb{g}_i\vecb{h}_j^\top\}$ where the coefficient of $\vecb{g}_i\vecb{h}_i^{\top}$ is $b_i(b_i-1)$. Intuitively, an adversary will be able to prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
+\vecb{h}_j)^\top$ is in the span of the vectors  $\{\vecb{g}_i\vecb{h}_j^\top\}$ without those pairs where $i=j$ only if $b_i(b_i-1)=0$ for all $i \in [m]$. 
 
 
 The argument we need for our results eliminates the perfectly binding commitment, which of course also means that step 2 disappears. Additionally, in the original scheme of \cite{AC:GonHevRaf15}, the distribution of $ck=[\matr{G}]_1$ is $\distlinizeroone$, while in our argument of membership in 

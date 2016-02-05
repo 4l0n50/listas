@@ -5,3 +5,5 @@ main-listas.bbl
 main-listas.blg
 main-listas.brf
 main-listas.pdf
+*.swp
+*.log
