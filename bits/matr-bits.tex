@@ -20,21 +20,23 @@ randomness $\vecb{s}$,
 \end{enumerate}
 First, note that in step 3, we can use the proof system $\Pi_\sfcom$, as both $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ are commitments of the required form, as if $\matr{G}_2$ denotes the last $k$ columns 
 of $\matr{G}$ and $\matr{G}_1$ the rest,
-$$[\vecb{c}]_1=\left(\begin{smallmatrix}
-\matr{G}_1 & \ldots & \vecb{0}  \\
-\vdots     & \ddots & \vdots  \\
-\vecb{0}   & \ldots & \matr{G}_1
-\end{smallmatrix}\right) \vecb{b}+ \left(\begin{smallmatrix}
- \matr{G}_{2} & \ldots & \vecb{0}\\
- \vdots         & \ddots & \vdots\\
- \vecb{0}       & \ldots & \matr{G}_{2}
-\end{smallmatrix}\right) \vecb{r}.$$
+$\vecb{c}=\matr{G}_1^n\vecb{b}+\matr{G}_2^n\vecb{r}.
+$
+%$$[\vecb{c}]_1=\left(\begin{smallmatrix}
+%\matr{G}_1 & \ldots & \vecb{0}  \\
+%\vdots     & \ddots & \vdots  \\
+%\vecb{0}   & \ldots & \matr{G}_1
+%\end{smallmatrix}\right) \vecb{b}+ \left(\begin{smallmatrix}
+% \matr{G}_{2} & \ldots & \vecb{0}\\
+% \vdots         & \ddots & \vdots\\
+% \vecb{0}       & \ldots & \matr{G}_{2}
+%\end{smallmatrix}\right) \vecb{r}.$$
 
 We give some intuition on why is the above scheme sound. For the case $\matr{G} \gets \distzeronk$ it suffices to note that the proof that  $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ share an opening implies in particular that they are both valid commitments. But if 
 $[\ovecb{c}]_1$ is a valid commitment then $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in \Lang_{ck,\sfbits}^n$ because for this distribution the commitments are perfecly hiding. 
 
 For the case where $\matr{G} \gets \distink$, $i>0$, 
 recall that the MP commitment with this key is 
-perfectly binding at coordinate $i$. In particular, this implies that if some $[\vecb{c}_j]_1 \notin \Lang_{ck,\sfbits}$, the $ith$ coordinate of $\vecb{b}_j$, denoted $b_{i,j}$, satisfies that $b_{i,j} \notin \{0,1\}$. Therefore, given some $j^* \gets [n]$ with probability at least $1/n$, if the adversary breaks soundness, then $b_{i,j^*} \notin \{0,1\}$. In the soundness proof, we switch to a game where the distribution of $\overline{\matr{G}}$ is changed so that now 
+perfectly binding at coordinate $i$. In particular, this implies that if some $[\vecb{c}_j]_1 \notin \Lang_{ck,\sfbits}$, the $ith$ coordinate of $\vecb{b}_j$, denoted $b_{i,j}$, satisfies that $b_{i,j} \notin \{0,1\}$. Therefore, given some $j^* \gets [n]$, if the adversary breaks soundness, then, with probability at least $1/n$, $b_{i,j^*} \notin \{0,1\}$. In the soundness proof, we switch to a game where the distribution of $\overline{\matr{G}}$ is changed so that now 
 $\MP.\Com_{\overline{ck}}$ is perfectly binding for $b_{i,j^*}$. Now it is easy to prove that if $b_{i,j^*} \notin \{0,1\}$, the soundness of $\Pi_\sfbits$ or of $\Pi_\sfcom$ is broken, because this is incompatible with $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ sharing an opening and $[\ovecb{c}]_1 \in\Lang_{\overline{ck},\sfbits}$.
 
