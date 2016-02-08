@@ -3,7 +3,7 @@ more efficient alternatives for concrete statements which appear often in practi
 
 These problems have been studied following a variety of approaches and techniques. For instance, they have been studied both in the interactive \cite{EC:BayGro12,AC:CamChaShe08,AC:Groth11} and the non-interactive setting \cite{PAIRING:RiaKohPre09,FC:ChaLipZha12,AC:GroLu07,SCN:LipZha12,EPRINT:FauLip15}, and in the latter setting, both under falsifiable (but not always standard) \cite{PAIRING:RiaKohPre09,AC:GroLu07} and non-falsifiable assumptions \cite{FC:ChaLipZha12,SCN:LipZha12,EPRINT:FauLip15} (like knowledge of exponent type of assumptions). 
 
-Generally speaking, non-interactive zero-knowledge proofs under falsifiable assumptions remain more inefficient than other approaches for the same problem (one notable exception being the recent QA-NIZK arguments of membership in linear spaces of  \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15}). However, this is the most desirable alternative from a cryptographic point of view. Indeed, interaction is not  so convenient in practice and further, there is the additional problem of non-transferablility (a proof might not convince a third party who cannot check if the challenges were computed correctly \cite{C:Pass03}).  On the other hand, non-falsifiable assumptions are very strong assumptions whose use is, at the very least, controversial \cite{AC:BoyPas15}. Although it might still be interesting to use these assumptions in practice, from a theoretical viewpoint it is definitely worth to explore how to improve efficiency based only on standard assumptions.  
+Generally speaking, non-interactive zero-knowledge proofs under falsifiable assumptions remain more inefficient than other approaches for the same problem (one notable exception being the recent QA-NIZK arguments of membership in linear spaces of  \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15}). However, this is the most desirable alternative from a cryptographic point of view. Indeed, interaction is not  so convenient in practice and further, there is the additional problem of non-transferablility (a proof might not convince a third party who cannot check if the challenges were computed correctly \cite{C:Pass03}).  On the other hand, non-falsifiable assumptions are very strong assumptions whose use is, at the very least, controversial \cite{EPRINT:BCPR13a,AC:BoyPas15}. Although it might still be interesting to use these assumptions in practice, from a theoretical viewpoint it is definitely worth to explore how to improve efficiency based only on standard assumptions.  
 
 This paper focuses on obtaining efficiency improvements for non-interactive arguments based on falsifiable assumptions for two of the interesting examples discussed above, namely, range proofs and interactive proofs of correctness of a shuffle.  
 
@@ -17,7 +17,7 @@ To derive efficiency improvements for this two languages we develop specific tec
 All our results are in a bilinear group $gk:=(q,\GG_1,\GG_2,\GG_T,e,\mathcal{P}_1,\mathcal{P}_2)$, where $\GG_1,\GG_2$
 and $\GG_T$ are groups of prime order $q$, the elements $\mathcal{P}_1, \mathcal{P}_2$ are generators of 
 $\GG_1,\GG_2$ respectively, and $e:\GG_1\times\GG_2\to\GG_T$ is an efficiently
-computable, non-degenerate bilinear map. Given a generator $\mathcal{P}_\gamma$ of $\GG_\gamma$, for any $x\in\Z_q$ we define $[x]_\gamma:=x\mathcal{P}_\gamma$, $\gamma\in\{1,2\}$.
+computable, non-degenerate bilinear map. Given a generator $\mathcal{P}_\gamma$ of $\GG_\gamma$, for any $x\in\Z_q$ we define $[x]_\gamma:=x\mathcal{P}_\gamma$, $\gamma\in\{1,2\}$. We simply write $[x]_1[y]_2$ to denote $e([x]_1,[y]_2)$.
 
 Note that in bilinear groups one can always use Groth-Sahai equations to prove these statements (quadratic equations are complete and one can prove every statement in NP, \cite{EC:GroOstSah06}).  However, a  naif use of GS proofs results in a large proof size ($\Theta(n^2)$ for shuffles, $\Theta(n)$ for range proofs) and in fact, as we discuss below, they have been combined with other strategies to obtain improved asymptotic efficiency. 
 
@@ -34,22 +34,23 @@ and where $c=\Com_{ck}(x;w)$ is a Groth-Sahai commitment to $x$ with randomness 
 and further, the marginal distribution of $ck$ is assumed to be witness samplable. The argument is said to be \textit{aggregated} because the size of the proof is independent of $n$, but in the soundness proof we will loose a factor of $n$ in the reduction. 
 
 Before discussing how to construct such an argument, we show how to use it as a building block for range and shuffle proofs.  
-\begin{description}
-\item[Range Argument:]
+\subsubsection{Range Argument:}
 Let $n,d\in\mathbb{N}$, $m:=\log d$, and $\ell:=n/m$. A commitment $c$ opens to a integer $x$ in the range $[0,2^n-1]$ iff the tuple $(c_1,\ldots,c_\ell) \in\Lang_{ck,[0,d-1]}^\ell$ and  $x=\sum_{i\in[\ell]}d^{i-1}x_i$. Indeed, note that if the right-hand side of this implication is satisfied, then: 
 \begin{eqnarray*}
 x & = & \sum_{i\in[\ell]} x_i d^{i-1}
    \in  [0,d^\ell-1]  =  [0,(d^{1/\log d})^n-1] = [0,2^n-1].
 \end{eqnarray*}
 The statement  $x=\sum_{i\in[\ell]}d^{i-1}x_i$ can be proven using standard techniques while membership in $\Lang_{ck,[0,d-1]}^\ell$ can be proved with an aggregated set membership proof. 
-This technique has been widely used in the literature. The underlying idea is that, for a given $n$, $m$ and $\ell$ are inversely proportional, while the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\Theta(\frac{n}{k \log n})$. 
+We remark that this way of constructing range arguments has been widely used in the literature.
+
+The underlying idea is that, for a given $n$, $m$ and $\ell$ are inversely proportional, while the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\Theta(\frac{n}{k \log n})$. 
 Note that the asymptotic improvement for this proof (compared to a naif strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
-  \item[Shuffle Argument:] The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. Recall that the statement we want to prove in a correctness of a shuffle argument is the following: ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
+  \subsubsection{Shuffle Argument:} The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. Recall that the statement we want to prove in a correctness of a shuffle argument is the following: ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
  $[\vecb{m}_2]$ is a permutation of $[\vecb{m}_1]$''. 
 The strategy we follow is the following:  
 \begin{itemize}
-\item[1)] Publish some vector of group elements $[\vecb{s}]_1 =\{[s_i]_1 :i \in [n]\}$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
-\item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
+\item[1)] Publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
+\item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
 \item[3)] The prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$.
 \item[4)] Finally, the prover outputs a proof that: 
 \begin{equation}\label{shuffle:ker}[\vecb{s}^{\top}]_1 [\vecb{m}_1]_2 =[\vecb{x}^{\top}]_1 [\vecb{m}_2]_2.
@@ -68,7 +69,6 @@ one can extract from   $[\vecb{m}_1]_2,[\vecb{m}_2]_2$ the coefficients of some 
 This soundness argument is an augmentation and translation into asymmetric groups of the argument of Groth and Lu \cite{AC:GroLu07}. Roughly speaking, the argument there also consists of two parts: one devoted to proving that some GS commitments open to a permutation of some set in the CRS (in \cite{AC:GroLu07} this is done via a non-standard assumption, the pairing permutation assumption), while the second part (Step 3) is proven very similarly (in particular, second part also follows from some Kernel Assumption secure in symmetric bilinear groups).  
 
 We note that it is crucial for our soundness argument that it is possible to decrypt the ciphertexts (otherwise we cannot extract solutions to the Kernel problems). This is possible in our case because the encryption public-key is assumed to be witness-samplable and the argument is quasi-adaptive. This explains why we do not have to rely on the notion of culpable soundness, as done in \cite{AC:GroLu07,EPRINT:FauLip15}.
-\end{description}
 
 \subsubsection{Aggregated Set Membership Proofs.} The statement $(c_1,\ldots,c_n) \in \Lang_{ck,S}^n$ can be characterized as follows. It holds if and only if 
 
