@@ -1,0 +1,187 @@
+Zero-knowledge proofs are proofs which yield nothing beyond the validity of a certain statement. Although one can prove every NP statement in zero-knowledge (going through a proof of circuit satisfiability, for instance),  the literature has extensively explored 
+more efficient alternatives for concrete statements which appear often in practice. Among them, some of the most important are: proofs of membership in linear spaces \cite{AC:JutRoy13,EC:LPJY14,C:JutRoy14,EC:AbdBenPoi15,EC:KilWee15}, range proofs \cite{AC:CamChaShe08,PAIRING:RiaKohPre09,FC:ChaLipZha12}, membership in a set \cite{PAIRING:RiaKohPre09,EC:BayGro13}, or correctness of a shuffle \cite{Chaum81,AC:GroLu07,SCN:LipZha12,EPRINT:FauLip15}. 
+
+These problems have been studied following a variety of approaches and techniques. For instance, they have been studied both in the interactive \cite{EC:BayGro12,AC:CamChaShe08,AC:Groth11} and the non-interactive setting \cite{PAIRING:RiaKohPre09,FC:ChaLipZha12,AC:GroLu07,SCN:LipZha12,EPRINT:FauLip15}, and in the latter setting, both under falsifiable (but not always standard) \cite{PAIRING:RiaKohPre09,AC:GroLu07} and non-falsifiable assumptions \cite{FC:ChaLipZha12,SCN:LipZha12,EPRINT:FauLip15} (like knowledge of exponent type of assumptions). 
+
+Generally speaking, non-interactive zero-knowledge proofs under falsifiable assumptions remain more inefficient than other approaches for the same problem (one notable exception being the recent QA-NIZK arguments of membership in linear spaces of  \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15}). However, this is the most desirable alternative from a cryptographic point of view. Indeed, interaction is not  so convenient in practice and further, there is the additional problem of non-transferablility (a proof might not convince a third party who cannot check if the challenges were computed correctly \cite{C:Pass03}).  On the other hand, non-falsifiable assumptions are very strong assumptions whose use is, at the very least, controversial \cite{AC:BoyPas15}. Although it might still be interesting to use these assumptions in practice, from a theoretical viewpoint it is definitely worth to explore how to improve efficiency based only on standard assumptions.  
+
+This paper focuses on obtaining efficiency improvements for non-interactive arguments based on falsifiable assumptions for two of the interesting examples discussed above, namely, range proofs and interactive proofs of correctness of a shuffle.  
+
+An argument of Correctness of a Shuffle is an essential tool in the construction of \emph{Mix-nets} \cite{Chaum81}. A Mix-net consists of a series of \emph{mixers}, each of which receives as input a set of $n$ ciphertexts and  outputs a \emph{shuffle} of the input ciphertexts. That is, a \emph{rerandomization} of the set of ciphertexts obtained after applying a \emph{random permutation} to the input set of ciphertexts. To enforce the honest behavior of mixers they are required to produce a zero-knowledge argument that the shuffle was correctly computed.  
+
+A Range argument is a tool often required in e-voting and e-cash scenarios, with the purpose of showing that the opening $y$ of some commitment $c$ is an integer in some interval $[A,B]$. For simplicity, the range considered is usually $[0,2^n-1]$ since a proof in any interval can be reduced to a proof in this interval.
+
+To derive efficiency improvements for this two languages we develop specific techniques that we can apply to both problems. Our resulting proofs are more efficient in terms of proof size and require more standard assumptions, but they have a rather large common reference string. They build on the recent arguments for membership in linear spaces of \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15} and the argument for proving that some commitment to a vector of integers in $\Z_q^{n}$ opens to $\{0,1\}^n$ due to \cite{AC:GonHevRaf15}. 
+  
+\subsection{Our Techniques}
+All our results are in a bilinear group $gk:=(q,\GG_1,\GG_2,\GG_T,e,\mathcal{P}_1,\mathcal{P}_2)$, where $\GG_1,\GG_2$
+and $\GG_T$ are groups of prime order $q$, the elements $\mathcal{P}_1, \mathcal{P}_2$ are generators of 
+$\GG_1,\GG_2$ respectively, and $e:\GG_1\times\GG_2\to\GG_T$ is an efficiently
+computable, non-degenerate bilinear map. Given a generator $\mathcal{P}_\gamma$ of $\GG_\gamma$, for any $x\in\Z_q$ we define $[x]_\gamma:=x\mathcal{P}_\gamma$, $\gamma\in\{1,2\}$.
+
+Note that in bilinear groups one can always use Groth-Sahai equations to prove these statements (quadratic equations are complete and one can prove every statement in NP, \cite{EC:GroOstSah06}).  However, a  naif use of GS proofs results in a large proof size ($\Theta(n^2)$ for shuffles, $\Theta(n)$ for range proofs) and in fact, as we discuss below, they have been combined with other strategies to obtain improved asymptotic efficiency. 
+
+\subsubsection{A Common Building Block.} Our starting point is the observation that range and shuffle proofs can be constructed by using as a common building block a 
+``zero-knowledge aggregated set membership argument''. This is achieved by slightly modifying some previous strategies used for shuffle and range proofs.
+
+More specifically,  given some publicly known set $S$, such an argument proves that $n$ commitments $c_1,\ldots,c_n$ open to values $x_1,\ldots,x_n \in S$.  The set $S$ is of polynomial size and is either $[0,d-1]\subset\Z_q$ or a subset of $\GG_\gamma$, $\gamma \in \{1,2\}$. 
+ 
+In other words, an aggregated set membership argument proves that $(c_1,\ldots,c_n) \in \Lang_{ck,S}^n$ where 
+$$
+\Lang_{ck,S}:=\{c: \exists x\in S, w\in\Z_q \text{ s.t. } c=\Com_{ck}(x;w)\}\text{ and }ck\gets\distk,
+$$
+and where $c=\Com_{ck}(x;w)$ is a Groth-Sahai commitment to $x$ with randomness $w$. The proof is Quasi-Adaptive \cite{AC:JutRoy13}, in the sense that the common reference string depends on $ck$ and $S$, which are assumed to be sampled from some distribution $\dist$
+and further, the marginal distribution of $ck$ is assumed to be witness samplable. The argument is said to be \textit{aggregated} because the size of the proof is independent of $n$, but in the soundness proof we will loose a factor of $n$ in the reduction. 
+
+Before discussing how to construct such an argument, we show how to use it as a building block for range and shuffle proofs.  
+\begin{description}
+\item[Range Argument:]
+Let $n,d\in\mathbb{N}$, $m:=\log d$, and $\ell:=n/m$. A commitment $c$ opens to a integer $x$ in the range $[0,2^n-1]$ iff the tuple $(c_1,\ldots,c_\ell) \in\Lang_{ck,[0,d-1]}^\ell$ and  $x=\sum_{i\in[\ell]}d^{i-1}x_i$. Indeed, note that if the right-hand side of this implication is satisfied, then: 
+\begin{eqnarray*}
+x & = & \sum_{i\in[\ell]} x_i d^{i-1}
+   \in  [0,d^\ell-1]  =  [0,(d^{1/\log d})^n-1] = [0,2^n-1].
+\end{eqnarray*}
+The statement  $x=\sum_{i\in[\ell]}d^{i-1}x_i$ can be proven using standard techniques while membership in $\Lang_{ck,[0,d-1]}^\ell$ can be proved with an aggregated set membership proof. 
+This technique has been widely used in the literature. The underlying idea is that, for a given $n$, $m$ and $\ell$ are inversely proportional, while the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\Theta(\frac{n}{k \log n})$. 
+Note that the asymptotic improvement for this proof (compared to a naif strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
+  \item[Shuffle Argument:] The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. Recall that the statement we want to prove in a correctness of a shuffle argument is the following: ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
+ $[\vecb{m}_2]$ is a permutation of $[\vecb{m}_1]$''. 
+The strategy we follow is the following:  
+\begin{itemize}
+\item[1)] Publish some vector of group elements $[\vecb{s}]_1 =\{[s_i]_1 :i \in [n]\}$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
+\item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
+\item[3)] The prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$.
+\item[4)] Finally, the prover outputs a proof that: 
+\begin{equation}\label{shuffle:ker}[\vecb{s}^{\top}]_1 [\vecb{m}_1]_2 =[\vecb{x}^{\top}]_1 [\vecb{m}_2]_2.
+\end{equation}
+\end{itemize}
+Soundness goes as follows. The underlying computational assumption is that it is infeasible to find a non-trivial combination of elements of $S$ which adds to $0$, that is, given $[\vecb{s}]_1$ it is infeasible to find $[\vecb{k}]_2 \neq [\vecb{0}]_2$ such that
+$\vecb{s}^{\top} \vecb{k}=\vecb{0}$ (this is the $\dist_{n,1}$-$\kermdh$ Assumption of \cite{EPRINT:MorRafVil15}). 
+ 
+First, by the soundess of the aggregated set membership proof, $[\vecb{x}]_1 \in S^{n}$. From the fact that 
+ $\sum_{i \in [n]} x_i =\sum_{i \in [n]} s_i$, it holds that if 
+ $\vecb{x}$ is not a permutation of $\vecb{s}$, then one can extract in the soundness game (assuming the extractor knows $ck$) a non-trivial linear combination of elements of $S$ which adds to $0$, which contradicts the security assumption. 
+ 
+Finally, if $\vecb{x}$ is a permutation of $\vecb{s}$,  then equation \label{shuffle:ker} implies that the shuffle is correct, or, again, 
+one can extract from   $[\vecb{m}_1]_2,[\vecb{m}_2]_2$ the coefficients of some non-trivial combination of elements of $S$ which is equal to $0$ (breaking the $\dist_{n,1}$-$\kermdh$ Assumption). 
+
+This soundness argument is an augmentation and translation into asymmetric groups of the argument of Groth and Lu \cite{AC:GroLu07}. Roughly speaking, the argument there also consists of two parts: one devoted to proving that some GS commitments open to a permutation of some set in the CRS (in \cite{AC:GroLu07} this is done via a non-standard assumption, the pairing permutation assumption), while the second part (Step 3) is proven very similarly (in particular, second part also follows from some Kernel Assumption secure in symmetric bilinear groups).  
+
+We note that it is crucial for our soundness argument that it is possible to decrypt the ciphertexts (otherwise we cannot extract solutions to the Kernel problems). This is possible in our case because the encryption public-key is assumed to be witness-samplable and the argument is quasi-adaptive. This explains why we do not have to rely on the notion of culpable soundness, as done in \cite{AC:GroLu07,EPRINT:FauLip15}.
+\end{description}
+
+\subsubsection{Aggregated Set Membership Proofs.} The statement $(c_1,\ldots,c_n) \in \Lang_{ck,S}^n$ can be characterized as follows. It holds if and only if 
+
+
+
+  
+
+
+
+
+
+
+We consider the following abstraction. Consider a commitment scheme $\Com$ (for now, an arbitrary commitment, we will see later that it needs to be homomorphic). Suppose we want to prove that given some commitment $c \in \mathcal{C}$ in some commitment space (where membership is easy to decide), has an opening which is in some language $\mathcal{L}$. Note that for simplicity we are talking about membership of the opening of $\vecb{c}$ in some language $\mathcal{L}$ and not of membership of $c$. In particular, the language $\mathcal{L}$ might be in $P$ or in $NP$. 
+
+For instance, if we want to prove that $c$ opens to an element in a set $S$ of polynomial size (publicly known), then it is easy to decide membership in $\mathcal{L}$. 
+
+ 
+ $$ \vecb{c}=\Com_{ck}(x), x \in \mathcal{L}_{gk,op} \Longleftrightarrow   \vecb{c}=\Com_{ck}(x) \wedge \exists \vecb{b} \in \{0,1\}^{\overline{w}} \text{such that} (x,\vecb{b}) \times \mathcal{R}, \matr{\Lambda}\vecb{b}=\vecb{\alpha}.$$  
+
+Pot ser més d'un commitment. Per exemple, 2. 
+That is, the opening of $\vecb{c}$ is in the language if and only there exists some vector $\vecb{b} \in \{0,1\}^{\overline{w}}$ such that... 
+
+  Bé, més o menys. 
+  
+ For example, if we have a shuffle then it is like that. 
+ 
+ For now, just believe that it is useful to characterize languages like this. 
+
+This suggests a strategy to prove membership in this language, prove that  
+
+          
+
+
+ 
+   
+
+
+
+
+membership in some language $\mathcal{L}$.  
+
+
+
+
+
+
+
+
+
+
+
+It is almost folklore that one way to construct Range Proofs is the following. Given some homomorphic commitment schem $\Com$, 
+to prove that some commitment $\vecb{c}$ opens to some $x \in [0,2^{d-1}-1]$ \textcolor{red}{mira si es la notacio que toca}, one commits to  each bit $b_i$, $i \in [d]$, of the binary representation of $x$, one proves that indeed the committed values are bits, and one proves that 
+$x=\sum_{i \in [d]} b_i 2^i$. In practice, the schemes in the literature XXX, XXXX use sophisticated refinements of these techniques because this naif strategy results in proofs of size at least linear in $\Theta(d)$.  However, the basic idea of committing to the binary representation  of $x$ remains.  
+
+Similarly, in a shuffle argument, the naif strategy to prove 
+  
+
+It is almost folkolre that one way to construct proofs of shuffles is XXX. So we can say that xxxx. 
+
+Showing that commitments $c_1,\ldots,c_n$ opens to $x_1,\ldots,x_n\in S$ is equivalent to show that $c_1,\ldots,c_n$ is in the language $\Lang_{ck,S}^n:=\Lang_{ck,S}\times\ldots\times\Lang_{ck,S}$, where
+$$
+\Lang_{ck,S}:=\{c:\exists x\in S, w\in\Z_q \text{ s.t. } c=\Com_{ck}(x;w)\}\text{ and }ck\gets\distk.
+$$
+Note that the language dependes on an external and honestly sampled parameter $ck$. Jutla and Roy introduced the notion of Quasi-Adaptive NIZK (QA-NIZK) \cite{AC:JutRoy13} which allows to define parameterized languages $\Lang_{\rho}$. For example $\rho$ can describe a matrix with coefficients in a group $\GG_1$ and $\Lang_{\rho}$ is the linear subspace generated by the columns of the matrix, or $\rho=(ck,S)$ and $\Lang_{\rho}=\Lang_{ck,S}$ as in our case.
+
+If $\Com$ is an homomorphic commitment scheme, that is $\alpha\Com_{ck}(x;r)+\beta\Com_{ck}(y;s)=\Com_{ck}(\alpha x+\beta y;\alpha r + \beta s)$,  membserhip in $\Lang_{ck,S}$ is equivalent to show the satisifiability of the following set of linear and quadratic equations:
+\begin{align}
+c_j = \sum_{i\in[m]}\Com_{ck}(s_i;0)b_{i,j}+\Com_{ck}(0;1)r_j,&
+& 1= \sum_{i\in[m]}b_{i,j},      \label{eq:lin}
+\end{align}
+and
+\begin{align}
+b_{i,j}(b_{i,j}-1)=0 \label{eq:quad},
+\end{align}
+for each $i\in[m],j\in[n]$ and where $m:=|S|$.
+
+In both the range or the shuffle argumnt... no entenc molt bé què pinta el 
+
+
+
+
+
+
+
+
+
+The argument is implicit in \cite{AC:GonHevRaf15}, where the authors construct a QA-NIZK argument for proving that a perfectly binding commitment opens to a bit-string. More technically, to prove that a  perfectly binding commitment $[\vecb{c}']_1$ opens to a bit-string $\vecb{b}$, the argument in \cite{AC:GonHevRaf15} takes the following steps:
+\begin{enumerate}
+\item Construct two MP commitments $[\vecb{c}]_1$, 
+$[\vecb{d}]_2$ to $\vecb{b}$. 
+\item Prove that $[\vecb{c}]_1$ and $[\vecb{c}']_1$ open to the same string. 
+\item Prove that the two MP commitments $[\vecb{c}]_1$ and $[\vecb{d}]_2$ open to the same string.
+\item Prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
+\vecb{h}_j)^\top\in\Span(\{\vecb{g}_i\vecb{h}_j^\top:(i,j)\in\indexSet{m}{1}\})$, where $ck:=[(\vecb{g}_1,\ldots,\vecb{g}_{m+1})]_1$ and $ck':=[(\vecb{h}_1,\ldots,\vecb{h}_{m+1})]_2$.
+\end{enumerate}
+The last step guarantees that 
+$b_i(b_i-1)=0$ for all $i \in [m]$. Indeed, 
+$\vecb{c}(\vecb{d}-\sum_{j \in [m]}
+\vecb{h}_j)^\top$ can be written as a linear combination of the vectors $\{\vecb{g}_i\vecb{h}_j^\top\}$ where the coefficient of $\vecb{g}_i\vecb{h}_i^{\top}$ is $b_i(b_i-1)$. Intuitively, we will be able to prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
+\vecb{h}_j)^\top$ are in the span of the vectors  $\{\vecb{g}_i\vecb{h}_j^\top\}$ without those pairs where $i=j$ only if $b_i(b_i-1)=0$ for all $i \in [m]$. 
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+          
