@@ -52,7 +52,7 @@ The strategy we follow is the following:
 \item[1)] Publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
 \item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
 \item[3)] The prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$.
-\item[4)] Finally, the prover outputs a proof that:\footnote{Actually, since the prover does not know the randomness nor the decryptions of the ciphertexts but only the randomness of the re-encryptions, she is not able to prove exactly this statement. However, for a cleaner explanation, in this section we assume it is.} 
+\item[4)] Finally, the prover outputs a proof that:\footnote{Actually, since the prover (a mixer) does not know the randomness nor the decryptions of the ciphertexts but only the randomness of the re-encryptions, she is not able to prove exactly this statement. However, for a cleaner explanation, in this section we assume it is.} 
 \begin{equation}\label{shuffle:ker}[\vecb{s}^{\top}]_1 [\vecb{m}_1]_2 =[\vecb{x}^{\top}]_1 [\vecb{m}_2]_2.
 \end{equation}
 \end{itemize}

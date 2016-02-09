@@ -192,7 +192,8 @@ $[\tilde{\vecb{x}}]_1$ and $[\vecb{c}]_1$ share a common opening, but it also pr
  
  
    
-\begin{figure} 
+\begin{figure}
+\begin{\algSize}
 $$
 \begin{array}{ll}
 \begin{array}{l}
@@ -219,9 +220,7 @@ r_j \gets\Z_q, \forall j\in[\lb]\\
 \pi_\sflin \gets 
     \Pi_\sflin.\algP
     (
-        \crs_\sflin,\\
-\qquad
-        
+        \crs_\sflin,
             [\tvecb{x}]_1\oplus
             [\vecb{c}]_1,
             \tilde{\vecb{b}}\oplus\vecb{r}
@@ -237,6 +236,7 @@ r_j \gets\Z_q, \forall j\in[\lb]\\
 \text{Return } \  ([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits). \\
 \\
 \\
+\\
 \end{array}\\
 \begin{array}{l}
 {\algV(\mathsf{crs},\{[\vecb{x}_i]_1:i\in[n]\},([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits))}\\
@@ -249,9 +249,9 @@ r_j \gets\Z_q, \forall j\in[\lb]\\
             [\vecb{c}]_1,
         \pi_\sflin
     )\\
-\mathsf{ans}_2 \gets \Pi_\sfbits.\algV(\crs_\sfbits,\{[\vecb{c}_j]_1:j\in[\lb]\},\\
-\qquad\quad\pi_\sfbits)\\
+\mathsf{ans}_2 \gets \Pi_\sfbits.\algV(\crs_\sfbits,\{[\vecb{c}_j]_1:j\in[\lb]\},\pi_\sfbits)\\
 \text{Return } \ \mathsf{ans}_1\wedge\mathsf{ans}_2.
+\\
 \\
 \\
 \\
@@ -280,6 +280,7 @@ r_j \gets\Z_q, \forall j\in[\lb]\\
 \text{Return } \  ([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits). \\
 \end{array}
 \end{array}$$
+\end{\algSize}
 \caption{Proof system for the language $\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}^n$, where $\Pi_\sfbits$ is the proof system for $\Lang_{ck,\sfbits}^n$ from Sect. \ref{sec:bits-n}, $\vecb{c}:=\vecb{c}_1\oplus\ldots\oplus\vecb{c}_\lb$, $\vecb{b}:=\vecb{b}_1\oplus\ldots\oplus\vecb{b}_n$, $\tvecb{x}:=\vecb{x}_1\oplus\grkb{\alpha}\oplus\ldots\oplus\vecb{x}_n\oplus\grkb{\alpha}$, and $\tilde{\vecb{b}}:=\vecb{b}_1\oplus\vecb{w}_1\oplus\ldots\vecb{b}_n\oplus\vecb{w}_n$. The proof size is $(2\lb+11)|\GG_1|+10|\GG_2|$.\label{fig:bin-leng-nizk}}
 \end{figure}
 %
