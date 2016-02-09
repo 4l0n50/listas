@@ -1,11 +1,11 @@
-\documentclass
-{llncs}
+\documentclass[11pt]{llncs}
 
 %\makeatletter
 %\def\input@path{{../}}
 %\makeatother
 %
 \input{common-packages}
+\usepackage{fullpage}
 
 %\usepackage{fullpage}
 \input{preamble}
@@ -29,9 +29,7 @@
 \maketitle
 %\vspace*{-.5cm}
 \begin{abstract}
-We consider the following problem: given commitments $c_1,\ldots,c_n$ to values $x_1,\ldots,x_n$, prove in zero-knowledge that each of $x_1,\ldots,x_n$ belongs to some set $S$. We construct a NIZK argument for this problem whose proof size is independent of the number of commitments. Our proof system is secure under the SXDH assumption plus the SSDP (introduced by XXX) in Type III groups, while we can prove it secure under the DLin assumption in Type I groups.
-
-We show how to use our NIZK argument to construct the most efficient \emph{Argument of Correctness of a Shuffle} and \emph{Range Argument} under standard and falsifiable assumptions. 
+    \input{abstract}
 \end{abstract} 
 
 \section{Introduction}

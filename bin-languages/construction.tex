@@ -8,12 +8,12 @@ Similarly as before, one may think of $[\vecb{x}_1]_1,\ldots,[\vecb{x}_n]_1\in\L
 For all $j \in [n]$, let $(\vecb{b}_j,\vecb{w}_j) \in \{0,1\}^{\lb} \times \Z_q^{\lc}$ be the witness of $\vecb{x}_j \in \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}.$ Let $b_{i,j}$ be the ith coordinate of $\vecb{b}_j$ and let 
  $\vecb{b}^*_{i}$ the ith row of $\matr{B}$. The basic steps of the proof are as follows:
 \begin{enumerate}
-\item Construct a MP commitment $[\vecb{c}_i]_1$ to $\vecb{b}^*_i$, for all $i \in [\lb]$,
-\item Prove that $\vecb{b}^*_i \in \{0,1\}^{n}$ for all $i \in [\lb]$, 
-\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}_1]_1 \oplus \ldots \oplus [\vecb{x}_n]_1$ open to the same value,
-\item Prove that $[\widetilde{\vecb{x}}]_1 \in \mathbf{Im}([\matr{\Sigma^n}]_1)$, 
+\item Construct a MP commitment $[\vecb{c}_i]_1$ to $\vecb{b}^*_i$, for all $i \in [\lb]$.
+\item Prove that $\vecb{b}^*_i \in \{0,1\}^{n}$ for all $i \in [\lb]$.
+\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}_1]_1 \oplus \ldots \oplus [\vecb{x}_n]_1$ open to the same value.
+\item Prove that $[\tilde{\vecb{x}}]_1 \in \mathbf{Im}([\matr{\Sigma^n}]_1)$.
 \end{enumerate}
-where we define: $\tilde{\vecb{x}}_i:=  \smallpmatrix
+Where we define: $\tilde{\vecb{x}}_i:=  \smallpmatrix
 {
     \vecb{x}_i\\
     \grkb{\alpha}
@@ -24,6 +24,8 @@ $\matr{\Sigma}:=\smallpmatrix{
     \matr{\Lambda} & \matr{0}
     }$. 
 
-The soundness intuition is as follows. Suppose that there is some $j\in[n]$ such that $[\vecb{x}_j]_1\notin\LangMN$ and suppose also that $ck$ is perfectly binding at coorinate $j$. Since the opening of $[\vecb{x}_j]$ can not be in $\bits^\lb$, this implies that the $j$ th column of $\matr{B}$ is not in $\bits^\lb$. Perfectly bindingness at coordinate $j$ implies that $[\vecb{c}_1],\ldots,[\vecb{c}_\lb]$ univocally defines the $j$ th column of $\matr{B}$ and thus there is at least one $[\vecb{c}_i]_1\notin\Lang_{ck,\sfbits}$. Althought we assume that $ck$ is perfectly binding at coordinte $j$, is not hard to see that the same argument works, with probability $1/n$, when $j$ is randomly chosen from $[n]$. 
+The soundness intuition is as follows. Suppose that there is some $j\in[n]$ such that $[\vecb{x}_j]_1\notin\LangMN$ and suppose also that $ck$ is perfectly binding at coorinate $j$. Since the opening of $[\vecb{x}_j]_1$ can not be in $\bits^\lb$, this implies that the $j$ th column of $\matr{B}$ is not in $\bits^\lb$. Perfect bindingness at coordinate $j$ implies that $[\vecb{c}_1],\ldots,[\vecb{c}_\lb]$ univocally defines the $j$ th column of $\matr{B}$ and thus there is at least one $[\vecb{c}_i]_1\notin\Lang_{ck,\sfbits}$. Althought we assume that $ck$ is perfectly binding at coordinte $j$, is not hard to see that the same argument works, with probability $1/n$, when $j$ is randomly chosen from $[n]$. 
  \begin{theorem} \label{theo:aggset} There exists a QA-NIZK argument $\Pi_\sfset$ for membership in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ with proof size  $(2\lb+11)|\GG_1|+10|\GG_2|$, perfect completeness, perfect-zero knowledge and computational soundness. 
 \end{theorem}
+
+The description of the protocol and the full proof of the theorem are in Appendix~\ref{app:bin-lang}.

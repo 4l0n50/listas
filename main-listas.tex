@@ -29,17 +29,15 @@
 \maketitle
 %\vspace*{-.5cm}
 \begin{abstract}
-We consider the following problem: given commitments $c_1,\ldots,c_n$ to values $x_1,\ldots,x_n$, prove in zero-knowledge that each of $x_1,\ldots,x_n$ belongs to some set $S$. We construct a NIZK argument for this problem whose proof size is independent of the number of commitments. Our proof system is secure under the SXDH assumption plus the SSDP (introduced by XXX) in Type III groups, while we can prove it secure under the DLin assumption in Type I groups.
-
-We show how to use our NIZK argument to construct the most efficient \emph{Argument of Correctness of a Shuffle} and \emph{Range Argument} under standard and falsifiable assumptions. 
+    \input{abstract}
 \end{abstract} 
 
 \section{Introduction}
-    \input{intro/introduction}
+    %\input{intro/introduction}
     \subsection{DeMentirijilla}
         \input{intro/dementirijilla}
-    \subsection{Our Techniques}\label{sec:techniques}
-        \input{intro/our-techniques}
+    %\subsection{Our Techniques}\label{sec:techniques}
+    %    \input{intro/our-techniques}
     \subsection{Applications}\label{sec:intro-app}
         \input{intro/applications}
     \subsection{Related Work}
@@ -78,15 +76,12 @@ We show how to use our NIZK argument to construct the most efficient \emph{Argum
 \input{shuffles/shuffles}
 %    \subsection{Security Proof}
 %        \input{shuffles/security-proofs}
-\section{Range Proof in the Interval $[0,2^n-1]$} \label{sec:range-proof}
+\section{Range Argument in the Interval $[0,2^n-1]$} \label{sec:range-proof}
     \input{range-proofs/range-proofs}
-    \subsection{Security Proofs}
-        \input{range-proofs/security-proofs}
 \bibliographystyle{abbrv}
 \bibliography{cryptobib/abbrev2,cryptobib/crypto,manualbib}
 
 \appendix
-
 
 \section{Extended Multi-Pedersen Commitments: Proofs} \label{app:mp}
     \input{mp-comm/app_mp}
@@ -97,13 +92,20 @@ In this section, we give the details of the QA-NIZK argument to prove that a MP 
     \subsection{Security Proof} \label{app:proofbits}
         \input{bits/proof}
     \subsection{Constant-size argument for $\Lang_{ck,\sfbits}^n$} \label{app:bits-n}
+        \input{bits/matr-bits-intuition}
         \input{bits/matr-bits-sec-proof}
 \section{Details of Aggregated NIZK Set Membership Arguments} \label{app:bin-lang}
     \input{bin-languages/app_bin_construction}
     \subsection{Security Proofs}
         \input{bin-languages/bin-lang-proof}
-\section{Proof of Correctness of a Shuffle: Security Proof}
-    \input{shuffles/security-proofs}
+\section{Details of the Proof of Correctness of a Shuffle} \label{app:shuffle}
+    \input{shuffles/detailed-description}
+    \subsection{Security Proofs}
+        \input{shuffles/security-proofs}
+\section{Details of the Range Argument} \label{app:range-proof}
+    \input{range-proofs/detailed-construction}
+    \subsection{Security Proofs}
+        \input{range-proofs/security-proofs}
 \end{document}
 
 

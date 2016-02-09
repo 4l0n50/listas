@@ -1,9 +1,8 @@
-main-listas.aux
-main-listas.log
-main-listas.out
-main-listas.bbl
-main-listas.blg
-main-listas.brf
-main-listas.pdf
-*.swp
+*.aux
 *.log
+*.out
+*.bbl
+*.blg
+*.brf
+*.pdf
+*.swp

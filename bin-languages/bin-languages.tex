@@ -42,11 +42,11 @@ The language of GS commitments to integers in the range $[0,d-1]$, $\Lang_{ck,[0
 $\matr{M}:=\vecb{u}_1(2^0,2^1,\ldots,2^{\log d-1})\in\Z_q^{2\times \log d}$, $\matr{N}:=\vecb{u}_2\in\Z_q^{2}$, and $\ld:=0$. The bit-witness size is $\log d$ and membership in $\Lang_{ck,[0,d-1]}$ is easily testable given $\vecb{u}_2$ and whenever $d=\poly(\lambda)$. 
 \end{example}
 
-In both examples, one may think of $[\vecb{x}]_1$ as a perfectly binding and computationally hiding commitment to $\vecb{b}$ using commitment key $ck:=([\matr{M}]_1||[\matr{N}]_1)$. Although in general this may be false, if one thinks in this way is easy to construct a proof of size $\Theta(\lb)$ for this language,  which roughly follows these steps:
+In both examples, one may think of $[\vecb{x}]_1$ as a commitment to $\vecb{b}$ using commitment key $ck:=([\matr{M}]_1||[\matr{N}]_1)$. Although in general this may be false, if one thinks in this way is easy to construct a proof of size $\Theta(\lb)$ for this language,  which roughly follows these steps:
 \begin{enumerate}
-\item Construct a GS commitment $[\vecb{c}_j]_1$ to $b_j$, for all $j \in [\lb]$,
+\item Construct a GS commitment $[\vecb{c}_j]_1$ to $b_j$, for all $j \in [\lb]$.
 \item Prove that $b_j \in \{0,1\}$, for all $j \in [\lb]$.
-\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}]_1$ open to the same value,
+\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}]_1$ open to the same value.
 \item Prove that $\pmatri
 {
     [\vecb{x}]_1\\
@@ -55,7 +55,7 @@ In both examples, one may think of $[\vecb{x}]_1$ as a perfectly binding and com
 \begin{pmatrix}
     [\matr{M}]_1       & [\matr{N}]_1\\
     [\matr{\Lambda}]_1 & [\matr{0}_{\ld\times \lc}]_1.
-    \end{pmatrix}$
+    \end{pmatrix}.$
 \end{enumerate}
 
 Steps 3, 4 can be done in constant-size with one of the QA-NIZK arguments we gave in Section \ref{Sect:QANIZKlinspace}. Step 2 can be done in constant-size with the results of \cite{AC:GonHevRaf15}. The total size of the proof is of size $2\lb|\GG_1|+\Theta(1)$, though, because 
