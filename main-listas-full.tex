@@ -1,0 +1,109 @@
+\documentclass
+{llncs}
+
+%\makeatletter
+%\def\input@path{{../}}
+%\makeatother
+%
+\input{common-packages}
+
+%\usepackage{fullpage}
+\input{preamble}
+
+
+%\author[1]{Alonso Gonz\'alez}
+%\author[1]{Alejandro Hevia}
+%\affil[1]{Departamento de Ciencias de la Computaci\'on, Universidad de Chile, Chile\\
+%\tt ahevia@dcc.uchile.cl, alonso.gon@gmail.com}}
+%\author[2]{Carla R\`afols}
+%\affil[2]{Horst-G\"ortz Institute for IT Security and Faculty of Mathematics, Ruhr-Universit\"at Bochum, Germany\\
+%{\tt carla.rafols@rub.de}}
+
+
+\author{\vspace*{-.5cm}}
+\institute{\vspace*{-.8cm}}
+\title{Aggregated Non-Interactive Zero-Knowledge Set Membership Arguments}
+\begin{document}
+%\begin{doublespace}
+
+\maketitle
+%\vspace*{-.5cm}
+\begin{abstract}
+We consider the following problem: given commitments $c_1,\ldots,c_n$ to values $x_1,\ldots,x_n$, prove in zero-knowledge that each of $x_1,\ldots,x_n$ belongs to some set $S$. We construct a NIZK argument for this problem whose proof size is independent of the number of commitments. Our proof system is secure under the SXDH assumption plus the SSDP (introduced by XXX) in Type III groups, while we can prove it secure under the DLin assumption in Type I groups.
+
+We show how to use our NIZK argument to construct the most efficient \emph{Argument of Correctness of a Shuffle} and \emph{Range Argument} under standard and falsifiable assumptions. 
+\end{abstract} 
+
+\section{Introduction}
+    %\input{intro/introduction}
+    \subsection{DeMentirijilla}
+        \input{intro/dementirijilla}
+    %\subsection{Our Techniques}\label{sec:techniques}
+    %    \input{intro/our-techniques}
+    \subsection{Applications}\label{sec:intro-app}
+        \input{intro/applications}
+    \subsection{Related Work}
+        \input{intro/related-work}
+    \subsection{Organization}
+        \input{intro/organization}
+\section{Preliminaries} \label{secc:prelim}
+    \input{prelim/prelim}
+    \subsection{Decisional Assumptions} 
+        \input{prelim/dec-assumptions} \label{sec:dec-ass}
+            \subsection{Computational Assumptions}\label{sec:comp-assump}
+        \input{prelim/comp-assumptions}
+ç \subsection{Commitment Schemes} \label{sec:comm}
+         \input{prelim/comm}
+    \subsection{Groth-Sahai NIZK Proofs} \label{GSproofs} \label{sec:gs}
+        \input{prelim/gs-proofs}
+    \subsection{Quasi-Adaptive NIZK Arguments} \label{zkdef} \label{sec:zkdef}
+        \input{prelim/qanizk}
+    \subsection{QA-NIZK Argument for Linear Subspaces} \label{Sect:QANIZKlinspace}
+        \input{prelim/qanizk-linear}
+\section{Extended Multi-Pedersen Commitments} \label{sec:mp-comm}
+    \input{mp-comm/mp-comm}
+\section{QA-NIZK For Bit-Strings, Revisited} \label{sec:bits}
+    \input{bits/bits}  
+    \subsection{Constant-Size Argument for $\Lang_{ck,\sfbits}^n$} \label{sec:bits-n}
+        \input{bits/matr-bits}
+       
+
+\section{Aggregated NIZK Set Membership Arguments} \label{sec:bin-lang}
+    \input{bin-languages/bin-languages}
+    \subsection{QA-NIZK Argument of Membership in $\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}^n$} \label{sec:bin-lan-constr}
+       \input{bin-languages/construction} 
+
+
+\section{Proof of Correctness of a Shuffle} \label{sec:shuffle}
+\input{shuffles/shuffles}
+%    \subsection{Security Proof}
+%        \input{shuffles/security-proofs}
+\section{Range Proof in the Interval $[0,2^n-1]$} \label{sec:range-proof}
+    \input{range-proofs/range-proofs}
+    \subsection{Security Proofs}
+        \input{range-proofs/security-proofs}
+\bibliographystyle{abbrv}
+\bibliography{cryptobib/abbrev2,cryptobib/crypto,manualbib}
+
+\appendix
+
+\section{Extended Multi-Pedersen Commitments: Proofs} \label{app:mp}
+    \input{mp-comm/app_mp}
+\section{QA-NIZK for Bit-Strings, Revisited} \label{app:bits}
+In this section, we give the details of the QA-NIZK argument to prove that a MP commitment opens to a bit-string.
+    \subsection{The scheme} \label{sec:bits-scheme} 
+        \input{bits/proof-system}
+    \subsection{Security Proof} \label{app:proofbits}
+        \input{bits/proof}
+    \subsection{Constant-size argument for $\Lang_{ck,\sfbits}^n$} \label{app:bits-n}
+        \input{bits/matr-bits-intuition}
+        \input{bits/matr-bits-sec-proof}
+\section{Details of Aggregated NIZK Set Membership Arguments} \label{app:bin-lang}
+    \input{bin-languages/app_bin_construction}
+    \subsection{Security Proofs}
+        \input{bin-languages/bin-lang-proof}
+\section{Proof of Correctness of a Shuffle: Security Proof}
+    \input{shuffles/security-proofs}
+\end{document}
+
+
