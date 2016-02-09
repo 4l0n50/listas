@@ -11,7 +11,7 @@ An argument of Correctness of a Shuffle is an essential tool in the construction
 
 A Range argument is a tool often required in e-voting and e-cash scenarios, with the purpose of showing that the opening $y$ of some commitment $c$ is an integer in some interval $[A,B]$. For simplicity, the range considered is usually $[0,2^n-1]$ since a proof in any interval can be reduced to a proof in this interval.
 
-To derive efficiency improvements for this two languages we develop specific techniques that we can apply to both problems. Our resulting proofs are more efficient in terms of proof size and require more standard assumptions, but they have a rather large common reference string. They build on the recent arguments for membership in linear spaces of \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15} and the argument for proving that some commitment to a vector of integers in $\Z_q^{n}$ opens to $\{0,1\}^n$ due to \cite{AC:GonHevRaf15}. 
+To derive efficiency improvements for these two languages we develop specific techniques that we can apply to both problems. Our resulting proofs are more efficient in terms of proof size and are based on more standard assumptions, but they have a rather large common reference string. They build on the recent arguments for membership in linear spaces of \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15} and the argument for proving that some commitment to a vector of integers in $\Z_q^{n}$ opens to $\{0,1\}^n$ due to \cite{AC:GonHevRaf15}. 
   
 \subsection{Our Techniques}
 All our results are in a bilinear group $gk:=(q,\GG_1,\GG_2,\GG_T,e,\mathcal{P}_1,\mathcal{P}_2)$, where $\GG_1,\GG_2$
@@ -19,7 +19,7 @@ and $\GG_T$ are groups of prime order $q$, the elements $\mathcal{P}_1, \mathcal
 $\GG_1,\GG_2$ respectively, and $e:\GG_1\times\GG_2\to\GG_T$ is an efficiently
 computable, non-degenerate bilinear map. Given a generator $\mathcal{P}_\gamma$ of $\GG_\gamma$, for any $x\in\Z_q$ we define $[x]_\gamma:=x\mathcal{P}_\gamma$, $\gamma\in\{1,2\}$. We simply write $[x]_1[y]_2$ to denote $e([x]_1,[y]_2)$.
 
-Note that in bilinear groups one can always use Groth-Sahai equations to prove these statements (quadratic equations are complete and one can prove every statement in NP, \cite{EC:GroOstSah06}).  However, a  naif use of GS proofs results in a large proof size ($\Theta(n^2)$ for shuffles, $\Theta(n)$ for range proofs) and in fact, as we discuss below, they have been combined with other strategies to obtain improved asymptotic efficiency. 
+Note that in bilinear groups one can always use Groth-Sahai proofs to prove these statements (quadratic equations are complete and one can prove every statement in NP, \cite{EC:GroOstSah06}).  However, a  naive use of GS proofs results in a large proof size ($\Theta(n^2)$ for shuffles, $\Theta(n)$ for range proofs) and in fact, as we discuss below, they have been combined with other strategies to obtain improved asymptotic efficiency. 
 
 \subsubsection{A Common Building Block.} Our starting point is the observation that range and shuffle proofs can be constructed by using as a common building block a 
 ``zero-knowledge aggregated set membership argument''. This is achieved by slightly modifying some previous strategies used for shuffle and range proofs.
@@ -44,15 +44,15 @@ The statement  $x=\sum_{i\in[\ell]}d^{i-1}x_i$ can be proven using standard tech
 We remark that this way of constructing range arguments has been widely used in the literature.
 
 The underlying idea is that, for a given $n$, $m$ and $\ell$ are inversely proportional, while the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\Theta(\frac{n}{k \log n})$. 
-Note that the asymptotic improvement for this proof (compared to a naif strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
-  \subsubsection{Shuffle Argument:} The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. Recall that the statement we want to prove in a correctness of a shuffle argument is the following: ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
+Note that the asymptotic improvement for this proof (compared to a naive strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
+  \subsubsection{Shuffle Argument:} The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. A rough sketch of our strategy is the following. The statement we want to prove in a correctness of a shuffle argument is : ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
  $[\vecb{m}_2]$ is a permutation of $[\vecb{m}_1]$''. 
 The strategy we follow is the following:  
 \begin{itemize}
 \item[1)] Publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
 \item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
 \item[3)] The prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$.
-\item[4)] Finally, the prover outputs a proof that: 
+\item[4)] Finally, the prover outputs a proof that:\footnote{Actually, since the prover does not know the randomness nor the decryptions of the ciphertexts but only the randomness of the re-encryptions, she is not able to prove exactly this statement. However, for a cleaner explanation, in this section we assume it is.} 
 \begin{equation}\label{shuffle:ker}[\vecb{s}^{\top}]_1 [\vecb{m}_1]_2 =[\vecb{x}^{\top}]_1 [\vecb{m}_2]_2.
 \end{equation}
 \end{itemize}
@@ -63,10 +63,10 @@ First, by the soundess of the aggregated set membership proof, $[\vecb{x}]_1 \in
  $\sum_{i \in [n]} x_i =\sum_{i \in [n]} s_i$, it holds that if 
  $\vecb{x}$ is not a permutation of $\vecb{s}$, then one can extract in the soundness game (assuming the extractor knows $ck$) a non-trivial linear combination of elements of $S$ which adds to $0$, which contradicts the security assumption. 
  
-Finally, if $\vecb{x}$ is a permutation of $\vecb{s}$,  then equation \label{shuffle:ker} implies that the shuffle is correct, or, again, 
+Finally, if $\vecb{x}$ is a permutation of $\vecb{s}$,  then equation (\ref{shuffle:ker}) implies that the shuffle is correct, or, again, 
 one can extract from   $[\vecb{m}_1]_2,[\vecb{m}_2]_2$ the coefficients of some non-trivial combination of elements of $S$ which is equal to $0$ (breaking the $\dist_{n,1}$-$\kermdh$ Assumption). 
 
-This soundness argument is an augmentation and translation into asymmetric groups of the argument of Groth and Lu \cite{AC:GroLu07}. Roughly speaking, the argument there also consists of two parts: one devoted to proving that some GS commitments open to a permutation of some set in the CRS (in \cite{AC:GroLu07} this is done via a non-standard assumption, the pairing permutation assumption), while the second part (Step 3) is proven very similarly (in particular, second part also follows from some Kernel Assumption secure in symmetric bilinear groups).  
+This soundness argument is an augmentation and translation into asymmetric groups of the argument of Groth and Lu \cite{AC:GroLu07}. Roughly speaking, the argument there also consists of two parts: one devoted to proving that some GS commitments open to a permutation of some set in the CRS (in \cite{AC:GroLu07} this is done via a non-standard assumption, the pairing permutation assumption), while the second part (Step 3) is proven very similarly (in particular, the second part also follows from some Kernel Assumption secure in symmetric bilinear groups).  
 
 We note that it is crucial for our soundness argument that it is possible to decrypt the ciphertexts (otherwise we cannot extract solutions to the Kernel problems). This is possible in our case because the encryption public-key is assumed to be witness-samplable and the argument is quasi-adaptive. This explains why we do not have to rely on the notion of culpable soundness, as done in \cite{AC:GroLu07,EPRINT:FauLip15}.
 
