@@ -8,30 +8,29 @@ Note that in bilinear groups one can always use Groth-Sahai proofs to prove thes
 \subsubsection{A Common Building Block.} Our starting point is the observation that range and shuffle proofs can be constructed by using as a common building block a 
 ``zero-knowledge aggregated set membership argument''. This is achieved by slightly modifying some previous strategies used for shuffle and range proofs.
 
-More specifically,  given some publicly known set $S$, such an argument proves that $n$ commitments $c_1,\ldots,c_n$ open to values $x_1,\ldots,x_n \in S$.  The set $S$ is of polynomial size and is either $[0,d-1]\subset\Z_q$ or a subset of $\GG_\gamma$, $\gamma \in \{1,2\}$. 
- 
-In other words, an aggregated set membership argument proves that $(c_1,\ldots,c_n) \in \Lang_{ck,S}^n$ where 
+More specifically,  given some publicly known set $S$, such an argument proves that $n$ commitments $c_1,\ldots,c_n$ open to values $x_1,\ldots,x_n \in S$.  The set $S$ is of polynomial size and is either $[0,d-1]\subset\Z_q$ or a subset of $\GG_\gamma$, $\gamma \in \{1,2\}$.  
+In other words, an aggregated set membership argument proves that $(c_1,\ldots,c_n)$ is in the language
 $$
-\Lang_{ck,S}:=\{c: \exists x\in S, w\in\Z_q \text{ s.t. } c=\Com_{ck}(x;w)\}\text{ and }ck\gets\distk,
+\Lang_{ck,S}:=\{c: \exists x\in S, w\in\Z_q \text{ s.t. } c=\Com_{ck}(x;w)\}\text{, where }ck\gets\distk,
 $$
-and where $c=\Com_{ck}(x;w)$ is a Groth-Sahai commitment to $x$ with randomness $w$. The proof is Quasi-Adaptive \cite{AC:JutRoy13}, in the sense that the common reference string depends on $ck$ and $S$, which are assumed to be sampled from some distribution $\dist$
-and further, the marginal distribution of $ck$ is assumed to be witness samplable. The argument is said to be \textit{aggregated} because the size of the proof is independent of $n$, but in the soundness proof we will loose a factor of $n$ in the reduction. 
+and $c=\Com_{ck}(x;w)$ is a Groth-Sahai commitment to $x$ with randomness $w$. The proof is Quasi-Adaptive \cite{AC:JutRoy13}, in the sense that the common reference string depends on $ck$ and $S$, which are assumed to be sampled from some distribution $\dist$
+and further, the marginal distribution of $ck$ is assumed to be witness samplable. The argument is said to be \textit{aggregated} because the size of the proof is independent of $n$ (but in the soundness proof we will loose a factor of $n$ in the reduction). Specifically, the cost is $\Theta(\log d)$ when $S=[0,d-1]$, and $\Theta(|S|)$ when $S\subset\GG_\gamma$.
 
 Before discussing how to construct such an argument, we show how to use it as a building block for range and shuffle proofs.  
 \subsubsection{Range Argument:}
-Let $n,d\in\mathbb{N}$, $m:=\log d$, and $\ell:=n/m$. A commitment $c$ opens to a integer $x$ in the range $[0,2^n-1]$ iff the tuple $(c_1,\ldots,c_\ell) \in\Lang_{ck,[0,d-1]}^\ell$ and  $x=\sum_{i\in[\ell]}d^{i-1}x_i$. Indeed, note that if the right-hand side of this implication is satisfied, then: 
+Let $n,d\in\mathbb{N}$, $m:=\log d$, and $\ell:=n/m$. A commitment $c$ opens to a integer $x$ in the range $[0,2^n-1]$ if $(c_1,\ldots,c_\ell) \in\Lang_{ck,[0,d-1]}^\ell$ and  $x=\sum_{i\in[\ell]}x_id^{i-1}$, where $c_i=\Com_{ck}(x_i)$. Indeed, since $x_i\in[0,d-1]$
 \begin{eqnarray*}
 x & = & \sum_{i\in[\ell]} x_i d^{i-1}
    \in  [0,d^\ell-1]  =  [0,(d^{1/\log d})^n-1] = [0,2^n-1].
 \end{eqnarray*}
 The statement  $x=\sum_{i\in[\ell]}d^{i-1}x_i$ can be proven using standard techniques while membership in $\Lang_{ck,[0,d-1]}^\ell$ can be proved with an aggregated set membership proof. 
-We remark that this way of constructing range arguments has been widely used in the literature.
 
-The underlying idea is that, for a given $n$, $m$ and $\ell$ are inversely proportional, while the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\Theta(\frac{n}{k \log n})$. 
-Note that the asymptotic improvement for this proof (compared to a naive strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
-  \subsubsection{Shuffle Argument:} The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. A rough sketch of our strategy is the following. The statement we want to prove in a correctness of a shuffle argument is : ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
+While this way of constructing range arguments has been widely used in the literature, the novelty of our approach is that the cost of proving $x_1,\ldots,x_\ell\in[0,d-1]$ is marginal.
+Indeed, the total cost of the range proof depends linearly on $\ell$ and $m$ ($\ell$ is due to the size of the commitments $c_1,\ldots,c_\ell$ and $m$ to the size of an aggregated proof of membership in $\Lang_{ck,[0,d-1]}^\ell$).  Setting $d=n^{k}$ for arbitrary $k$ leads to a proof size of $\ell+m=\Theta(\frac{n}{k \log n})+\Theta(k\log n)=\Theta(\frac{n}{k \log n})$. 
+%Note that the asymptotic improvement for this proof (compared to a naive strategy where the proof is of size $n$) relies fundamentally on the fact that the size of $\ell$ proofs of membership in $\Lang_{ck,[0,d-1]}$ is independent of $\ell$. 
+  \subsubsection{Shuffle Argument:} The proof is partially inspired by the non-interactive shuffle of \cite{AC:GroLu07}. The statement we want to prove in a correctness of a shuffle argument is : ``Given two vectors of ciphertexts which open, respectively, to vectors of plaintexts $[\vecb{m}_1]_2, [\vecb{m}_2]_2$, prove that 
  $[\vecb{m}_2]$ is a permutation of $[\vecb{m}_1]$''. 
-The strategy we follow is the following:  
+The strategy we follow is roughly the following:  
 \begin{itemize}
 \item[1)] Publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
 \item[2)] The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
@@ -40,13 +39,12 @@ The strategy we follow is the following:
 \begin{equation}\label{shuffle:ker}[\vecb{s}^{\top}]_1 [\vecb{m}_1]_2 =[\vecb{x}^{\top}]_1 [\vecb{m}_2]_2.
 \end{equation}
 \end{itemize}
-Soundness goes as follows. The underlying computational assumption is that it is infeasible to find a non-trivial combination of elements of $S$ which adds to $0$, that is, given $[\vecb{s}]_1$ it is infeasible to find $[\vecb{k}]_2 \neq [\vecb{0}]_2$ such that
+The underlying computational assumption is that it is infeasible to find a non-trivial combination of elements of $S$ which adds to $0$, that is, given $[\vecb{s}]_1$ it is infeasible to find $[\vecb{k}]_2 \neq [\vecb{0}]_2$ such that
 $\vecb{s}^{\top} \vecb{k}=\vecb{0}$ (this is the $\dist_{n,1}$-$\kermdh$ Assumption of \cite{EPRINT:MorRafVil15}). 
- 
-First, by the soundess of the aggregated set membership proof, $[\vecb{x}]_1 \in S^{n}$. From the fact that 
+
+Soundness goes as follows. First, by the soundness of the aggregated set membership proof, $[\vecb{x}]_1 \in S^{n}$ and from the fact that 
  $\sum_{i \in [n]} x_i =\sum_{i \in [n]} s_i$, it holds that if 
  $\vecb{x}$ is not a permutation of $\vecb{s}$, then one can extract in the soundness game (assuming the extractor knows $ck$) a non-trivial linear combination of elements of $S$ which adds to $0$, which contradicts the security assumption. 
- 
 Finally, if $\vecb{x}$ is a permutation of $\vecb{s}$,  then equation (\ref{shuffle:ker}) implies that the shuffle is correct, or, again, 
 one can extract from   $[\vecb{m}_1]_2,[\vecb{m}_2]_2$ the coefficients of some non-trivial combination of elements of $S$ which is equal to $0$ (breaking the $\dist_{n,1}$-$\kermdh$ Assumption). 
 
@@ -58,7 +56,7 @@ We note that it is crucial for our soundness argument that it is possible to dec
 \subsubsection{Set Membership Proofs.} One of the keys to our result is a proper characterization of  $\Lang^{n}_{ck,S}$. Before we move to the aggregated case, we start by discussing how to make one single proof of membership in a set $S$. Our first observation is that  
  membership in $S$ can be written as:
 \begin{itemize}
-\item If $S \subset \GG_{\gamma}$, and we identify $S$ with $[\vecb{s}]_\gamma=([s_1]_\gamma,\ldots,[s_m]_\gamma)$ then, 
+\item If $S \subset \GG_{\gamma}$, and we identify $S$ with $[\vecb{s}]_\gamma=([s_1]_\gamma,\ldots,[s_m]_\gamma)^\top$ then, 
 $c \in \Lang^{n}_{ck,S}$ if and only if $\exists \vecb{b} \in \Z_q^{m}$ such that
 \vspace{-0.4cm}
 $$ 1) \vecb{b} \in \{0,1\}^{m}, \ 2) c=\Com_{ck}(x;w), \ 3) x=\vecb{s}^{\top} \vecb{b}, \ 4) \sum_{i \in [m]} b_i=1.$$
@@ -73,151 +71,136 @@ That is, both languages can be written in a similar way, except that when $S \su
 
  To avoid distinguishing all the time between both types of subsets, we note that both languages can be seen as special case of the language 
  $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}\subseteq\GG_1^\la$, defined as: 
-$[\vecb{x}]_1\in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ if and only if 
-\vspace{-0.2cm}
+$[\vecb{x}]_1\in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ if and only if $\exists \vecb{b}\in \Z_q^\lb,\vecb{w}\in\Z_q^\lc$ such that
 \begin{eqnarray*}
-\exists \vecb{b}\in \Z_q^\lb,\vecb{w}\in\Z_q^\lc \text{ s.t. }
-\left( \ 1) \vecb{b}\in \{0,1\}^\lb
+1) \vecb{b}\in \{0,1\}^\lb
   \wedge \ 2)
-\pmatri
+\smallpmatrix
 {
     \vecb{c}\\
     \grkb{\alpha}
 }
 =
-\begin{pmatrix}
+\smallpmatrix
+{
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}_{\ld\times \lc}
-\end{pmatrix}
-\pmatri
+}
+\smallpmatrix
 {
     \vecb{b}\\
     \vecb{w}
-}\right).
+}.
 \end{eqnarray*}
-For the purposes of this high-level explanation of our results, it is not too relevant to see how $[\matr{M}]_1$, $[\matr{N}]_1$, $\matr{\Lambda}$ and $\grkb{\alpha}$ look like in each of our two examples (they depend of the commitment key, the set $S$ and the linear constraints expressed by 4)). The basic idea is that a GS commitment is a linear combination of the commitment keys whose coefficients are the randomness and the committed values, i.e.  
+The basic idea is that a GS commitment is a linear combination of the commitment keys whose coefficients are the randomness and the committed values, i.e.  
 a commitment to a scalar $x \in \Z_q$ is defined as $\Com_{ck}(x;w)=x [\vecb{u}_1]_1+w [\vecb{u}_2]_1$, for $ck=(\vecb{u}_1,\vecb{u}_2)$, so essentially membership in this space amounts to some ``linear conditions'' plus proving that $\vecb{b}$ is binary. For instance in the case where $S=[0,d-1]$, it should hold that:
-\vspace{-0.2cm}
-$$
-\pmatri
-{
-    \vecb{c}
-}
+$
+    \vecb{c} = \pmatri{\matr{M}&\matr{N}}\smallpmatrix{\vecb{b}\\ w}
 =
 \begin{pmatrix}
-    \vecb{u}_1 & \ &2 \vecb{u}_1  &   \ & \ldots    & \  &  2^{m-1} \vecb{u}_1& \ &  \vecb{u}_2
+    (\vecb{u}_1 & \ &2 \vecb{u}_1  &   \ & \ldots    & \  &  2^{m-1} \vecb{u}_1)& \ &  \vecb{u}_2
 \end{pmatrix}
-\pmatri
+\smallpmatrix
 {
     \vecb{b}\\
     w
-}.
- $$
- \vspace{-0.2cm}
-(In this case, because there is no condition 4) $\matr{\Lambda}, \grkb{\alpha}$ are zero and are ignored).
+}$.
+(In this case, because there is no condition 4) $\matr{\Lambda}, \grkb{\alpha}$ are zero and are ignored). For more details on how this matrices are constructed see Sect. \ref{sec:bin-lang}.
+%For the purposes of this high-level explanation of our results, it is not too relevant to see how $[\matr{M}]_1$, $[\matr{N}]_1$, $\matr{\Lambda}$ and $\grkb{\alpha}$ look like in each of our two examples (they depend of the commitment key, the set $S$ and the linear constraints expressed by 4)). 
 
 
 \subsubsection{Proof Strategy.} The most efficient strategy we are aware of for this type of statements follows a 
  commit-and-prove approach. Namely, to prove that such a vector $\vecb{b}$ exists, one computes 
-GS commitments $[\vecb{d}_i]_1$, $i \in [m]$ to all coordinates of $\vecb{b}$ and then it proves two independent statements, namely that:
+GS commitments $[\vecb{d}_i]_1$, $i \in [m]$, to all coordinates of $\vecb{b}$ and then it proves two independent statements, namely that:
 \vspace{-0.2cm}
 \begin{itemize}
 \item $\exists \vecb{b}\in \Z_q^\lb, r_i \in \Z_q$ such that  
-$1') \vecb{b}\in \{0,1\}^\lb$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \begin{pmatrix}
-b_i  \\ r_i  
-\end{pmatrix}$,
+$1') \vecb{b}\in \{0,1\}^\lb$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{b_i  \\ r_i}$,
 \item   $\exists \widetilde{\vecb{b}} \in \Z_q^\lb, \vecb{w} \in\Z_q^\lc$ such that  
-   $2') \pmatri
+   $2') \smallpmatrix
 {
     \vecb{c}\\
     \grkb{\alpha}
 }
 =
-\begin{pmatrix}
+\smallpmatrix{
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}_{\ld\times \lc}
-\end{pmatrix}
-\pmatri
+}
+\smallpmatrix
 {
     \widetilde{\vecb{b}}\\
     \vecb{w}
-}$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \begin{pmatrix}
-\widetilde{b}_i  \\ r_i  
-\end{pmatrix}$.
+}$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{
+\widetilde{b}_i  \\ r_i}$.
 \end{itemize}
-More specifically, the strategy consists of:
-\begin{itemize}
-\item using the QA-NIZK argument for bit-strings of \cite{AC:GonHevRaf15} for the first statement,
-\item use the QA-NIZK argument for linear spaces of \cite{C:JutRoy14,EC:KilWee15} to the second statement 
+More specifically: use the QA-NIZK argument for bit-strings of \cite{AC:GonHevRaf15} for the first statement;
+use the QA-NIZK argument for linear spaces of \cite{C:JutRoy14,EC:KilWee15} to the second statement
 (note that conditions 2') and 3') can be written down as a single system of equations with a large matrix $\widetilde{\matr{M}}$ and then satisfiability of 
-2') and 3') is equivalent to proving that the vector $(\vecb{c}^{\top},\grkb{\alpha}^{\top},\vecb{d}_1^{\top}, \ldots, \vecb{d}_m^{\top})$ is in the span 
-of this large matrix $\widetilde{\matr{M}}$). 
-\end{itemize}
+2') and 3') is equivalent to proving that the vector $(\vecb{c}^{\top},\grkb{\alpha}^{\top},\vecb{d}_1^{\top}, \ldots, \vecb{d}_m^{\top})^\top$ is in the span 
+of this large matrix $\widetilde{\matr{M}}$).
+
 Since both proofs are constant-size, the resulting proof size is dominated by the cost of the commitments to $b_i$, which is $O(m)$. 
 For soundness, the important point here is that we never prove that $\vecb{b}=\widetilde{\vecb{b}}$, but, since GS commitments are perfectly binding (or, said otherwise, because $\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}$
 has full rank), equality holds. This immediately proves that the statement is in the language.  
-\textcolor{red}{mierda queda el tema de las x y las c's. }
-\subsubsection{Aggregated Set Membership Proofs.} An aggregated set membership proof amounts to proving membership in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$. By definition, $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ if and only if 
-\vspace{-0.2cm}
-\begin{eqnarray*}
-\forall j \in [n], \exists \vecb{b}_j\in \Z_q^\lb,\vecb{w}_j\in\Z_q^\lc \text{ s.t. }
+\subsubsection{Aggregated Set Membership Proofs.} An aggregated set membership proof amounts to proving membership in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$. By definition, $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ if and only if  $\forall j \in [n], \exists \vecb{b}_j\in \Z_q^\lb,\vecb{w}_j\in\Z_q^\lc$ such that
+$$
  1) \vecb{b}_j\in \{0,1\}^\lb
   \wedge \ 2)
-\pmatri
+\smallpmatrix
 {
     \vecb{c}_j\\
     \grkb{\alpha}
 }
 =
-\begin{pmatrix}
+\smallpmatrix
+{
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}_{\ld\times \lc}
-\end{pmatrix}
-\pmatri
+}
+\smallpmatrix
 {
     \vecb{b}_j\\
     \vecb{w}_j
 }.
-\end{eqnarray*}
+$$
 Recall that we want a proof size independent of $n$ and this rules out the naive approach of committing to all the coordinates of $\vecb{b}_j$  for all $j \in [n]$, because the resulting size of the GS commitments is $\Theta(nm)$. 
 Therefore, to improve on the asymptotic size of the proof, we are forced to use shrinking commitments to $b_{ij}$. We stress that it is far from clear how to do this, as it might break down the soundness argument completely (e.g. in the single proof, we used in a fundamental way the uniqueness of the openings). In fact, overcoming this problem is probably one of the main technical contributions of this paper. 
 
-Our idea is to use as a shrinking commitment the two-dimensional generalization of Multi-Pedersen commitments used implictly by Gonz\'alez \textit{et al.} \cite{AC:GonHevRaf15}. Given some matrix $\matr{G} \in \Z_q^{2 \times (n+1)}$ sampled from some distribution $\dist_{2,n+1}$, $,\mathsf{MP}.\Com(\vecb{y} \in \Z_q^{n}; r \in \Z_q)=[\matr{G}]_1 \begin{pmatrix} \vecb{b} \\ r \end{pmatrix}$. The special thing about these commitments is that if the ith column of 
-$\matr{G}$ is linearly independent of the rest, they are perfectly binding at coordinate $i$. Intuitively, the new commitment is defined in a space of one extra-dimension so that one coordinate of information is preserved. Further, under
-the DDH Assumption, one can define computationally indistinguishable distributions for $\matr{G}$ which hide which is the binding coordinate.    
-\textcolor{red}{queda pendiente }
-Define the matrix $\matr{B}=(\vecb{b}_1|| \ldots || \vecb{b}_n) \in \{0,1\}^{m \times n}$ and let $\vecb{b}_i^*$ be the ith row of $\matr{B}$. To prove $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, we first compute MP commitments $[\vecb{d}_i]_1$, $i \in [n]$ to $\vecb{b}_i^*$.  As before, 
+Our idea is to use as a shrinking commitment the two-dimensional generalization of Multi-Pedersen commitments used implictly by Gonz\'alez \textit{et al.} \cite{AC:GonHevRaf15}. Given some matrix $\matr{G} \in \Z_q^{2 \times (n+1)}$ sampled from some distribution $\dist_{2,n+1}$, $\mathsf{MP}.\Com(\vecb{y} \in \Z_q^{n}; r \in \Z_q)=[\matr{G}]_1 \smallpmatrix{\vecb{b} \\ r}$. The special thing about these commitments is that one can set a ``hidden'' linearly independent column of 
+$\matr{G}$, and thus commitments are perfectly binding at some coordinate $j^*\in[n]$ which is hidden to the adversary.
+%Intuitively, the new commitment is defined in a space of one extra-dimension so that one coordinate of information is preserved. Further, under the DDH Assumption, one can define computationally indistinguishable distributions for $\matr{G}$ which hide which is the binding coordinate.    
+
+Define the matrix $\matr{B}=(\vecb{b}_1|| \ldots || \vecb{b}_n) \in \{0,1\}^{\lb \times n}$ and let $\vecb{b}_i^*$ be the $i$th row of $\matr{B}$. To prove $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, we first compute MP commitments $[\vecb{d}_i]_1$, $i \in [n]$, to $\vecb{b}_i^*$.  As before, 
 the proof actually consists of two independent statements:
 \begin{itemize}
-\item $\exists \vecb{r} \in \Z_q^m, \matr{B} \in \Z_q^{m \times n}$, (whose rows are denoted as $\vecb{b}_i^*$, $i \in [m]$), such that  
-$1'') \matr{B} \in \{0,1\}^{m \times n}$ and $3'') \forall i \in [m]: \vecb{d}_i=\matr{G}\begin{pmatrix}
-\vecb{b}_i^*  \\ r_i  
-\end{pmatrix}$,
-\item $\exists \{\vecb{w}_j \in\Z_q^\lc: j \in [n]\}, \widetilde{\matr{B}} \in \Z_q^{m \times n}$, (whose rows are denoted as $\widetilde{\vecb{b}_i}^*$, $i \in [m]$ and the columns $\widetilde{\vecb{b}_j}$, $j \in [n]$), such that  
-   $2') \pmatri
+\item $\exists \vecb{r} \in \Z_q^\lb, \matr{B} \in \Z_q^{\lb \times n}$ such that  
+$1'') \matr{B} \in \{0,1\}^{\lb \times n}$ and $3'') \forall i \in [m], \vecb{d}_i=\matr{G}\smallpmatrix{\vecb{b}_i^*  \\ r_i}$,
+\item $\exists \vecb{w}_1,\ldots,\vecb{w}_n \in\Z_q^\lc, \widetilde{\matr{B}} \in \Z_q^{\lb \times n}$, (whose rows are denoted as $\widetilde{\vecb{b}}_i^*$, $i \in [m]$, and the columns $\widetilde{\vecb{b}}_j$, $j \in [n]$), such that  
+   $2') \smallpmatrix
 {
     \vecb{c}\\
     \grkb{\alpha}
 }
 =
-\begin{pmatrix}
+\smallpmatrix
+{
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}_{\ld\times \lc}
-\end{pmatrix}
-\pmatri
+}
+\smallpmatrix
 {
     \vecb{b}_j\\
     \vecb{w}_j
-}$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \begin{pmatrix}
-\widetilde{b}^*_i  \\ r_i  
-\end{pmatrix}$.
+}$ and $3') \forall i \in [m]: \vecb{d}_i=\pmatri{ \vecb{u}_1 &   \vecb{u}_2}   \smallpmatrix{
+\widetilde{b}^*_i  \\ r_i}$.
 \end{itemize}
 Again, for the first statement we use a (slight modification) of \cite{AC:GonHevRaf15} and for the second
 a QA-NIZK argument for linear spaces of \cite{C:JutRoy14,EC:KilWee15} (after writing all the equations appropriately). 
 With this approach, the proof remains of size $O(m)$, the size of the commitments, while the rest of the proof is constant. 
 
-The interesting part is the soundness argument. The argument for $n=1$ fails here because now there is no guarantee that 
- $\matr{B}=\widetilde{\matr{B}}$ (as the openings of $[\vecb{d}_i]_1$ are not unique).  However, the distribution of the MP commitment key can be chosen so that it is binding at some coordinate $j^*$ which is computationally hidden to the adversary. This implies that for all $i$, the $j^*$th coordinate of row $\vecb{b}_i^*$ and $\widetilde{\vecb{b}}_i^*$ is equal, i.e. the $j^*$th column $\vecb{b}_j$ of $\matr{B}$ and $\widetilde{\matr{B}}$ are equal.  
+The interesting part is the soundness argument. The previous argument for $n=1$ fails here because now there is no guarantee that 
+ $\matr{B}=\widetilde{\matr{B}}$ (as the openings of $[\vecb{d}_i]_1$ are not unique).  However, as we said, the distribution of the MP commitment key can be chosen so that it is binding at some coordinate $j^*$ which is computationally hidden to the adversary. This implies that for all $i$, the $j^*$th coordinate of row $\vecb{b}_i^*$ and $\widetilde{\vecb{b}}_i^*$ is equal, i.e. the $j^*$th column $\vecb{b}_j$ of $\matr{B}$ and $\widetilde{\matr{B}}$ are equal.  
 
 Thus, we have that for the coordinate $j^*$, the proof is sound (because we have the uniqueness of openings which was necessary to prove soundness), i.e. the adversary cannot break soundness for any tuple $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1)$ such that $[\vecb{c}_j^*]_1 \notin \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$. 
 But since $j^*$ is computationally hidden, we can reduce soundness to one coordinate soundness with a loss in the reduction of $1/n$. 

@@ -1,31 +1,34 @@
-The main result of this Section is a proof, of the same size $2\lb|\GG_1|+\Theta(1)$, that several statements $[\vecb{x}_1]_1,\ldots,[\vecb{x}_n]_1$ are in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$.
+The main result of this Section is a proof, of roughly the same size as in the last Section ($2\lb|\GG_1|+\Theta(1)$), that  $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)$ is in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$.
 
-Similarly as before, one may think of $[\vecb{x}_1]_1,\ldots,[\vecb{x}_n]_1\in\LangMN$ as commitments to $\vecb{b}_1,\ldots,\vecb{b}_n\in\bits^n$. Let $\matr{B}:=(\vecb{b}_1||\cdots||\vecb{b}_n)\in\bits^{\lb\times n}$. To get a proof of size independent of $n$ we commit to $\matr{B}$ ``compressing the rows'', that is, computing a MP commitment to each row of $\matr{B}$.\footnote{Similarly as before, it would be tempting to try to construct a constant-size proof ``compressing also the columns'' of $\matr{B}$. But, again, we do not know how to prove soundness in this case.}
-%We prove that by changing the distibution of the MP commitment key in a clever way we get a proof of size independent of $n$ and prove soundness.
- 
-%We already announced that one runs into difficulties in the soundness proof when trying to replace the GS commitments by MP commitments to get a more compressed proof of $[\vecb{x}]_1 \in \Lang_{[\matr{M}]_1,[\matr{N}_1],\matr{\Lambda},\grkb{\alpha}}$. However for $n$ proofs we can use this idea in combination with changing the distribution of the MP commitment key in a clever way to get a proof of size independent of $n$. 
-
-For all $j \in [n]$, let $(\vecb{b}_j,\vecb{w}_j) \in \{0,1\}^{\lb} \times \Z_q^{\lc}$ be the witness of $\vecb{x}_j \in \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}.$ Let $b_{i,j}$ be the ith coordinate of $\vecb{b}_j$ and let 
- $\vecb{b}^*_{i}$ the ith row of $\matr{B}$. The basic steps of the proof are as follows:
-\begin{enumerate}
-\item Construct a MP commitment $[\vecb{c}_i]_1$ to $\vecb{b}^*_i$, for all $i \in [\lb]$.
-\item Prove that $\vecb{b}^*_i \in \{0,1\}^{n}$ for all $i \in [\lb]$.
-\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}_1]_1 \oplus \ldots \oplus [\vecb{x}_n]_1$ open to the same value.
-\item Prove that $[\tilde{\vecb{x}}]_1 \in \mathbf{Im}([\matr{\Sigma^n}]_1)$.
-\end{enumerate}
-Where we define: $\tilde{\vecb{x}}_i:=  \smallpmatrix
+For all $j \in [n]$, let $(\vecb{b}_j,\vecb{w}_j) \in \{0,1\}^{\lb} \times \Z_q^{\lc}$ be the witness of $\vecb{c}_j \in \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}.$ Let $\matr{B}=(\vecb{b}_1|| \ldots ||\vecb{b}_n)$ and let $\vecb{b}^*_{i}$, $i \in [m]$ the ith row of $\matr{B}$. To get a proof of size independent of $n$ we commit to $\matr{B}$ ``compressing the rows'', that is, the proof includes MP commitments $[\vecb{d}_i]_1$, $i \in [n]$ to $\vecb{b}_i^*$.\footnote{To get a constant-size proof, it would be tempting to compress the commitments to all of $\matr{B}$, but we do not know how to prove soundness in this case.} Further, as announced in Section~\ref{sec:techniques}, the proof consists of two independent statements:
+\begin{itemize}
+\item $\exists \vecb{r} \in \Z_q^m, \matr{B} \in \Z_q^{m \times n}$, (whose rows are denoted as $\vecb{b}_i^*$, $i \in [m]$), such that  
+$1'') \matr{B} \in \{0,1\}^{m \times n}$ and $3'') \forall i \in [m]: \vecb{d}_i=\matr{G}\begin{pmatrix}
+\vecb{b}_i^*  \\ r_i  
+\end{pmatrix}$,
+\item $\exists \vecb{r} \in \Z_q^m, \{\vecb{w}_j \in\Z_q^\lc: j \in [n]\}, \widetilde{\matr{B}} \in \Z_q^{m \times n}$, (whose rows are denoted as $\widetilde{\vecb{b}}_i^*$, $i \in [m]$ and the columns $\widetilde{\vecb{b}_j}$, $j \in [n]$), such that  
+   $2'') \pmatri
 {
-    \vecb{x}_i\\
+    \vecb{c}_j\\
     \grkb{\alpha}
-}$, $\tilde{\vecb{x}}:= \tilde{\vecb{x}}_1 \oplus 
-\ldots \oplus  \tilde{\vecb{x}}_n$, and
-$\matr{\Sigma}:=\smallpmatrix{
+}
+=
+\begin{pmatrix}
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}
-    }$. 
+\end{pmatrix}
+\pmatri
+{
+    \widetilde{\vecb{b}}_j\\
+    \vecb{w}_j
+}$ and $3'') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \begin{pmatrix}
+\widetilde{\vecb{b}}^*_i  \\ r_i  
+\end{pmatrix}$.
+\end{itemize} 
+For the first statement we use the constant-size Argument for $\Lang_{ck,\sfbits}^m$ of Section~\ref{sec:bits}. For the second statement, we write conditions 2''), 3'') as a single system of equations and use $\Pi_\sflin$ to prove that it can satisfied (which is equivalent to proving that the solution is in the span of the coefficient's matrix).  
 
-The soundness intuition is as follows. Suppose that there is some $j\in[n]$ such that $[\vecb{x}_j]_1\notin\LangMN$ and suppose also that $ck$ is perfectly binding at coorinate $j$. Since the opening of $[\vecb{x}_j]_1$ can not be in $\bits^\lb$, this implies that the $j$ th column of $\matr{B}$ is not in $\bits^\lb$. Perfect bindingness at coordinate $j$ implies that $[\vecb{c}_1],\ldots,[\vecb{c}_\lb]$ univocally defines the $j$ th column of $\matr{B}$ and thus there is at least one $[\vecb{c}_i]_1\notin\Lang_{ck,\sfbits}$. Althought we assume that $ck$ is perfectly binding at coordinte $j$, is not hard to see that the same argument works, with probability $1/n$, when $j$ is randomly chosen from $[n]$. 
- \begin{theorem} \label{theo:aggset} There exists a QA-NIZK argument $\Pi_\sfset$ for membership in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ with proof size  $(2\lb+11)|\GG_1|+10|\GG_2|$, perfect completeness, perfect-zero knowledge and computational soundness. 
+The soundness argument follows from the arguments exposed in Section~\ref{sec:techniques}. The full description of the argument together with the proof of the following theorem are in Appendix~\ref{app:bin-lang}.
+
+\begin{theorem} \label{theo:aggset} There exists a QA-NIZK argument $\Pi_\sfset$ for membership in the language $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ with proof size  $(2\lb+11)|\GG_1|+10|\GG_2|$, perfect completeness, perfect-zero knowledge and computational soundness. 
 \end{theorem}
 
-The description of the protocol and the full proof of the theorem are in Appendix~\ref{app:bin-lang}.
