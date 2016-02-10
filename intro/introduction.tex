@@ -1,16 +1,47 @@
-We consider the following problem: given commitments $c_1,\ldots,c_n$ to values $x_1,\ldots,x_n$, prove in zero-knowledge that each of $x_1,\ldots,x_n$ belongs to some set $S$. We distinguish two types of sets: an integer interval $S=\{0,1,\ldots,|S|-1\}$, and a poly-sized subset of $\Z_q$ or a poly-sized subset of $\GG_1$ or $\GG_2$, where $\GG_1$ and $\GG_2$ are bilinear groups.
+Zero-knowledge proofs are proofs which yield nothing beyond the validity of a certain statement. Although one can prove every NP statement in zero-knowledge (going through a proof of circuit satisfiability, for instance),  the literature has extensively explored 
+more efficient alternatives for concrete statements which appear often in practice. Among them, some of the most important are: proofs of membership in linear spaces \cite{AC:JutRoy13,EC:LPJY14,C:JutRoy14,EC:AbdBenPoi15,EC:KilWee15}, range proofs \cite{AC:CamChaShe08,PAIRING:RiaKohPre09,FC:ChaLipZha12}, membership in a set \cite{PAIRING:RiaKohPre09,EC:BayGro13}, or correctness of a shuffle \cite{Chaum81,AC:GroLu07,SCN:LipZha12,EPRINT:FauLip15}. 
+
+These problems have been studied following a variety of approaches and techniques. For instance, they have been studied both in the interactive \cite{EC:BayGro12,AC:CamChaShe08,AC:Groth11} and the non-interactive setting \cite{PAIRING:RiaKohPre09,FC:ChaLipZha12,AC:GroLu07,SCN:LipZha12,EPRINT:FauLip15}, and in the latter setting, both under falsifiable (but not always standard) \cite{PAIRING:RiaKohPre09,AC:GroLu07} and non-falsifiable assumptions \cite{FC:ChaLipZha12,SCN:LipZha12,EPRINT:FauLip15} (like knowledge of exponent type of assumptions). 
+
+Generally speaking, non-interactive zero-knowledge proofs under falsifiable assumptions remain more inefficient than other approaches for the same problem (one notable exception being the recent QA-NIZK arguments of membership in linear spaces of  \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15}). However, this is the most desirable alternative from a cryptographic point of view. Indeed, interaction is not  so convenient in practice and further, there is the additional problem of non-transferablility (a proof might not convince a third party who cannot check if the challenges were computed correctly \cite{C:Pass03}).  On the other hand, non-falsifiable assumptions are very strong assumptions whose use is, at the very least, controversial \cite{EPRINT:BCPR13a,AC:BoyPas15}. Although it might still be interesting to use these assumptions in practice, from a theoretical viewpoint it is definitely worth to explore how to improve efficiency based only on standard assumptions.  
+
+This paper focuses on obtaining efficiency improvements for non-interactive arguments based on falsifiable assumptions for two of the interesting examples discussed above, namely, range proofs and interactive proofs of correctness of a shuffle.  
+
+An argument of Correctness of a Shuffle is an essential tool in the construction of \emph{Mix-nets} \cite{Chaum81}. A Mix-net consists of a series of \emph{mixers}, each of which receives as input a set of $n$ ciphertexts and  outputs a \emph{shuffle} of the input ciphertexts. That is, a \emph{rerandomization} of the set of ciphertexts obtained after applying a \emph{random permutation} to the input set of ciphertexts. To enforce the honest behavior of mixers they are required to produce a zero-knowledge argument that the shuffle was correctly computed.  
+
+A Range argument is a tool often required in e-voting and e-cash scenarios, with the purpose of showing that the opening $y$ of some commitment $c$ is an integer in some interval $[A,B]$. For simplicity, the range considered is usually $[0,2^n-1]$ since a proof in any interval can be reduced to a proof in this interval.
+
+To derive efficiency improvements for these two languages we develop specific techniques that we can apply to both problems. Our resulting proofs are more efficient in terms of proof size and are based on more standard assumptions, but they have a rather large common reference string. They build on the recent arguments for membership in linear spaces of \cite{EC:LPJY14,C:JutRoy14,EC:KilWee15} and the argument for proving that some commitment to a vector of integers in $\Z_q^{n}$ opens to $\{0,1\}^n$ due to \cite{AC:GonHevRaf15}. 
+
+
+
+
+
+ 
   
-We construct a Non-Interactive Zero-Knowledge argument for this problem with the following characteristics:
-\begin{itemize}
-\item It is based on the SXDH plus the Split Simultaneous Double Pairing Assumption  (SSDP, introduced in \cite{AC:GonHevRaf15}) assumptions in Type III bilinear groups, and only on the Decisional Linear (DLin) assumption in Type I bilinear groups.
-\item The proof size is independent of the number of commitments. Specifically, the proof size is $\Theta(\log|S|)$ when $S$ is an integer interval, and $\Theta(|S|)$ when $S$ is a subset of $\Z_q,\GG_1,$ or $\GG_2$.
-\item The computational cost of the prover is dominated by the cost of $\Theta(n)$ exponentiations ({\color{red} Chequear!}).
-\item The computational cost of the verifier is dominated by the cost of $\Theta(|S|+n)$ pairing computations ({\color{red} Chequear!}). 
-\end{itemize}
+   
+    
+     
+      
+       
+       
 
-As application of our NIZK argument we construct the most efficient argument of \emph{Correctness of a Shuffle} and the most efficient \emph{Range Argument}, under standard and falsifiable assumptions.
 
-An argument of Correctness of a Shuffle is an essential tool in the construction of \emph{Mix-nets} \cite{Chaum81}. A Mix-net consists of a series of \emph{mixers}, each of which receives as input a set of ciphertexts and  outputs a \emph{shuffle} of the input ciphertexts. That is, a \emph{rerandomization} of the set of ciphertexts obtained after applying a \emph{random permutation} to the input set of ciphertexts. To enforce the honest behavior of mixers they are required to produce a zero-knowledge argument that the shuffle was correctly computed. As a first application of our set membership argument we construct a shuffle argument with improved efficiency and security.
 
-A Range argument is a tool often required in e-voting and e-cash scenarios, with the purpose of showing that the opening $y$ of some commitment $c$ is an integer in some interval $[A,B]$. For simplicity, the range considered is usually $[0,2^n-1]$ since the proof in the original range can be reduced to a proof in this range with only a small overhead. As a second application of our of our set membership argument, we construct a Range argument with improved efficiency and security.
-%whose size is $2k\log n+\frac{n}{k\log n}+11$ elements of $\GG_1$ and $10$ elements of $\GG_2$, for any arbitrarily chosen $k\in\mathbb{N}$.
+
+
+
+
+
+
+ 
+
+
+  
+
+
+
+
+
+
+          
