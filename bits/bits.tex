@@ -14,7 +14,7 @@ $[\vecb{d}]_2$ to $\vecb{b}$.
 \item Prove that $[\vecb{c}]_1$ and $[\vecb{c}']_1$ open to the same string. 
 \item Prove that the two MP commitments $[\vecb{c}]_1$ and $[\vecb{d}]_2$ open to the same string.
 \item Prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
-\vecb{h}_j)^\top\in\Span(\{\vecb{g}_i\vecb{h}_j^\top:(i,j)\in\indexSet{m}{1}\})$, where $ck:=[(\vecb{g}_1,\ldots,\vecb{g}_{m+1})]_1$ and $ck':=[(\vecb{h}_1,\ldots,\vecb{h}_{m+1})]_2$.
+\vecb{h}_j)^\top\in\Span(\{\vecb{g}_i\vecb{h}_j^\top:i,j\in[m+1]\}\setminus\{\vecb{g}_i\vecb{h}_i^\top:i\in[m]\})$, where $ck:=[(\vecb{g}_1,\ldots,\vecb{g}_{m+1})]_1$ and $ck':=[(\vecb{h}_1,\ldots,\vecb{h}_{m+1})]_2$.
 \end{enumerate}
 The last step guarantees that 
 $b_i(b_i-1)=0$ for all $i \in [m]$. Indeed, 
