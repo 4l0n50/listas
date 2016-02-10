@@ -115,7 +115,7 @@ GS commitments $[\vecb{d}_i]_1$, $i \in [m]$, to all coordinates of $\vecb{b}$ a
 \vspace{-0.2cm}
 \begin{itemize}
 \item $\exists \vecb{b}\in \Z_q^\lb, r_i \in \Z_q$ such that  
-$1') \vecb{b}\in \{0,1\}^\lb$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{b_i  \\ r_i}$,
+$1') \vecb{b}\in \{0,1\}^\lb$ and $3') \forall i \in [\lb], \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{b_i  \\ r_i}$,
 \item   $\exists \widetilde{\vecb{b}} \in \Z_q^\lb, \vecb{w} \in\Z_q^\lc$ such that  
    $2') \smallpmatrix
 {
@@ -131,7 +131,7 @@ $1') \vecb{b}\in \{0,1\}^\lb$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmat
 {
     \widetilde{\vecb{b}}\\
     \vecb{w}
-}$ and $3') \forall i \in [m]: \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{
+}$ and $3') \forall i \in [m], \vecb{d}_i=\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}   \smallpmatrix{
 \widetilde{b}_i  \\ r_i}$.
 \end{itemize}
 More specifically: use the QA-NIZK argument for bit-strings of \cite{AC:GonHevRaf15} for the first statement;
@@ -171,15 +171,15 @@ Our idea is to use as a shrinking commitment the two-dimensional generalization 
 $\matr{G}$, and thus commitments are perfectly binding at some coordinate $j^*\in[n]$ which is hidden to the adversary.
 %Intuitively, the new commitment is defined in a space of one extra-dimension so that one coordinate of information is preserved. Further, under the DDH Assumption, one can define computationally indistinguishable distributions for $\matr{G}$ which hide which is the binding coordinate.    
 
-Define the matrix $\matr{B}=(\vecb{b}_1|| \ldots || \vecb{b}_n) \in \{0,1\}^{\lb \times n}$ and let $\vecb{b}_i^*$ be the $i$th row of $\matr{B}$. To prove $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, we first compute MP commitments $[\vecb{d}_i]_1$, $i \in [n]$, to $\vecb{b}_i^*$.  As before, 
+Define the matrix $\matr{B}=(\vecb{b}_1|| \ldots || \vecb{b}_n) \in \{0,1\}^{\lb \times n}$ and let $\vecb{b}_i^*$ be the $i$th row of $\matr{B}$. To prove $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, we first compute MP commitments $[\vecb{d}_i]_1$, $i \in [\lb]$, to $\vecb{b}_i^*$.  As before, 
 the proof actually consists of two independent statements:
 \begin{itemize}
 \item $\exists \vecb{r} \in \Z_q^\lb, \matr{B} \in \Z_q^{\lb \times n}$ such that  
 $1'') \matr{B} \in \{0,1\}^{\lb \times n}$ and $3'') \forall i \in [m], \vecb{d}_i=\matr{G}\smallpmatrix{\vecb{b}_i^*  \\ r_i}$,
-\item $\exists \vecb{w}_1,\ldots,\vecb{w}_n \in\Z_q^\lc, \widetilde{\matr{B}} \in \Z_q^{\lb \times n}$, (whose rows are denoted as $\widetilde{\vecb{b}}_i^*$, $i \in [m]$, and the columns $\widetilde{\vecb{b}}_j$, $j \in [n]$), such that  
-   $2') \smallpmatrix
+\item $\exists \widetilde{\vecb{r}}\in\Z_q^\lb, \vecb{w}_1,\ldots,\vecb{w}_n \in\Z_q^\lc, \widetilde{\matr{B}} \in \Z_q^{\lb \times n}$, (whose rows are denoted as $\widetilde{\vecb{b}}_i^*$, $i \in [\lb]$, and the columns $\widetilde{\vecb{b}}_j$, $j \in [n]$), such that  
+   $2')\forall i\in[n], \smallpmatrix
 {
-    \vecb{c}\\
+    \vecb{c}_j\\
     \grkb{\alpha}
 }
 =
@@ -192,8 +192,7 @@ $1'') \matr{B} \in \{0,1\}^{\lb \times n}$ and $3'') \forall i \in [m], \vecb{d}
 {
     \vecb{b}_j\\
     \vecb{w}_j
-}$ and $3') \forall i \in [m]: \vecb{d}_i=\pmatri{ \vecb{u}_1 &   \vecb{u}_2}   \smallpmatrix{
-\widetilde{b}^*_i  \\ r_i}$.
+}$ and $3') \forall i \in [\lb], \vecb{d}_i=\matr{G}   \smallpmatrix{\widetilde{\vecb{b}}^*_i  \\ \widetilde{r}_i}$.
 \end{itemize}
 Again, for the first statement we use a (slight modification) of \cite{AC:GonHevRaf15} and for the second
 a QA-NIZK argument for linear spaces of \cite{C:JutRoy14,EC:KilWee15} (after writing all the equations appropriately). 
