@@ -3,12 +3,12 @@ The proof system from Fig. \ref{fig:bin-leng-nizk} is a QA-NIZK proof system for
 \end{theorem}
 
 
-\subsubsection{Completeness.} If $([\vecb{x}_1]_1,\ldots,
-[\matr{x}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, then for every $j\in[\lb]$ there exists $\matr{b}_j\in\bits^{\lb},\matr{w}_j \in\Z_q^{\lc}$ such that 
+\subsubsection{Completeness.} If $([\vecb{c}_1]_1,\ldots,
+[\matr{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$, then for every $j\in[\lb]$ there exists $\matr{b}_j\in\bits^{\lb},\matr{w}_j \in\Z_q^{\lc}$ such that 
 $$
 \pmatri
 {
-\matr{x}_j\\
+\matr{c}_j\\
 \grkb{\alpha}
 }
 =
@@ -22,17 +22,16 @@ $$
     \matr{w}_j
 }.
 $$
-Given that $[\matr{c}_i]_1 = \MP.\Com_{[\matr{G}]_1}(\vecb{b}_i^*;r_i)=\sum_{j\in[n]}b_{i,j}[\vecb{g}_i]_1+r_i[\vecb{g}_{n+1}]_1$,
+Given that $[\matr{d}_i]_1 = \MP.\Com_{[\matr{G}]_1}(\vecb{b}_i^*;r_i)=\sum_{j\in[n]}b_{i,j}[\vecb{g}_i]_1+r_i[\vecb{g}_{n+1}]_1$,
 \begin{eqnarray*}
-\vecb{c} & = & \vecb{c}_1\oplus\ldots\oplus\vecb{c}_\lb\\
-         & = & {\sum_{j\in[n]}\sdmatrix{\vecb{g}_i}\smallpmatrix{b_{1,j}\\\vdots\\b_{\lb,j}}+\sdmatrix{\vecb{g}_{n+1}}\smallpmatrix{r_1\\\vdots\\r_\lb}}\\
-         & = & (\overline{\vecb{g}}_1^\lb||\cdots||\overline{\vecb{g}}_{n}^\lb||\vecb{g}_{n+1}^\lb)(\vecb{b}_1\oplus\vecb{w}_1\oplus\ldots\oplus\vecb{b}_n\oplus\vecb{w}_n\oplus\vecb{r}) \\
-& \Longrightarrow &
-\pmatri{[\tvecb{x}]_1 \\  [\vecb{c}]} = \matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G}) \pmatri{\tvecb{b}\\ \vecb{r}},
+ \vecb{d}_1\oplus\ldots\oplus\vecb{d}_\lb\\
+          &=&  {\sum_{j\in[n]}\sdmatrix{\vecb{g}_i}\smallpmatrix{b_{1,j}\\\vdots\\b_{\lb,j}}+\sdmatrix{\vecb{g}_{n+1}}\smallpmatrix{r_1\\\vdots\\r_\lb}}\\
+         &= & (\overline{\vecb{g}}_1^\lb||\cdots||\overline{\vecb{g}}_{n}^\lb||\vecb{g}_{n+1}^\lb)(\vecb{b}_1\oplus\vecb{w}_1\oplus\ldots\oplus\vecb{b}_n\oplus\vecb{w}_n\oplus\vecb{r}).
 \end{eqnarray*}
-which implies that $\mathsf{ans}_1=1$. On the other hand, $\vecb{b}_1^*,\ldots,\vecb{b}_\lb^*\in\bits^n$ implies that $\mathsf{ans}_2=1$.
+Combining these two facts we conclude that
+$[\vecb{y}]_1 = [\matr{\Xi}] \vecb{v}$, which implies that $\mathsf{ans}_1=1$. On the other hand, $\vecb{b}_1^*,\ldots,\vecb{b}_\lb^*\in\bits^n$ implies that $\mathsf{ans}_2=1$.
   
-\subsubsection{Soundness}
+\subsubsection{Soundness.}
 
 \begin{theorem}
 Let $\adv_{\mathcal{PS}}(\advA)$ be the advantage of an adversary $\advA$ against the soundness of the proof system described in Fig. \ref{fig:bin-leng-nizk}. There exist PPT adversaries $\advD$, against $\distlin_1\mbox{-}\mddh$ in $\GG_1$, $\advB_1$ against the soundness of $\Pi_\sflin$, and $\advB_2$, against the soundness of $\Pi_\sfbits$, such that
@@ -43,10 +42,11 @@ $$
 
 The proof follows from the indistinguishability of the following games:
 \begin{itemize}
-\item[$\mathsf{Real}$] This is the real soundness game. The output is 1 if the adversary breaks soundness, that is, if the adversary submits $([\vecb{x}_1]_1,\ldots,[\vecb{x}_n]_1)\notin\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ and the corresponding proof which is accepted by the verifier.
+\item[$\mathsf{Real}$] This is the real soundness game. The output is $1$ if the adversary breaks soundness, that is, if the adversary submits $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\notin\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ and the corresponding proof which is accepted by the verifier.
 \item[$\sfGame_0$] This is identical as $\mathsf{Real}$ except that algorithm $\algK_1$ does not receive $[\matr{N}]_1$ as input but it samples $\matr{N}$ itself.
-\item[$\sfGame_1$] This game is identical to $\sfGame_0$ except that the simulator picks a random $j^*\in[n]$, and checks if the output of the adversary is such that $\algF([\matr{M}]_1,\matr{N},[\vecb{x}_{j^*}]_1)=1$. It aborts if $\algF([\matr{M}]_1,\matr{N},[\vecb{x}_{j^*}]_1)=1$.
-\item[$\sfGame_2$] This is game is identical to $\sfGame_1$ but now $\matr{G} \gets \distlinjsnzero$.
+\item[$\sfGame_1$] This game is identical to $\sfGame_0$ except that the simulator picks a random $j^*\in[n]$, and 
+aborts if $\algF([\matr{M}]_1,\matr{N},[\vecb{c}_{j^*}]_1)=1$ (that is to say if $[\vecb{c}_{j^*}]_1 \in \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$.)
+\item[$\sfGame_2$] This game is identical to $\sfGame_1$ but now $\matr{G} \gets \distlinjsnzero$.
 \end{itemize}
 
 It is obvious that the first two games are indistinguishable. 
@@ -57,7 +57,7 @@ The rest of the argument goes as follows.
 
 \begin{proof}  The probability that
  $\mathsf{Game}_1(\advA)=1$ is the probability that  a) $\mathsf{Game}_0(\advA)=1$ and
-b)  $[\vecb{x}_{j^*}]_1 \notin \Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$. The view of adversary $\advA$ is independent of $j^*$, while, if $\mathsf{Game_0}(\advA)=1$, then there is at least one index $j \in [n]$ such that $[\vecb{x}_{j}]_1 \notin \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$. Thus, 
+b)  $[\vecb{c}_{j^*}]_1 \notin \Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$. The view of adversary $\advA$ is independent of $j^*$, while, if $\mathsf{Game_0}(\advA)=1$, then there is at least one index $j \in [n]$ such that $[\vecb{c}_{j}]_1 \notin \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$. Thus, 
 the probability that the event described in b) occurs conditioned on $\mathsf{Game_0}(\advA)=1$, is greater than or equal to $1/n$ and the lemma follows.
 \end{proof}
 
@@ -79,26 +79,32 @@ There exist adversaries $\advB_1,\advB_2$ such that $\Pr[\sfGame_2(\advA)=1]\leq
 \end{lemma}
 
 \begin{proof}
-Let $E$ the event where $\tvecb{x}\oplus\vecb{c}\notin\Span(\matr{\Xi})$, and let $\advB_1$ the adversary against $\Pi_\sflin$ that outputs $[\tvecb{x}]_1\oplus[\vecb{c}]_1$ and $\pi_\sflin$. Then $\Pr[\sfGame_2(\advA)=1]\leq\adv_{\Pi_\sflin}(\advB_1)+\Pr[\sfGame_2(\advA)=1|\neg E]$.  To prove the lemma, there is only left to bound this last probability.
+Let $E$ the event where $\vecb{y}\notin\mathbf{Im}(\matr{\Xi})$, and let $\advB_1$ the adversary against $\Pi_\sflin$ that outputs $[\tvecb{x}]_1\oplus[\vecb{d}]_1$ and $\pi_\sflin$. Obviously, $\Pr[\sfGame_2(\advA)=1]\leq\adv_{\Pi_\sflin}(\advB_1)+\Pr[\sfGame_2(\advA)=1|\neg E]$, because 
+if $E$ occurs the adversary breaks the soundness of
+ $\Pi_\sflin$. To prove the lemma, there is only left to bound this last probability.
 
-If $\sfGame(\advA)=1$, then $[\vecb{x}_{j^*}]_1\notin \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ while all the verification equations are accepted. $\neg E$ implies that there exists $\vecb{b}_1,\ldots,\vecb{b}_n\in\Z_q^{\lb}$, $\vecb{w}_1,\ldots,\vecb{w}_n\in\Z_q^{\lc}$ and $\vecb{r}\in\Z_q^\lb$ such that
+If $\sfGame(\advA)=1$, then $[\vecb{c}_{j^*}]_1\notin \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ while all the verification equations are accepted. $\neg E$ implies that there exists $\vecb{v}$, 
+which uniquely defines some $(\widetilde{\vecb{b}}_{j^*},\vecb{w}_{j^*})$ and some $\widetilde{\vecb{b}}_i^*$ such that:
 $$
-\pmatri{\tvecb{x}\\ \tvecb{c}}=\matr{\Xi}
-\pmatri{\tvecb{b}\\\vecb{r}}
+\vecb{y}=\matr{\Xi} \vecb{v}
 \Longrightarrow
-\pmatri{\vecb{x}_{j^*}\\ \grkb{\alpha}}=
+\pmatri{\vecb{c}_{j^*}\\ \grkb{\alpha}}=
 \begin{pmatrix}
     \matr{M}       & \matr{N}\\
     \matr{\Lambda} & \matr{0}
 \end{pmatrix}
 \pmatri
 {
-    \vecb{b}_{j^*}\\
+    \widetilde{\vecb{b}}_{j^*}\\
     \vecb{w}_{j^*}
 }
 $$
- and $[\matr{c}_i]_1=\MP.\Com_{[\matr{G}]_1}(\vecb{b}_i^*;r), \forall i\in[\lb].$
-If $[\vecb{x}_{j^*}]_1 \notin \Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$, then $\vecb{b}_{j^*}\notin\bits^\lb$ and thus $([\vecb{c}_1]_1\ldots,[\vecb{c}_\lb]_1)\notin\Lang_{[\matr{G}]_1,\sfbits}$. Therefore, an adversary $\advB_2$ that simulates $\advA$ and outputs $(([\vecb{c}_1]_1\ldots,[\vecb{c}_\lb]_1),\pi_\sfbits)$ violates soundness of $\Pi_\sfbits$ with probability $\Pr[\sfGame_2(\advA)=1|\neg E]$.
+ and $[\matr{d}_i]_1=\MP.\Com_{[\matr{G}]_1}(\vecb{b}_i^*;r), \forall i\in[\lb].$
+Since in this game $[\vecb{c}_{j^*}]_1 \notin \Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$ (otherwise the game aborts), then $\widetilde{\vecb{b}}_{j^*}\notin\bits^\lb$. 
+
+Since the MP commitment is perfectly binding at coordinate 
+$j^*$, this implies that  $([\vecb{d}_1]_1\ldots,[\vecb{d}_\lb]_1)\notin \Lang_{[\matr{G}]_1,\sfbits}$. 
+Therefore, an adversary $\advB_2$ that simulates $\advA$ and outputs $(([\vecb{d}_1]_1\ldots,[\vecb{d}_\lb]_1),\pi_\sfbits)$ violates soundness of $\Pi_\sfbits$ with probability at least $\Pr[\sfGame_2(\advA)=1|\neg E]$.
 \end{proof}
 
 \subsubsection{Zero-Knowledge}
@@ -108,11 +114,11 @@ The proof system is perfect quasi-adaptive zero-knowledge.
 \end{theorem}
 
 \begin{proof}
-Recall that $([\vecb{x}_1]_1,\ldots,[\vecb{x}_n]_1)\in\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$ implies that
+Recall that $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\in\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}$ implies that
 $
 \tvecb{x}
 =\matr{\Sigma}^n\tvecb{b}
 $
 and, given that $\distlin_1^{n,0}$ defines perfectly hiding commitments, for all $i\in[\lb]$ there is some $r_i\in\Z_q$ such that
-$[\vecb{c}_i]_1=\MP.\Com(\matr{0}_{n\times1};\tilde{{r}}_i)=\MP.\Com(\vecb{b}_i^*;r_i)$. Then $\tvecb{x}\oplus\tvecb{c}\in\Span(\matr{\Xi})$ and thus perfect Zero-Knowledge of $\Pi_\sflin$ and $\Pi_\sfbits$ implies that $\pi_\sflin$ and $\pi_\sfbits$ are correctly distributed.
+$[\vecb{d}_i]_1=\MP.\Com(\matr{0}_{n\times1};\tilde{{r}}_i)=\MP.\Com(\vecb{b}_i^*;r_i)$. Then $\vecb{y}\in\mathbf{Im}(\matr{\Xi})$ and thus perfect Zero-Knowledge of $\Pi_\sflin$ and $\Pi_\sfbits$ implies that $\pi_\sflin$ and $\pi_\sfbits$ are correctly distributed.
 \end{proof}

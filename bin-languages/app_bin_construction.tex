@@ -1,144 +1,8 @@
-%
-%
-%The following definition will be useful for our construction
-%\begin{definition}
-%Given matrices $\matr{M}\in\Z_q^{k\times \lb},\matr{N}\in\Z_q^{k\times m},\matr{\Lambda}\in\Z_q^{t\times \lb}$ and $\matr{G}=(\vecb{g}_1||\cdots||\vecb{g}_{n+1})\in\Z_q^{k\times (n+1)}$, we define
-%$$
-%\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G}):=
-%\left(\begin{array}{c|c|c}
-%\matr{I}_{n\times n}\otimes\matr{M}         & \matr{I}_{n\times n}\otimes\matr{N} & \matr{0}_{kn\times \lb}                          \\
-%\hline
-%\matr{I}_{n\times n}\otimes\matr{\Lambda}   & \matr{0}_{t n\times mn}         & \matr{0}_{t n\times \lb}                     \\
-%\hline
-%\begin{array}{ccc}
-%    \matr{I}_{\lb\times \lb}\otimes\vecb{g}_1&
-%    \cdots &
-%    \matr{I}_{\lb\times \lb}\otimes\vecb{g}_n
-%\end{array}                                 & \matr{0}_{k \lb \times mn}         & \matr{I}_{\lb\times \lb}\otimes\vecb{g}_{n+1}
-%\end{array}\right).
-%$$
-%Or more explicitly
-%$$
-%\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G}):=
-%\left(\begin{array}{ccc|ccc|ccc}
-%\matr{M}               & \cdots & \matr{0}       & \matr{N} & \cdots & \matr{0} & \matr{0} & \cdots & \matr{0} \\
-%\vdots                 & \ddots & \vdots         & \vdots   & \ddots & \vdots   & \vdots   & \ddots & \vdots   \\
-%\matr{0}               & \cdots & \matr{M}       & \matr{0} & \cdots & \matr{N} & \matr{0} & \cdots & \matr{0} \\
-%\hline
-%\matr{\Lambda}         & \cdots & \matr{0}       & \matr{0} & \cdots & \matr{0} & \vecb{0} & \cdots & \matr{0} \\
-%\vdots                 & \ddots & \vdots         & \vdots   & \ddots & \vdots   & \vdots   & \ddots & \vdots   \\
-%\matr{0}               & \cdots & \matr{\Lambda} & \matr{0} & \cdots & \matr{0} & \matr{0} & \cdots & \matr{0} \\
-%\hline
-%    \begin{array}{ccc}
-%        \vecb{g}_1 & \cdots & \vecb{0}
-%    \end{array} &
-%    &
-%    \begin{array}{ccc}
-%        \vecb{g}_n & \cdots & \vecb{0}    
-%    \end{array} &
-%    \matr{0} & \cdots & \matr{0} &
-%    \vecb{g}_{n+1} & \cdots & \vecb{0} \\
-%    \begin{array}{ccc}
-%        \vdots & \ddots & \vdots
-%    \end{array} &
-%    \cdots &
-%    \begin{array}{ccc}
-%        \vdots & \ddots & \vdots   
-%    \end{array} &
-%    \vdots & \ddots & \vdots &
-%    \vdots & \ddots & \vdots \\
-%    \begin{array}{ccc}
-%        \vecb{0} & \cdots & \vecb{g}_1
-%    \end{array} &
-%    &
-%    \begin{array}{ccc}
-%        \vecb{0} & \cdots & \vecb{g}_n   
-%    \end{array} &
-%    \matr{0} & \cdots & \matr{0} &
-%    \vecb{0} & \cdots & \vecb{g}_{n+1}
-%\end{array}\right)
-%$$
-%\end{definition}
-%
-%The following lemma will be useful in the security proofs.
-%\begin{lemma}
-%Let $\matr{B}=(\vecb{b}_1||\cdots||\vecb{b}_n)\in\Z_q^{\lb\times n},\matr{W}\in\Z_q^{m\times n},\vecb{r}\in\Z_q^\lb$, then
-%$$
-%\pmatri{\matr{X}\\\grkb{\alpha}||\cdots||\grkb{\alpha}} =
-%\begin{pmatrix}
-%\matr{M}       &  \matr{N}\\
-%\matr{\Lambda} & \matr{0}_{t\times m}
-%\end{pmatrix}
-%\pmatri{\matr{B}\\\matr{W}}
-%\text{ and }
-%[\matr{C}]_1=\MP.\Com_{[\matr{G}]_1}(\matr{B}^\top;\vecb{r}).
-%$$
-%if and only if
-%\begin{equation*}
-%\pmatri{\tvecb{x}\\\tgrkb{\alpha}\\\tvecb{c}} = \matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G})\pmatri{\tvecb{b}\\\tvecb{w}\\\vecb{r}},
-%\end{equation*}
-%where $\tvecb{x}:=\uvecb{X}$, $\tvecb{c}:=\uvecb{C}$, $\tvecb{b}:=\uvecb{B}$, $\tvecb{w}:=\uvecb{W}$, and $\tgrkb{\alpha}:=\vect(\grkb{\alpha}||\cdots||\grkb{\alpha})$.
-%\end{lemma}\label{fact:popo}
-%\begin{proof}
-%$$
-%\pmatri
-%{
-%\matr{X}\\
-%\grkb{\alpha}||\cdots||\grkb{\alpha}
-%}
-%=
-%\begin{pmatrix}
-%\matr{M}       & \matr{N}\\
-%\matr{\Lambda} & \matr{0}_{t\times m}
-%\end{pmatrix}
-%\pmatri
-%{
-%    \matr{B}\\
-%    \matr{W}
-%}
-% \Longleftrightarrow 
-%\pmatri{\tvecb{x}\\\tgrkb{\alpha}} =
-%\left(\begin{array}{c|c|c}
-%\matr{I}_{n\times n}\otimes\matr{M}       & \matr{I}_{n\times n}\otimes\matr{N}
-%& \matr{0}_{kn\times\lb}\\
-%\hline
-%\matr{I}_{n\times n}\otimes\matr{\Lambda} & \matr{0}_{t n\times mn}
-%& \matr{0}_{t n\times\lb}
-%\end{array}\right)
-%\pmatri{\tvecb{b}\\\tvecb{w}\\\vecb{r}}.
-%$$
-%and
-%\begin{eqnarray*}
-%[\matr{C}]_1=\MP.\Com_{[\matr{G}]_1}(\matr{B}^\top;\vecb{r})
-%& \Longleftrightarrow &
-%\matr{C} = \sum_{i\in[n]}\vecb{g}_i\vecb{b}_i^\top + \vecb{g}_{n+1}\vecb{r}^\top\\
-%& \Longleftrightarrow &
-%\tvecb{c} = \sum_{i\in[n]}(\matr{I}_{\lb\times\lb}\otimes\vecb{g}_i)\vecb{b}_i+(\matr{I}_{\lb\times\lb}\otimes\vecb{g}_{n+1})\vecb{r}\\
-%& \Longleftrightarrow &
-%\tvecb{c} = (\matr{I}_{\lb\times\lb}\otimes\vecb{g}_1||\cdots||\matr{I}_{\lb\times\lb}\otimes\vecb{g}_n||\matr{0}_{k\lb\times mn}||\matr{I}_{\lb\times\lb}\matr{g}_{n+1})\pmatri{\tvecb{b}\\\tvecb{w}\\\vecb{r}}
-%\end{eqnarray*}
-%which allows us to conclude.
-%\end{proof}
 
 
-In Section~\ref{sec:bin-lan-constr} we gave a description of the basic steps of the proof
-%which were: 
-%\begin{enumerate}
-%\item Construct a MP commitment $[\vecb{c}_i]_1$ to $\vecb{b}^*_i$, for all $i \in [\lb]$,
-%\item Prove that $[\vecb{c}_i]_1$ can be opened to some vector $\vecb{b}^*_i \in \{0,1\}^{n}$ for all $i \in [\lb]$, 
-%\item Prove that $[\vecb{c}]_1:=[\vecb{c}_1]_1 \oplus \ldots \oplus [\vecb{c}_n]_1$ and $[\vecb{x}_1]_1 \oplus \ldots \oplus [\vecb{x}_n]_1$ open to the same value,
-%\item Prove that $[\widetilde{\vecb{x}}]_1 \in \mathbf{Im}([\matr{\Sigma^n}]_1)$, 
-%\end{enumerate}
-%In fact,
-but now, for efficiency, we fusionate Steps 3,4 in a single one. More specifically, the basic steps of the proof are:
-\begin{enumerate}
-\item[a)] Construct a MP commitment $[\vecb{c}_i]_1$ to $\vecb{b}^*_i$, for all $i \in [\lb]$,
-\item[b)] Prove that  $[\vecb{c}_i]_1$  can be opened to some $\vecb{b}^*_i \in \{0,1\}^{n}$ for all $i \in [\lb]$, 
-\item[c)] Prove that $\begin{pmatrix}[\widetilde{\vecb{x}}]_1 \\ [\vecb{c}]_1 \end{pmatrix} \in \mathbf{Im}([\matr{\Xi}]_1)$, 
-\end{enumerate}
-where the matrix $\matr{\Xi}$ is defined so that Step c) implies Steps 3,4, namely.
-%Let $\matr{B}:=(\vecb{b}_1||\cdots||\vecb{b}_n)$, $\matr{X}:=(\vecb{x}_1||\cdots||\vecb{x}_n)$, $\matr{C}:=(\vecb{c}_1||\cdots||\vecb{c}_\lb)$, and $\matr{W}:=(\vecb{w}_1||\cdots||\vecb{w}_n)$. Note that they satisfy the equations $\matr{X}=\matr{\Sigma}\smallpmatrix{\matr{B}\\\matr{W}}$ and $\matr{C}=\matr{G}\smallpmatrix{\matr{B}^\top\\\vecb{r}^\top}$, which can be written as the linear systems $\tvecb{x}=\matr{\Sigma}^n\tvecb{b}$ and $\vecb{c}=\matr{G}^n \matr{T}(\vecb{b})$, where $\matr{T}$ is the matrix defining the transpose when matrices in $\Z_q^{\la\times\lb}$ are viewed as vectors in $\Z_q^{\la\lb}$. 
+As announced in Section~\ref{sec:bin-lan-constr}, our construction in fact proofs two different statements and for the second statement, conditions 2''), 3'') are written as a single system of equations with a single matrix $\matr{\Xi}$ and use $\Pi_\sflin$ to prove that certain vector of $\GG_1$ is in the span of $\matr{\Xi}$.
 
+This matrix is defined as:
 $$\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G}):=
 \left(\begin{array}{ccc|ccc}
 \matr{\Sigma}             & \cdots & \matr{0}                  & \matr{0} \\
@@ -147,49 +11,41 @@ $$\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G}):=
 \hline
 \overline{\vecb{g}}_1^\lb & \cdots & \overline{\vecb{g}}_n^\lb & \vecb{g}_{n+1}^\lb
 \end{array}\right),
-$$ where $\overline{\vecb{g}}_i^\lb:=\vecb{g}_i^\lb||\vecb{0}$, $i\in[n]$. To see why this is the right definition of $\matr{\Xi}$, we argue for simplicity in the case where $n=2$. In this case, the matrix looks like:   
-$$\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G})=
-\left(\begin{array}{cccc}
-    \matr{\Sigma}             & \matr{0}                  & \matr{0}           \\
-    \matr{0}                  & \matr{\Sigma}             & \matr{0}           \\
-    \overline{\vecb{g}}_1^\lb & \overline{\vecb{g}}_2^\lb & \vecb{g}_{3}^\lb
-\end{array}\right)
-=
-\left(\begin{array}{ccccc}
-    \matr{M}       & \matr{N}  & \matr{0}       & \matr{0} & \matr{0}         \\
-    \matr{\Lambda} & \matr{0}  & \matr{0}       & \matr{0} & \matr{0}         \\
-    \matr{0}       & \matr{0}  & \matr{M}       & \matr{N} & \matr{0}         \\
-    \matr{0}       & \matr{0}  & \matr{\Lambda} & \matr{0} & \matr{0}         \\
-    \vecb{g}_1^\lb & \vecb{0}  &\vecb{g}_2^\lb  & \vecb{0} & \vecb{g}_{3}^\lb
-\end{array}\right).
-$$ 
-
-The statement $\begin{pmatrix}[\widetilde{\vecb{x}}]_1 \\ [\vecb{c}]_1 \end{pmatrix} \in \mathbf{Im}([\matr{\Xi}]_1)$ means that one proves that
-$[\tilde{\vecb{x}}]_1$ and $[\vecb{c}]_1$ share a common opening, but it also proves that each $[\vecb{c}_i]_1$ is computed from only certain parts of the opening. For example, if $\vecb{x}_i =\matr{\Sigma}\smallpmatrix{\vecb{b}_i\\\vecb{w}_i}$, then $\vecb{c}_1=b_{1,1}\vecb{g}_1+b_{2,1}\vecb{g}_2+r_1\vecb{g}_3$ (recall that $\vecb{g}_i^\lb=\smallpmatrix{\vecb{g}_i&\cdots&\vecb{0}\\\vdots&\ddots&\vdots\\\vecb{0}&\cdots&\vecb{g}_i}$). Therefore, we are also proving that $[\vecb{c}_1]_1$ is a commitment to $\vecb{b}_1^*$, the first row of $\matr{B}=(\vecb{b}_1||\vecb{b}_2)$.
+$$ where $\matr{\Sigma}:=\begin{pmatrix}
+    \matr{M}       & \matr{N}\\
+    \matr{\Lambda} & \matr{0}
+\end{pmatrix}$ and
+ $\overline{\vecb{g}}_i^\lb:=\vecb{g}_i^\lb||\vecb{0}$, $i\in[n]$. 
  
-%  $$\begin{pmatrix}[\vecb{x}_1]_1 \\ [\vecb{\alpha}]_1 \\ [\vecb{x}_2]_1 \\ [\vecb{\alpha}]_1 \\ [\vecb{c}_1]_1 \\ [\vecb{c}_2]_1  \end{pmatrix} = \left(\begin{array}{cccccc}
-%    \matr{M}       & \matr{N}  & \matr{0} & \matr{0} & \matr{0} & \matr{0}\\
-%    \matr{\Lambda} & \matr{0}  & \matr{0} & \matr{0} & \matr{0} & \matr{0} \\
-% \matr{0} & 
-%\matr{0} &  \matr{M}       & \matr{N} &  \matr{0} & \matr{0}\\
-% \matr{0} & \matr{0}  & \matr{\Lambda} & \matr{0} & \matr{0} & \matr{0} \\
-%\matr{G}_1  & \vecb{0}&\vecb{0} & \vecb{0} & 
-%\matr{G}_2 & \matr{0} \\
-%\matr{0}  & \matr{0} & \vecb{G}_1 & \matr{0} &  \matr{0} & \matr{G}_2
-%\end{array}\right) \begin{pmatrix} \vecb{b}_1 \\ \vecb{w}_1 \\ \vecb{b}_2 \\
-%  \vecb{w}_2 \\ \vecb{r}_1 \\
-%  \vecb{r}_2 \end{pmatrix}
+Define $\vecb{y}:=\vecb{c}_1\oplus \grkb{\alpha} \oplus
+\oplus \ldots \oplus \vecb{c}_n\oplus \grkb{\alpha} 
+\oplus \vecb{d}_1 \oplus  \ldots \oplus  \vecb{d}_m$
+and 
+ $\vecb{v}:=\vecb{b}_1\oplus \vecb{w}_1 \oplus \ldots \oplus \vecb{b}_n\oplus \vecb{w}_n \oplus r_1 \oplus \ldots \oplus r_n.$ The statement we want to prove is that $[\vecb{y}]_1 \in \mathbf{Im}([\matr{\Xi}]_1)$, and the witness is $\vecb{v}$. The upper left block of the matrix guarantees condition 2''), while the two lower blocks guarantee 
+condition 3'').  
+%  
+%    To see why this is the right definition of $\matr{\Xi}$, we argue for simplicity in the case where $n=2$. In this case, the matrix looks like:   
+%$$\matr{\Xi}(\matr{M},\matr{N},\matr{\Lambda},\matr{G})=
+%\left(\begin{array}{cccc}
+%    \matr{\Sigma}             & \matr{0}                  & \matr{0}           \\
+%    \matr{0}                  & \matr{\Sigma}             & \matr{0}           \\
+%    \overline{\vecb{g}}_1^\lb & \overline{\vecb{g}}_2^\lb & \vecb{g}_{3}^\lb
+%\end{array}\right)
+%=
+%\left(\begin{array}{ccccc}
+%    \matr{M}       & \matr{N}  & \matr{0}       & \matr{0} & \matr{0}         \\
+%    \matr{\Lambda} & \matr{0}  & \matr{0}       & \matr{0} & \matr{0}         \\
+%    \matr{0}       & \matr{0}  & \matr{M}       & \matr{N} & \matr{0}         \\
+%    \matr{0}       & \matr{0}  & \matr{\Lambda} & \matr{0} & \matr{0}         \\
+%    \vecb{g}_1^\lb & \vecb{0}  &\vecb{g}_2^\lb  & \vecb{0} & \vecb{g}_{3}^\lb
+%\end{array}\right).
 %$$ 
-%  for some $\vecb{b}_1,\vecb{b}_2 \in \Z_q^{\lb},\vecb{w}_1,\vecb{w}_2 \in \Z_q^{\lc},\vecb{r}_1,\vecb{r}_2 \in \Z_q^{\la}$.
-%  In particular, it is obvious from this write-up that this implies both that $[\vecb{x}_j]_1 \in \Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ for all $j \in [2]$ (which is equivalent to 
-%  $[\tilde{\vecb{x}}]_1 \in \mathbf{Im}(\matr{\Sigma}^2)$
-%  and that $[\vecb{x}_j]_1$ and $[\vecb{c}_j]_1$, for all
-%   $j \in [2]$ share a common opening. 
-%   
-% In the following, we extend the message space of the MP commitment to matrices  $\matr{M}\in\Z_q^{m\times n}$ by defining $\MP.\Com_{[\matr{G}]_\gamma}(\matr{M};\vecb{W}):=[\matr{G}]_\gamma \pmatri{\matr{M}\\ \matr{W}}\in\GG_\gamma^{(k+1)\times n}$, for $\matr{W}\in\Z_q^{k \times n}$. The columns of the resulting commitment are the commitments to the columns of $\matr{M}$.   
-%    For simplicity, we take 
-% $k=1$ in the definition of the MP commitment. 
- 
+%
+%
+%The statement $\begin{pmatrix}[\widetilde{\vecb{c}}]_1 \\ [\vecb{d}]_1 \end{pmatrix} \in \mathbf{Im}([\matr{\Xi}]_1)$ means that one proves that
+%$[\tilde{\vecb{c}}]_1$ and $[\vecb{d}]_1$ share a common opening, but it also proves that each $[\vecb{d}_i]_1$ is computed from only certain parts of the opening. For example, if $\vecb{c}_i =\matr{\Sigma}\smallpmatrix{\vecb{b}_i\\\vecb{w}_i}$, then $\vecb{d}_1=b_{1,1}\vecb{g}_1+b_{2,1}\vecb{g}_2+r_1\vecb{g}_3$ (recall that $\vecb{g}_i^\lb=\smallpmatrix{\vecb{g}_i&\cdots&\vecb{0}\\\vdots&\ddots&\vdots\\\vecb{0}&\cdots&\vecb{g}_i}$). Therefore, we are also proving that $[\vecb{d}_1]_1$ is a commitment to $\vecb{b}_1^*$, the first row of $\matr{B}=(\vecb{b}_1||\vecb{b}_2)$.
+% 
+
  
    
 \begin{figure}
@@ -213,43 +69,41 @@ $$
 \end{array}
 &
 \begin{array}{l}
-{\algP(\mathsf{crs}, \{[\vecb{x}_i]_1,\langle \vecb{b}_i,\vecb{w}_i\rangle:i\in[n]\})}\\
+{\algP(\mathsf{crs}, \{[\vecb{c}_j]_1,\langle \vecb{b}_j,\vecb{w}_j\rangle:j\in[n]\})}\\
 \hline
-{[\vecb{c}_j]_1} := \MP.\Com_{[\matr{G}]_1}(\vecb{b}_j^*;r_j),\\
-r_j \gets\Z_q, \forall j\in[\lb]\\
+{[\vecb{d}_i]_1} := \MP.\Com_{[\matr{G}]_1}(\vecb{b}_i^*;r_i),\\
+r_i \gets\Z_q, \forall i\in[\lb]\\
 \pi_\sflin \gets 
     \Pi_\sflin.\algP
     (
         \crs_\sflin,
-            [\tvecb{x}]_1\oplus
-            [\vecb{c}]_1,
-            \tilde{\vecb{b}}\oplus\vecb{r}
+            [\vecb{y}]_1,
+            \vecb{v}
     )\\
 \pi_\sfbits \gets
     \Pi_\sfbits.\algP
     (
         \crs_\sfbits,
-        \{[\matr{c}_j]_1,\\
+        \{[\matr{d}_i]_1,\\
 \qquad
-        \langle\matr{b}^*_j,r_j\rangle:j\in[\lb]\}
+        \langle\matr{b}^*_i,r_i\rangle:i \in[\lb]\}
     )\\
-\text{Return } \  ([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits). \\
+\text{Return } \  ([\vecb{d}]_1,\pi_\sflin,\pi_\sfbits). \\
 \\
 \\
 \\
 \end{array}\\
 \begin{array}{l}
-{\algV(\mathsf{crs},\{[\vecb{x}_i]_1:i\in[n]\},([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits))}\\
+{\algV(\mathsf{crs},\{[\vecb{c}_j]_1:j\in[n]\},([\vecb{d}]_1,\pi_\sflin,\pi_\sfbits))}\\
 \hline
 \mathsf{ans}_1 \gets
     \Pi_\sflin.\algV
     (
         \crs_\sflin,
-            [\tvecb{x}]_1\oplus
-            [\vecb{c}]_1,
+            [\vecb{y}]_1,
         \pi_\sflin
     )\\
-\mathsf{ans}_2 \gets \Pi_\sfbits.\algV(\crs_\sfbits,\{[\vecb{c}_j]_1:j\in[\lb]\},\pi_\sfbits)\\
+\mathsf{ans}_2 \gets \Pi_\sfbits.\algV(\crs_\sfbits,\{[\vecb{d}_i]_1:i\in[\lb]\},\pi_\sfbits)\\
 \text{Return } \ \mathsf{ans}_1\wedge\mathsf{ans}_2.
 \\
 \\
@@ -258,30 +112,29 @@ r_j \gets\Z_q, \forall j\in[\lb]\\
 \end{array}
 &
 \begin{array}{l}
-{\mathsf{S}_2(\crs,[\vecb{x}]_1,\tau)}\\
+{\mathsf{S}_2(\crs,[\vecb{c}]_1,\tau)}\\
 \hline
-{[\vecb{c}_j]_1} := \MP.\Com_{[\matr{G}]_1}(\matr{0}_{n\times 1};\tilde{{r}}_j)\\
-\tilde{{r}}_j\gets\Z_q^\lb, \forall j\in[\lb]\\
+{[\vecb{d}_i]_1} := \MP.\Com_{[\matr{G}]_1}(\matr{0}_{n\times 1};\tilde{{r}}_i)\\
+\tilde{{r}}_i\gets\Z_q, \forall i\in[\lb]\\
 \pi_\sflin \gets 
     \Pi_\sflin.\algS
     (
         \crs_\sflin,
-            [\tvecb{x}]_1\oplus
-            [\vecb{c}]_1,
+            [\vecb{y}]_1,
        \tau_\sflin
     )\\
 \pi_\sfbits \gets
     \Pi_\sfbits.\algS
     (
         \crs_\sfbits,\\
-\qquad\quad  \{[\vecb{c}_j]_1:j\in[\lb]\},
+\qquad\quad  \{[\vecb{d}_i]_1:i\in[\lb]\},
         \tau_\sfbits
     )\\
-\text{Return } \  ([\vecb{c}]_1,\pi_\sflin,\pi_\sfbits). \\
+\text{Return } \  ([\vecb{d}]_1,\pi_\sflin,\pi_\sfbits). \\
 \end{array}
 \end{array}$$
 \end{\algSize}
-\caption{Proof system for the language $\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}^n$, where $\Pi_\sfbits$ is the proof system for $\Lang_{ck,\sfbits}^n$ from Sect. \ref{sec:bits-n}, $\vecb{c}:=\vecb{c}_1\oplus\ldots\oplus\vecb{c}_\lb$, $\vecb{b}:=\vecb{b}_1\oplus\ldots\oplus\vecb{b}_n$, $\tvecb{x}:=\vecb{x}_1\oplus\grkb{\alpha}\oplus\ldots\oplus\vecb{x}_n\oplus\grkb{\alpha}$, and $\tilde{\vecb{b}}:=\vecb{b}_1\oplus\vecb{w}_1\oplus\ldots\vecb{b}_n\oplus\vecb{w}_n$. The proof size is $(2\lb+11)|\GG_1|+10|\GG_2|$.\label{fig:bin-leng-nizk}}
+\caption{Proof system for the language $\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}^n$, where $\Pi_\sfbits$ is the proof system for $\Lang_{ck,\sfbits}^m$ from Sect. \ref{sec:bits-n}, $\vecb{d}:=\vecb{d}_1\oplus\ldots\oplus\vecb{d}_\lb$, and $\vecb{c}:=\vecb{c}_1\oplus\ldots\oplus\vecb{c}_n$. The proof size is $(2\lb+11)|\GG_1|+10|\GG_2|$.\label{fig:bin-leng-nizk}}
 \end{figure}
 %
-% and where $\tvecb{x}:=\uvecb{X}$, $\tvecb{c}:=\uvecb{C}$, $\tvecb{b}:=\uvecb{B}$, $\tvecb{w}:=\uvecb{W}$, and $\tgrkb{\alpha}:=\vect(\grkb{\alpha}||\cdots||\grkb{\alpha})$.
+% and where $\tvecb{c}:=\uvecb{X}$, $\tvecb{c}:=\uvecb{C}$, $\tvecb{b}:=\uvecb{B}$, $\tvecb{w}:=\uvecb{W}$, and $\tgrkb{\alpha}:=\vect(\grkb{\alpha}||\cdots||\grkb{\alpha})$.
