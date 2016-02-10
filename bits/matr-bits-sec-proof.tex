@@ -1,7 +1,7 @@
 \subsection{The Scheme}
 \vspace*{-1cm}
 %   If $\matr{G}\gets\dist_{2,m+1}^0$ the proof that $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ open to the same value implies that $\ovecb{c}_j\in\Span(\matr{G})$ for all $j\in[n]$ and, by the perfect hiding property, $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)$ can be opened to any $\matr{B}\in\bits^{m\times n}$ thus $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\in\Lang_{ck,\sfbits}^n$. If $\matr{G}\gets\dist_{2,m+1}^{i^*}$ and $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\notin\Lang_{ck,\sfbits}^n$, then the $i^*$ th row of $\matr{B}$ is not in $\bits^{1\times n}$ which implies that there is some $j\in[n]$ such that $[\vecb{c}_j]_1\notin\Lang_{ck,\sfbits}$. If we pick $j^*\gets[n]$ and $\overline{\matr{G}}\gets\dist_{2,mn+1}^{m(i^*-1)+j^*}$, soundness of the proof that $[\ovecb{c}]_1\in\Lang_{\overline{ck},\sfbits}$ is violated with probability at least $1/n$.
-\begin{figure} 
+\begin{figure}[H]
 \begin{\algSize}
 $$
 \begin{array}{ll}
@@ -55,7 +55,7 @@ $\matr{G}^n:=(\matr{G}_1\oplus\ldots\oplus\matr{G}_1||\vecb{g}_{n+1}\oplus\ldots
 \label{fig:bitsn}
 }
 \end{figure}
-\vspace*{-1cm}
+%\vspace*{-1cm}
 \subsection{Security Proof}
 
 \begin{proof}
