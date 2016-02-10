@@ -7,3 +7,5 @@
 *.pdf
 *.swp
 *.old
+*.bcf
+*.xml

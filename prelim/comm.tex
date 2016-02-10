@@ -27,22 +27,6 @@ $$\Pr\left[ck \gets \algK(gk); m \gets \mathcal{M}_{ck};
 In this paper we will be using two commitment schemes, one is the GS commitment scheme, and the other is a generalization of the Multi-Pedersen commitment. Multi-Pedersen commitments will be introduced in Sect. \ref{sec:mp-comm} and GS commitments are described below.
 %commitment to a vector of scalars is a vector of two group elements, instead of the usual Multi-Pedersen where commitment is only one group element.
 
-\subsubsection{Groth-Sahai Commitments}
-
-\begin{definition} The Groth-Sahai commitment scheme in the SXDH instantiation in the group $\GG_\gamma$, $\gamma\in\{1,2\}$, is  specified by the following three algorithms 
-	$(\mathsf{GS}.\algK,\mathsf{GS}.\Com,\mathsf{GS}.\algVrfy)$ such that:
-	\begin{itemize} 
-		\item  $\mathsf{GS}.\algK$ is a randomized algorithm, which on input the group key $gk$ and the (optional and if not given assumed to be $\mathsf{true}$) flag $\mathsf{binding}$, outputs a commitment key $ck:=[\matr{U}]_\gamma\in\GG_\gamma^{2\times 2}$. If $\mathsf{binding}=\mathsf{true}$, then it outputs the {perfectly binding key} where $\matr{U}:=(\vecb{u}_1||\vecb{u}_2)$, else, it outputs the {perfectly hiding commitment key} where $\matr{U}:=(\vecb{u}_1-\vecb{e}_2||\vecb{u}_2)$. In both cases $\vecb{u}_2\gets\distlin_{1}$ and $\vecb{u}_1:=\mu\vecb{u}_2$ for $\mu\gets\Z_q$.
-		\item $\mathsf{GS}.\Com$ is a randomized algorithm which, on input a commitment key $ck=\bmatr{U}_\gamma$, and a message 
-		$\mathsf{m}$ in the message space $\mathcal{M}_{ck}=\Z_q\cup\GG_\gamma$, it proceeds as follows. If $\mathsf{m}=m\in\Z_q$, it samples $r \gets \Z_q$ and outputs a commitment $\bvecb{c}_\gamma := m[\vecb{e}_2+\vecb{u}_1]_\gamma+r[\vecb{u}_2]_\gamma$ in the commitment space $\mathcal{C}_{ck}=\GG_\gamma^2$ and an opening $Op=r$. If $\mathsf{m}=[m]_\gamma\in\GG_\gamma$, it samples $\vecb{r} \gets \Z_q^2$ and outputs a commitment $\bvecb{c}_\gamma := [m]_\gamma\vecb{e}_2+[\matr{U}]_\gamma\vecb{r}$ in the commitment space $\mathcal{C}_{ck}=\GG_\gamma^2$ and an opening $Op=\vecb{r}$.
-		\item $\mathsf{GS}.\algVrfy$ is a deterministic algorithm which, on input the commitment key $ck=\bmatr{U}_\gamma$, a commitment $\bvecb{c}_\gamma$,  a message 
-		$m \in \mathcal{M}_{ck}$ and an opening $Op$, outputs $1$ if $\bvecb{c}_\gamma=\GS.\Com_{ck}(m;Op)$
-		and $0$ otherwise.
-	\end{itemize}
-\end{definition}
-
-\begin{theorem}[\cite{EC:GroSah08}] If $ck\gets\algK(gk)$ (resp. $ck\gets\algK(gk,\mathsf{false})$) the Groth-Sahai commitment scheme is perfectly binding (resp. computationally binding) and computationally hiding (resp. perfectly hiding).
-\end{theorem}
 
 %The message space is naturally extended to row-vectors $\vecb{m}\in\Z_q^{1\times m}$  defining $\GS.\Com_{[\matr{U}]_1}(\vecb{m};\vecb{w}):=\pmatri{{[\vecb{m}]_1}\\{[\vecb{0}_{1\times m}]_1}}+[\matr{U}]_1\pmatri{\vecb{m}\\\vecb{w}}\in\GG_1^{2\times m}$, for $\vecb{w}\in\Z_q^{1\times m}$. Similarly, for $[\vecb{m}]_1\in\GG_1^{1\times m}$, $\GS.\Com_{[\matr{U}]_1}([\vecb{m}]_1;\matr{W}):=\pmatri{{[\vecb{m}]_1}\\{[\vecb{0}_{1\times m}]_1}}+[\matr{U}]_1\matr{W}\in\GG_1^{2\times m}$, for $\matr{W}\in\Z_q^{2\times m}$. 
 

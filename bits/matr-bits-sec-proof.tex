@@ -1,5 +1,5 @@
 \subsection{The Scheme}
-
+\vspace*{-1cm}
 %   If $\matr{G}\gets\dist_{2,m+1}^0$ the proof that $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ open to the same value implies that $\ovecb{c}_j\in\Span(\matr{G})$ for all $j\in[n]$ and, by the perfect hiding property, $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)$ can be opened to any $\matr{B}\in\bits^{m\times n}$ thus $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\in\Lang_{ck,\sfbits}^n$. If $\matr{G}\gets\dist_{2,m+1}^{i^*}$ and $([\vecb{c}_1]_1,\ldots,[\vecb{c}_n]_1)\notin\Lang_{ck,\sfbits}^n$, then the $i^*$ th row of $\matr{B}$ is not in $\bits^{1\times n}$ which implies that there is some $j\in[n]$ such that $[\vecb{c}_j]_1\notin\Lang_{ck,\sfbits}$. If we pick $j^*\gets[n]$ and $\overline{\matr{G}}\gets\dist_{2,mn+1}^{m(i^*-1)+j^*}$, soundness of the proof that $[\ovecb{c}]_1\in\Lang_{\overline{ck},\sfbits}$ is violated with probability at least $1/n$.
 \begin{figure} 
 \begin{\algSize}
@@ -55,17 +55,14 @@ $\matr{G}^n:=(\matr{G}_1\oplus\ldots\oplus\matr{G}_1||\vecb{g}_{n+1}\oplus\ldots
 \label{fig:bitsn}
 }
 \end{figure}
-
-
-
+\vspace*{-1cm}
 \subsection{Security Proof}
 
 \begin{proof}
-\begin{description}
-\item[Completeness.]
+{\bf Completeness.}
 Follows from the fact that $([\vecb{c}]_1,[\ovc]_1)\in\Lang_{\sfcom,[\matr{G}^n]_1,[\ovG]_1,mn}$ and that $[\ovc]_1\in\Lang_{[\ovG]_1,\sfbits}$.
 
-\item[Soundness.]
+{\bf Soundness.}
 When $\matr{G}\gets\distlinizeroone$ the proof follows from the proof that $[\vecb{c}]_1$ and $[\ovecb{c}]_1$ open to the same value.
 When $\matr{G}\gets\distlinisnone$, the proof follows from the indistinguishability of the following games.
 
@@ -110,8 +107,7 @@ There exists adversaries $\advB_1,\advB_2$ such that $\Pr[\sfGame_2(\advA)=1]\le
 If $\sfGame(\advA)=1$, then $b_{i^*,j^*}\notin\bits$ while all the verification equations are accepted. Given that $\ovecb{g}_{m(i^*-1)+j^*}$ is linearly independent from $\{\ovecb{g}_j:j\neq m(i^*-1)+j^*\}$, it holds that $\{\ovecb{g}_{m(i^*-1)+j^*},\ovecb{g}_{mn+1}\}$ is a basis for $\Z_q^2$ and thus we can define $\bb_{i^*,j^*},\overline{w}_{h,i}$ as the unique coefficients in $\Z_q$ such that $\ovecb{c} = \bb_{i^*,j^*}\ovecb{g}_{m(i^*-1)+j^*}+\overline{w}_{h,i}\ovecb{g}_{mn+1}$. If $b_{i^*,j^*}\neq\bb_{i^*,j^*}$, then $([\vecb{c}]_1,[\ovecb{c}]_1)$ can not open to the same value and we can construct an adversary $\advB_1$ against $\Pi_\sfcom$. Else, it must be the case that $\bb_{i^*,j^*}=b_{i^*,j^*}\notin\bits$. Therefore, if an adversary $\advB_2$ simulates $\sfGame_2$ until $\advA$ halts and outputs $([\ovecb{c}]_1,\pi_\sfbits)$, then $\advB_2$ breaks soundness of $\Pi_\sfbits$. 
 \end{proof}
 
-\item[Zero-Knowledge.] Given that $\overline{\matr{G}}$ defines perfectly hiding commitments, $[\ovecb{c}]_1$ can be opened to any value. Therefore $[\ovecb{c}]_1$ and $[\vecb{c}]_1$ share a common opening and $[\ovecb{c}]_1\in\Lang_{\overline{ck},\sfbits}$, and thus $\pi_\sfcom$ and $\pi_\sfbits$ are correctly distributed.  
-\end{description}
+{\bf Zero-Knowledge.} Given that $\overline{\matr{G}}$ defines perfectly hiding commitments, $[\ovecb{c}]_1$ can be opened to any value. Therefore $[\ovecb{c}]_1$ and $[\vecb{c}]_1$ share a common opening and $[\ovecb{c}]_1\in\Lang_{\overline{ck},\sfbits}$, and thus $\pi_\sfcom$ and $\pi_\sfbits$ are correctly distributed.  
 \end{proof}
 
 
