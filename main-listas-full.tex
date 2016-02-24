@@ -10,6 +10,8 @@
 %\usepackage{fullpage}
 \input{preamble}
 
+\newif\iffull
+\fulltrue
 
 %\author[1]{Alonso Gonz\'alez}
 %\author[1]{Alejandro Hevia}
@@ -33,24 +35,21 @@
 \end{abstract} 
 
 \section{Introduction}
-    %\input{intro/introduction}
-    \subsection{DeMentirijilla}
-        \input{intro/dementirijilla}
-    %\subsection{Our Techniques}\label{sec:techniques}
-    %    \input{intro/our-techniques}
-    \subsection{Applications}\label{sec:intro-app}
-        \input{intro/applications}
+    \input{intro/introduction}
+    \subsection{Our Techniques}\label{sec:techniques}
+        \input{intro/our-techniques}
     \subsection{Related Work}
         \input{intro/related-work}
     \subsection{Organization}
         \input{intro/organization}
+
 \section{Preliminaries} \label{secc:prelim}
     \input{prelim/prelim}
     \subsection{Decisional Assumptions} 
         \input{prelim/dec-assumptions} \label{sec:dec-ass}
             \subsection{Computational Assumptions}\label{sec:comp-assump}
         \input{prelim/comp-assumptions}
-ç \subsection{Commitment Schemes} \label{sec:comm}
+    \subsection{Commitment Schemes} \label{sec:comm}
          \input{prelim/comm}
     \subsection{Groth-Sahai NIZK Proofs} \label{GSproofs} \label{sec:gs}
         \input{prelim/gs-proofs}
@@ -58,19 +57,19 @@
         \input{prelim/qanizk}
     \subsection{QA-NIZK Argument for Linear Subspaces} \label{Sect:QANIZKlinspace}
         \input{prelim/qanizk-linear}
+
 \section{Extended Multi-Pedersen Commitments} \label{sec:mp-comm}
     \input{mp-comm/mp-comm}
+
 \section{QA-NIZK For Bit-Strings, Revisited} \label{sec:bits}
     \input{bits/bits}  
     \subsection{Constant-Size Argument for $\Lang_{ck,\sfbits}^n$} \label{sec:bits-n}
         \input{bits/matr-bits}
        
-
 \section{Aggregated NIZK Set Membership Arguments} \label{sec:bin-lang}
     \input{bin-languages/bin-languages}
     \subsection{QA-NIZK Argument of Membership in $\Lang_{\matr{M},\matr{N},\matr{\Lambda},\grkb{\alpha}}^n$} \label{sec:bin-lan-constr}
        \input{bin-languages/construction} 
-
 
 \section{Proof of Correctness of a Shuffle} \label{sec:shuffle}
 \input{shuffles/shuffles}
@@ -100,7 +99,7 @@ In this section, we give the details of the QA-NIZK argument to prove that a MP 
     \input{bin-languages/app_bin_construction}
     \subsection{Security Proofs}
         \input{bin-languages/bin-lang-proof}
-\section{Proof of Correctness of a Shuffle: Security Proof}
+\section{Proof of Correctness of a Shuffle: Security Proof} \label{app:shuffle}
     \input{shuffles/security-proofs}
 \end{document}
 

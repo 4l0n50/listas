@@ -26,7 +26,7 @@ $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
 The argument we need for our results eliminates the perfectly binding commitment, which of course also means that step 2 disappears. Additionally, in the original scheme of \cite{AC:GonHevRaf15}, the distribution of $ck=[\matr{G}]_1$ is $\distlinizeroone$, while in our argument of membership in 
 $\Lang_{ck,\sfbits}$, $\matr{G}$ can follow any distribution $\distlininone$ for some $0 \leq i \leq m$. 
 However, it is not hard to adapt the original proof to these distributions (in fact, in the soundness proof of 
-\cite{AC:GonHevRaf15}, there is a game where the distribution of $\matr{G}$ is changed to $\distlininone$, for some $i \gets [m]$). The proof that $\Lang_{ck,\sfbits}$ admits a constant-size QA-NIZK argument essentially reuses parts of the proof of \cite{AC:GonHevRaf15}.  In summary, in the full version of this work we prove the following result, which heavily draws on the work of \cite{AC:GonHevRaf15}. 
+\cite{AC:GonHevRaf15}, there is a game where the distribution of $\matr{G}$ is changed to $\distlininone$, for some $i \gets [m]$). The proof that $\Lang_{ck,\sfbits}$ admits a constant-size QA-NIZK argument essentially reuses parts of the proof of \cite{AC:GonHevRaf15}.  In summary, \iffull in Appendix \ref{app:bits} \else in the full version of this work \fi we prove the following result, which heavily draws on the work of \cite{AC:GonHevRaf15}. 
 
 \begin{theorem} \label{theo:bits} There exists a QA-NIZK argument $\Pi_\sfbits$ for membership in $\Lang_{ck,\sfbits}$ with proof size  
 $8|\GG_1|+10|\GG_2|$ with perfect completeness, perfect-zero knowledge and computational soundness. 

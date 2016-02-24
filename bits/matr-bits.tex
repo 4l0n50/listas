@@ -1,8 +1,14 @@
 We give a QA-NIZK argument of membership in the language $\Lang_{ck,\sfbits}^n  = \Lang_{ck,\sfbits} \times \ldots \times \Lang_{ck,\sfbits}$ with a proof size which is independent of $n$ (but with a loss factor in the proof of soundness of $n$). The result will be crucial to get improved proof sizes for more complex statements. More specifically, we prove: 
 
-
 \begin{theorem} \label{theo:bitsnm} There exists a QA-NIZK argument $\Pi_\sfbitsn$  for membership in $\Lang_{ck,\sfbits}^n$ with proof size  
 $10|\GG_1|+10|\GG_2|$ with perfect completeness, perfect-zero knowledge and computational soundness. 
 \end{theorem}
 
-The description of the protocol and the full proof of the theorem are in Appendix~\ref{app:bits-n}. 
+\iffull
+\subsection{Intuition}
+ \input{bits/matr-bits-intuition.tex}
+\fi
+
+The description of the protocol and the full proof of Theorem \ref{theo:bitsnm} are in Appendix~\ref{app:bits-n}.
+
+
