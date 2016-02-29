@@ -20,6 +20,17 @@ The common reference string is given by:
 \begin{enumerate}
 \item $[\vecb{d}]_2:= \mathsf{MP}.\Com_{[\matr{H}]_2} (\vecb{b};s)$, $s \gets \Z_q$. 
 \item Pick $\matr{R} \gets \Z_q^{2\times 2}$ and compute:
+\iffull
+\begin{eqnarray*}
+([\matr{\Theta}]_1, [\matr{\Pi}]_2) & := & ([\matr{R}]_1,[-\matr{R}]_2)+
+\sum_{i\in[m]}\sum_{j\in[m]}b_i(b_j-1)([\matr{C}_{i,j}]_1,[\matr{D}_{i,j}]_2)+\\
+& &     rs([\matr{C}_{m+1,m+1}]_1,[\matr{D}_{m+1,m+1}]_2)+
+  \sum_{i \in [m]}
+ \left(b_i s  ([\matr{C}_{i,m+1}]_1,[\matr{D}_{i,m+1}]_2)\right. +\\
+& & \left.r(b_i-1) ([\matr{C}_{m+1,i}]_1,[\matr{D}_{m+1,i}]_2)\right).
+\end{eqnarray*}
+
+\else
 \begin{eqnarray*}
 ([\matr{\Theta}]_1, [\matr{\Pi}]_2) & := & ([\matr{R}]_1,[-\matr{R}]_2)+
 \sum_{i\in[m]}\sum_{j\in[m]}b_i(b_j-1)([\matr{C}_{i,j}]_1,[\matr{D}_{i,j}]_2)+\\
@@ -28,6 +39,7 @@ The common reference string is given by:
  \left(b_i s  ([\matr{C}_{i,m+1}]_1,[\matr{D}_{i,m+1}]_2)\right. +\\
 & & \left.r(b_i-1) ([\matr{C}_{m+1,i}]_1,[\matr{D}_{m+1,i}]_2)\right).
 \end{eqnarray*}
+\fi
 \item Compute a proof $\pi_\sfsum$
 that $\matr{\Theta}+\matr{\Pi}$ is in the span of 
 $\{\matr{C}_{i,j}+\matr{D}_{i,j}\}_{(i,j)\in\indexSet{m}{1}}$

@@ -17,4 +17,9 @@ Given that it must hold that $\ell=n/\log d$, the total size of the proof is $\m
 \subsection{Our Construction}
 Note that \ref{rp:b} is equivalent to show that $(\GS.\Com(y_1)||\cdots||\GS.\Com(y_\ell))\in\Lang_{ck,[0,d-1]}^\ell$. Thus, using the proof system from Sect. \ref{sec:bin-lang} we are able to aggregate $\ell$ Range Proofs in the interval $[0,d-1]$ into a single proof of size $\Theta(\log d)$. Choosing $d=n^k$ we get that $\mathsf{S}_{[0,d-1]}(\ell)=\Theta(k\log n)$ and $\ell=n/\log n^k=\frac{n}{k\log n}$, and thus the size of our Range Proof is $\Theta(\frac{n}{k\log n})$ for an arbitrarily chosen $k\in\mathbb{N}$. One would be tempted to choose $d=2^{\sqrt{n}}$ to obtain a proof of size $\Theta(\sqrt{n})$. However, the proof system from Sect. \ref{sec:bin-lang} requires membership in $\Lang_{ck,[0,d-1]}$ to be efficiently testable, which seems to be infeasible as when $d=2^{\sqrt{n}}$.
 
+\iffull
+A detailed description of our proof system is in Fig. \ref{fig:rp}.
+\input{range-proofs/detailed-construction}
+\else
 A detailed description and the security proofs of our proof system can be found in Appendix \ref{app:range-proof}.
+\fi

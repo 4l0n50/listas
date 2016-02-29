@@ -7,11 +7,12 @@
 \input{common-packages}
 \usepackage{fullpage}
 
+\newif\iffull
+\fulltrue
+
 %\usepackage{fullpage}
 \input{preamble}
 
-\newif\iffull
-\fulltrue
 
 %\author[1]{Alonso Gonz\'alez}
 %\author[1]{Alejandro Hevia}
@@ -87,7 +88,7 @@
 \section{Extended Multi-Pedersen Commitments: Proofs} \label{app:mp}
     \input{mp-comm/app_mp}
 \section{QA-NIZK for Bit-Strings, Revisited} \label{app:bits}
-In this section, we give the details of the QA-NIZK argument to prove that a MP commitment opens to a bit-string.
+In this section, we give the details of the QA-NIZK argument to prove that a MP commitment opens to a bit-string. We denote by $\indexSet{n}{k}$ the set $\{(i,j):i,j\in[n+k]\}\setminus\{(i,i),i\in[n]\}$.
     \subsection{The scheme} \label{sec:bits-scheme} 
         \input{bits/proof-system}
     \subsection{Security Proof} \label{app:proofbits}

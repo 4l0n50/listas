@@ -17,10 +17,13 @@ In the above definitions, $\matr{M} \in \Z_q^{m \times t_1}$,
  for some matrices $[\matr{A}]_\gamma,[\matr{B}]_\gamma$ defined in 
   $ck$. 
 
-%We emphasize that when using the proof systems  for the above languages as a building block to prove other statements,
 We denote indistinctly by $\Pi_\sflin$ the proof systems for (i) and (ii), by $\Pi_\sfcom$ the proof system for (iii), and by $\Pi_\sfsum$ the proof system for (iv).
 
- To compute the proof sizes of our constructions, we will use the most efficient instantiations for each of these languages, which are described in Table \ref{table:lin-sp}. We note that the argument of \cite{AC:GonHevRaf15} for $\Lang_{ck,ck',\sfcom}$ is for the case $i=1,j=2$. It is not hard to see that when $i=j$, membership in $\Lang_{ck,ck',\sfcom}$ (for commitments of the form we specified) amounts to prove membership in some linear space in $\GG_\gamma$, which explains the second row of the table.  
+ To compute the proof sizes of our constructions, we will use the most efficient instantiations for each of these languages, which are described in Table \ref{table:lin-sp}. We note that the argument of \cite{AC:GonHevRaf15} for $\Lang_{ck,ck',\sfcom}$ is for the case $i=1,j=2$. It is not hard to see that when $i=j$, membership in $\Lang_{ck,ck',\sfcom}$ (for commitments of the form we specified) amounts to prove membership in some linear space in $\GG_\gamma$, which explains the second row of the table.
+
+\iffull
+In Sect. \ref{app:proofbits} we require this constructions to satisfy a stronger notion of soundness, as defined in Sect. \ref{sec:zkdef}. It have been proven that the same constructions satisfy this stronger notion of soundness \cite{EPRINT:GonHevRaf15}.
+\fi
 
 \input{prelim/table-nikz-lin.tex}
 

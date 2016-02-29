@@ -27,6 +27,10 @@ $\footnote{While using slightly different assumptions, in \cite{AC:GroLu07} this
 
 The remainder of the proof follows essentially the proof from \cite{AC:GroLu07}. Suppose that $[\matr{C}]_2=\Enc_{[\vecb{v}]_2}([\matr{m}^\top]_2)$ and $[\matr{C}]_2=\Enc_{[\vecb{v}]_2}([\matr{n}^\top]_2)$. Let $\vecb{k}=(-v_2/v_1,1)^\top$ the ``decryption key'' (i.e. $\vecb{v}^\top\vecb{k}=0$ and $(0,1)\vecb{k}=1$)\footnote{The availability of the decryption key $\vecb{k}$ in the soundness reduction is possible since the reduction samples by itself the language parameter $\vecb{v}$. Correspondingly Groth and Lu \cite{AC:GroLu07} proved \emph{Culpable Soundness} (also called co-soundness), which essentially requires the soundness adversary to produce the decryption key.}, we multiply by $\matr{k}$, on the right, the equation from condition $\ref{shuffle:c}$ to ``decrypt'' $[\matr{C}]_2$ and $[\matr{D}]_2$. We get that
 $[\vecb{s}^\top]_1\matr{P}^\top[\matr{m}]_2-[\vecb{s}^\top]_1[\matr{n}]_2=[0]_T$, which implies that $\matr{P}^\top[\matr{m}]_2=[\matr{n}]_2$ unless $\matr{P}^\top[\matr{m}]_2-[\matr{n}]_2$ is a solution to the $\dist_{n,1}\mbox{-}\kermdh$. Finally this implies that $[\matr{C}]_2\matr{P}-[\matr{D}]_2$ is an encryption of $[\matr{0}_{n\times 1}]_2$ and thus $([\matr{C}]_2,[\matr{D}]_2)\in\Lang_{[\vecb{v}]_2,n,\mathsf{shuffle}}$.
- 
-A detailed description and the proof of security of our construction can be found in Appendix \ref{app:shuffle}.
 
+\iffull
+A detailed description of our construction is in Fig. \ref{fig:shuffles} and the proof of security can be found in Appendix \ref{app:shuffle}.
+\input{shuffles/detailed-description}
+\else
+A detailed description and the proof of security of our construction can be found in Appendix \ref{app:shuffle}.
+\fi
