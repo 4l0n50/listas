@@ -6,11 +6,19 @@ where $ck:=([\vecb{u}_1]_1,[\vecb{u}_2]_1)\gets\GS.\algK(1^\lambda)$.
 %The most efficient Range Proof under falsifiable assumptions, specifically the $q$-Hidden Strong Diffie-Hellman Assumption, is of size $\Theta(\frac{n}{\log n-\log\log n})$ \cite{PAIRING:RiaKohPre09}.
 %In general, the approach from \cite{PAIRING:RiaKohPre09}, which closely follows \cite{AC:CamChaShe08}, can be summarized as follows:
 Our proof is as follows:
+\iffull
 \begin{enumerate}[label=\alph*)]
+\else
+\begin{enumerate*}[label=\alph*)]
+\fi
 \item Commit to $y_1,\ldots y_\ell$.
 \item Show that $y_i\in[0,d-1]$, for each $i\in[\ell]$. \label{rp:b}
 \item Show that $y=\sum_{i\in[\ell]}y_id^{i-1}$.
+\iffull
 \end{enumerate}
+\else
+\end{enumerate*}
+\fi
 %Given that the maximum $y$ expressible as $\sum_{i\in[\ell]}x_id^{i-1}$ is $\sum_{i\in[\ell]}(d-1)d^{i-1}=d^\ell-1$,
 Given that it must hold that $\ell=n/\log d$, the total size of the proof is $\mathsf{S}_{[0,d-1]}(\ell)+\Theta(\ell)$, where $\mathsf{S}_{[0,d-1]}(\ell)$ is the size of $\ell$ Range Proofs in the interval $[0,d-1]$.
 
@@ -21,5 +29,5 @@ Note that \ref{rp:b} is equivalent to show that $(\GS.\Com(y_1)||\cdots||\GS.\Co
 A detailed description of our proof system is in Fig. \ref{fig:rp}.
 \input{range-proofs/detailed-construction}
 \else
-A detailed description and the security proofs of our proof system can be found in Appendix \ref{app:range-proof}.
+A detailed description and the security proofs of our proof system can be found in the full version.
 \fi

@@ -8,14 +8,22 @@ some distribution $\distink$. For simplicity, in the exposition we restrict ours
 It is important to note that, as an extended MP commitment is at best only binding at one coordinate, a priori showing that it opens to $\vecb{b} \in \{0,1\}^m$ is not very meaningful, as it does open to other values as well. However, when combined with external protocols that univocally define $\vecb{b}$, it becomes a key building block to obtain the rest of the results of the paper.  
 
 The argument is implicit in \cite{AC:GonHevRaf15}, where the authors construct a QA-NIZK argument for proving that a perfectly binding commitment opens to a bit-string. More technically, to prove that a  perfectly binding commitment $[\vecb{c}']_1$ opens to a bit-string $\vecb{b}$, the argument in \cite{AC:GonHevRaf15} takes the following steps:
-\begin{enumerate}
+\iffull
+\begin{enumerate}[label=\arabic*)]
+\else
+\begin{enumerate*}[label=\arabic*)]
+\fi
 \item Construct two MP commitments $[\vecb{c}]_1$, 
 $[\vecb{d}]_2$ to $\vecb{b}$. 
 \item Prove that $[\vecb{c}]_1$ and $[\vecb{c}']_1$ open to the same string. 
 \item Prove that the two MP commitments $[\vecb{c}]_1$ and $[\vecb{d}]_2$ open to the same string.
 \item Prove that $\vecb{c}(\vecb{d}-\sum_{j \in [m]}
 \vecb{h}_j)^\top\in\Span(\{\vecb{g}_i\vecb{h}_j^\top:i,j\in[m+1]\}\setminus\{\vecb{g}_i\vecb{h}_i^\top:i\in[m]\})$, where $ck:=[(\vecb{g}_1,\ldots,\vecb{g}_{m+1})]_1$ and $ck':=[(\vecb{h}_1,\ldots,\vecb{h}_{m+1})]_2$.
+\iffull
 \end{enumerate}
+\else
+\end{enumerate*}
+\fi
 The last step guarantees that 
 $b_i(b_i-1)=0$ for all $i \in [m]$. Indeed, 
 $\vecb{c}(\vecb{d}-\sum_{j \in [m]}

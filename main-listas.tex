@@ -13,17 +13,9 @@
 \input{preamble}
 
 
-%\author[1]{Alonso Gonz\'alez}
-%\author[1]{Alejandro Hevia}
-%\affil[1]{Departamento de Ciencias de la Computaci\'on, Universidad de Chile, Chile\\
-%\tt ahevia@dcc.uchile.cl, alonso.gon@gmail.com}}
-%\author[2]{Carla R\`afols}
-%\affil[2]{Horst-G\"ortz Institute for IT Security and Faculty of Mathematics, Ruhr-Universit\"at Bochum, Germany\\
-%{\tt carla.rafols@rub.de}}
+\author{Alonso Gonz\'alez\thanks{Funded by CONICYT, CONICYT-PCHA/Doctorado Nacional/2013-21130937.} \inst{1} \and  Carla R\`afols \inst{2}}
+\institute{DCC, Universidad de Chile, Chile \and DTIC, Universitat Pompeu Fabra, Barcelona}
 
-
-\author{\vspace*{-.5cm}}
-\institute{\vspace*{-.8cm}}
 \title{New Techniques for Non-Interactive Shuffle and Range Arguments}
 \begin{document}
 %\begin{doublespace}
@@ -42,8 +34,10 @@
 %        \input{intro/applications}
     \subsection{Related Work}
         \input{intro/related-work}
+\iffull
     \subsection{Organization}
         \input{intro/organization}
+\fi
 \section{Preliminaries} \label{secc:prelim}
     \input{prelim/prelim}
     \subsection{Decisional Assumptions} 
@@ -81,6 +75,7 @@
 \bibliographystyle{abbrv}
 \bibliography{cryptobib/abbrev2,cryptobib/crypto,manualbib}
 
+\iffalse
 \appendix
 \section{Groth-Sahai Proofs} \label{app:gs-proofs}
     \input{prelim/app-gsproofs}
@@ -109,6 +104,6 @@
     \input{range-proofs/detailed-construction}
     \subsection{Security Proofs}
         \input{range-proofs/security-proofs}
+\fi
 \end{document}
-
 

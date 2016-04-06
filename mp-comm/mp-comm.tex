@@ -1,4 +1,4 @@
-In this Section we introduce a new commitment scheme which is a generalization of Multi-Pedersen commitments and which was implicitly used in \cite{EPRINT:GonHevRaf15}. 
+In this Section we introduce a new commitment scheme which is a generalization of Multi-Pedersen commitments and which was implicitly used in \cite{AC:GonHevRaf15}. 
 
 Given a vector $\vecb{m}\in\Z_q^m$, the Multi-Pedersen commitment in $\GG_{\gamma}$ is a single group element $[c]_\gamma:=\sum_{i\in [m]} m_i[g_i]_\gamma+r[g_{n+1}]_\gamma \in\GG_\gamma$, where $[g_i]_{\gamma}\in\GG_\gamma$, $i\in[m+1]$, and $r\gets\Z_q$. \footnote{Written in the usual multiplicative notation $c=\prod_{i\in[m]}g_i^{m_i} \cdot g_{m+1}^r$.}  The $(k+1)$-dimensional Multi-Pedersen commitments 
 differs only in that the keys and the resulting commitments are in 
@@ -30,7 +30,7 @@ $\dist_{k+1,n+k}=\distink$, it holds that:
 there exists a unique $\tilde{m}_i \in\Z_q$ such that for all $\vecb{m} \in\Z_q^m, \vecb{r} \in\Z_q^{k}$ such that  $\bvecb{c}_{\gamma}=\bmatr{G}_{\gamma}\smallpmatrix{\vecb{m}\\\vecb{r}}$, $m_i=\tilde{m}_i$. Further, the scheme is perfectly hiding at the rest of coordinates. 
 \end{itemize}
 \end{theorem}
-The proof is not hard to derive from the definition of the $\distink$ distribution, and can be found in Appendix \ref{app:mp}. 
+The proof is not hard to derive from the definition of the $\distink$ distribution, and can be found in the full version. 
 
 
 %The message space is naturally extended to matrices $\matr{M}\in\Z_q^{m\times n}$ by defining $\MP.\Com_{[\matr{G}]_\gamma}(\matr{M};\vecb{W}):=[\matr{G}]_\gamma \pmatri{\matr{M}\\ \matr{W}}\in\GG_\gamma^{(k+1)\times n}$, for $\matr{W}\in\Z_q^{k \times n}$. The columns of the resulting commitment are the commitments to the columns of $\matr{M}$. 
