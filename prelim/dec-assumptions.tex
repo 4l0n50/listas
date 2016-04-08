@@ -38,7 +38,7 @@ In this paper we will refer to the following matrix distributions:
     a_{\ell,1} &  \ldots &  a_{\ell,k} 
 \end{smallmatrix} \right),
 \]
-where $a_i,a_{i,j}\leftarrow \Z_q$, for each $i,j\in[k]$.  The $\distlin_{k}$-$\mddh$ Assumption is the $k$-linear family of Decisional Assumptions
+where $a_i,a_{i,j}\leftarrow \Z_q$.  The $\distlin_{k}$-$\mddh$ Assumption is the $k$-linear family of Decisional Assumptions
 and corresponds to 
  the Decisional Diffie-Hellman (DDH)
 Assumption in $\GG_\gamma$ when $k=1$. The SXDH Assumption states that DDH holds in $\GG_\gamma$ for all $\gamma \in \{1,2\}$. The $\mathcal{U}_{\ell,k}$ Assumption is the \textit{Uniform} Assumption and is the weakest of all assumptions of size $\ell \times k$. 
@@ -50,7 +50,7 @@ Further, given any matrix distribution $\dist_{k}$, $m \in \mathbb{N}$ and any $
 & \vecb{z} &  \matr{B}\vecb{w}_{i+1} & \ldots &  
   \matr{B}\vecb{w}_{m} & \matr{B}  \end{smallmatrix} \right) 
 \]
-where $\matr{B} \leftarrow \dist_{k}$, $\vecb{w}_i \leftarrow \Z_q^k$ and $\vecb{z} \leftarrow \GG^{k+1}$. The following are two trivial properties of the $\distink$ distribution. 
+where $\matr{B} \leftarrow \dist_{k}$, $\vecb{w}_i \leftarrow \Z_q^k$ and $\vecb{z} \leftarrow \Z_q^{k+1}$. The following are two trivial properties of the $\distink$ distribution. 
 
-\begin{lemma} Under the $\dist_{k}$-$\mddh$ Assumption in $\GG_\gamma$ , for any $0 < i \leq n$, the distribution of  $[\matrA]_\gamma$ when $\matrA \leftarrow \distzeronk$ and when $\matrA \leftarrow \distink$ are computationally indistinguishable. Further, if $\ell>k$, for any $i>0$, if $\matr{A} \leftarrow \distink$, then with overwhelming probability its ith column is linearly independent of the rest. \label{lemma:dist-i}
+\begin{lemma} Under the $\dist_{k}$-$\mddh$ Assumption in $\GG_\gamma$, for any $0 < i \leq n$, the distribution of  $[\matrA]_\gamma$ when $\matrA \leftarrow \distzeronk$ and when $\matrA \leftarrow \distink$ are computationally indistinguishable. Further, if $\ell>k$, for any $i>0$, if $\matr{A} \leftarrow \distink$, then with overwhelming probability its ith column is linearly independent of the rest. \label{lemma:dist-i}
 \end{lemma}

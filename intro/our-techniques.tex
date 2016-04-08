@@ -146,7 +146,7 @@ of this matrix $\widetilde{\matr{M}}$).
 
 Since both proofs are constant-size, the resulting proof size is dominated by the cost of the commitments to $b_i$, which is $\Theta(m)$. 
 For soundness, the important point here is that we never prove that $\vecb{b}=\widetilde{\vecb{b}}$, but, since GS commitments are perfectly binding (or, said otherwise, because $\begin{pmatrix} \vecb{u}_1 &   \vecb{u}_2 \end{pmatrix}$
-has full rank), equality holds. This immediately proves that the statement is in the language.  
+has full rank), equality holds. This immediately proves the statement.  
 \subsubsection{Aggregated Set Membership Proofs.} An aggregated set membership proof amounts to proving membership in $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$. By definition, $([\vecb{c}_1]_1,\ldots, [\vecb{c}_n]_1) \in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}^n$ if and only if  $\forall j \in [n], \exists \vecb{b}_j\in \Z_q^\lb,\vecb{w}_j\in\Z_q^\lc$ such that
 $$
  1) \vecb{b}_j\in \{0,1\}^\lb

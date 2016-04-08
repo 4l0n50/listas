@@ -1,4 +1,4 @@
-In this section we describe the languages for which there exist constant-size QA-NIZK arguments of membership which will be used as building blocks in our constructions.  These languages are (i) linear subspaces of $\GG_s^m$, $s \in \{1,2\}$ \cite{C:JutRoy14,EC:KilWee15,EC:LPJY14}, (ii) linear subspaces of $\GG_1^m\times\GG_2^n$ \cite{AC:GonHevRaf15}, (iii) equal commitment opening \cite{AC:GonHevRaf15}, and (iv) \emph{sum in subspace} \cite{AC:GonHevRaf15}. The proof systems follow the syntax from Sect. \ref{sec:zkdef} and the languages are defined as follows, for $\gamma,\nu \in \{1,2\}$, 
+In this section we describe the languages for which there exist constant-size QA-NIZK arguments of membership which will be used as building blocks in our constructions.  These languages are (i) linear subspaces of $\GG_s^m$, $s \in \{1,2\}$ \cite{C:JutRoy14,EC:KilWee15,EC:LPJY14}, (ii) linear subspaces of $\GG_1^m\times\GG_2^n$ \cite{AC:GonHevRaf15}, (iii) equal commitment opening \cite{AC:GonHevRaf15}, and (iv) \emph{sum in subspace} \cite{AC:GonHevRaf15}. More specifically, the languages are defined as follows for $\gamma,\nu \in \{1,2\}$, 
 \begin{align}
 &\Lang_{[\matr{M}]_\gamma}:=\{ [\vecb{x}]_{\gamma} \in \GG_{\gamma}^{n}:  \exists \vecb{w} \in \Z_q^{t}, \  \vecb{x}=\matr{M}\vecb{w} \}, \tag{i}\\
 &\Lang_{[\matr{M}]_1,[\matr{N}]_2}:=\{ ([\vecb{x}]_1,[\vecb{y}]_2) \in \GG_1^{m}\times\GG_2^n:  \exists \vecb{w} \in \Z_q^{t}, \  \vecb{x}=\matr{M}\vecb{w}, \   \vecb{y}=\matr{N}\vecb{w} \}, \tag{ii}\\
@@ -12,14 +12,14 @@ In this section we describe the languages for which there exist constant-size QA
 &\Lang_{[\matr{M}]_1,[\matr{N}]_2,\sfsum}:=\{([\vecb{x}]_1,[\vecb{y}]_2):\exists\vecb{w}, \vecb{x}+\vecb{y}=(\matr{M}+\matr{N})\vecb{w}\}. \tag{iv}
 \end{align}
 In the above definitions, $\matr{M} \in \Z_q^{m \times t_1}$,
-  $\matr{N} \in \Z_q^{n \times t_2}$ and $ck$ (resp. $ck$') define some commitments of vectors of $\Z_q^{n}$ where the randomness space is $\Z_q^{t_1}$ (resp. $\Z_q^{t_2}$). In (iv), $t_1=t_2$. The commitment scheme $\Com$ is assumed to be of the form 
+  $\matr{N} \in \Z_q^{n \times t_2}$ and $ck$ (resp. $ck$') defines some commitments to vectors of $\Z_q^{n}$ where the randomness space is $\Z_q^{t_1}$ (resp. $\Z_q^{t_2}$). In (iv), $t_1=t_2$. The commitment scheme $\Com$ is assumed to be of the form 
  $\Com_{ck}(\vecb{w};\vecb{r})=[\matr{A}]_\gamma \vecb{w}+[\matr{B}]_\gamma \vecb{r}$, 
  for some matrices $[\matr{A}]_\gamma,[\matr{B}]_\gamma$ defined in 
   $ck$. 
 
 We denote indistinctly by $\Pi_\sflin$ the proof systems for (i) and (ii), by $\Pi_\sfcom$ the proof system for (iii), and by $\Pi_\sfsum$ the proof system for (iv).
 
- To compute the proof sizes of our constructions, we will use the most efficient instantiations for each of these languages, which are described in Table \ref{table:lin-sp}. We note that the argument of \cite{AC:GonHevRaf15} for $\Lang_{ck,ck',\sfcom}$ is for the case $i=1,j=2$. It is not hard to see that when $i=j$, membership in $\Lang_{ck,ck',\sfcom}$ (for commitments of the form we specified) amounts to prove membership in some linear space in $\GG_\gamma$, which explains the second row of the table.
+ To compute the proof sizes of our constructions, we will use the most efficient instantiations for each of these languages, which are described in Table \ref{table:lin-sp}. We note that the argument of \cite{AC:GonHevRaf15} for $\Lang_{ck,ck',\sfcom}$ is for the case $\gamma=1,\nu=2$. It is not hard to see that when $\nu=\gamma$, membership in $\Lang_{ck,ck',\sfcom}$ (for commitments of the form we specified) amounts to prove membership in some linear space in $\GG_\gamma$, which explains the second row of the table.
 
 \iffull
 In Sect. \ref{app:proofbits} we require this constructions to satisfy a stronger notion of soundness, as defined in Sect. \ref{sec:zkdef}. It have been proven that the same constructions satisfy this stronger notion of soundness \cite{EPRINT:GonHevRaf15}.
