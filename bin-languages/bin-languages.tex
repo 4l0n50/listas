@@ -28,12 +28,12 @@ $[\vecb{c}]_1\in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ 
 
 \begin{example}
 The language of GS commitments to group elements in the set $S:=\{[s_1]_1,\ldots,[s_\lb]_1\} \subset \GG_1$, $\Lang_{ck,S}$, where $ck:=([\vecb{u}_1]_1||[\vecb{u}_2]_1)$, is equal to $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$, where
-$\matr{M}:=\smallpmatrix{0 &\cdots & 0\\s_1 & \cdots & s_\lb}$, $\matr{N}:=(\vecb{u}_1-\vecb{e}_1||\vecb{u}_2)$, $\alpha=1$, and $\matr{\Lambda}=(1,\ldots,1)$. The bit-witness size is $|S|$ and membership $\Lang_{ck,S}$ is efficiently testable given $\vecb{u}_1,\vecb{u}_2 \in \Z_q^2$ (assuming $|S|=\poly(\lambda)$). 
+$\matr{M}:=\smallpmatrix{0 &\cdots & 0\\s_1 & \cdots & s_\lb}$, $\matr{N}:=(\vecb{u}_1||\vecb{u}_2)$, $\alpha=1$, and $\matr{\Lambda}=(1,\ldots,1)$. The bit-witness size is $|S|$ and membership $\Lang_{ck,S}$ is efficiently testable given $\vecb{u}_1,\vecb{u}_2 \in \Z_q^2$ (assuming $|S|=\poly(\lambda)$). 
 \end{example}
 
 \begin{example}
 The language of GS commitments to integers in the range $[0,d-1]$, $\Lang_{ck,[0,d-1]}$, where $ck:=([\vecb{u}_1]_1||[\vecb{u}_2]_1)$, is equal to $\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$, where
-$\matr{M}:=\vecb{u}_1(2^0,2^1,\ldots,2^{\log d-1})\in\Z_q^{2\times \log d}$, $\matr{N}:=\vecb{u}_2\in\Z_q^{2}$, and $\ld:=0$. The bit-witness size is $\log d$ and membership in $\Lang_{ck,[0,d-1]}$ is easily testable given $\vecb{u}_2 \in \Z_q^2$
+$\matr{M}:=(\vecb{e}_2+\vecb{u}_1)(2^0,2^1,\ldots,2^{\log d-1})\in\Z_q^{2\times \log d}$, $\matr{N}:=\vecb{u}_2\in\Z_q^{2}$, and $\ld:=0$. The bit-witness size is $\log d$ and membership in $\Lang_{ck,[0,d-1]}$ is easily testable given $\vecb{u}_2 \in \Z_q^2$
 (assuming $d=\poly(\lambda)$). 
 \end{example}
 

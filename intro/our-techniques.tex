@@ -101,17 +101,11 @@ $[\vecb{x}]_1\in\Lang_{[\matr{M}]_1,[\matr{N}]_1,\matr{\Lambda},\grkb{\alpha}}$ 
 The basic idea is that a GS commitment is a linear combination of the commitment keys whose coefficients are the randomness and the committed values, i.e.  
 a commitment to a scalar $x \in \Z_q$ is defined as $\Com_{ck}(x;w)=x [\vecb{u}_1]_1+w [\vecb{u}_2]_1$, for $ck=(\vecb{u}_1,\vecb{u}_2)$, so essentially membership in this space amounts to some ``linear conditions'' plus proving that $\vecb{b}$ is binary. For instance in the case where $S=[0,d-1]$, it should hold that:
 $
-    \vecb{c} = \pmatri{\matr{M}&\matr{N}}\smallpmatrix{\vecb{b}\\ w}
-=
-\begin{pmatrix}
-    (\vecb{u}_1 & \ &2 \vecb{u}_1  &   \ & \ldots    & \  &  2^{m-1} \vecb{u}_1)& \ &  \vecb{u}_2
-\end{pmatrix}
-\smallpmatrix
-{
-    \vecb{b}\\
-    w
-}$.
-(In this case, because there is no condition 4) $\matr{\Lambda}, \grkb{\alpha}$ are zero and are ignored). 
+    \vecb{c} = \pmatri{\matr{M}&\matr{N}}\smallpmatrix{\vecb{b}\\ w}$
+where $\matr{M}=\vecb{u}_1\begin{pmatrix}
+    2^0 & \ &2^1 &   \ & \ldots    & \  &  2^{m-1}
+\end{pmatrix}$ and $\matr{N}=\vecb{u}_2$.
+(In this case, because there is no condition 4), $\matr{\Lambda}$ and $\grkb{\alpha}$ are zero and are ignored). 
 %For the purposes of this high-level explanation of our results, it is not too relevant to see how $[\matr{M}]_1$, $[\matr{N}]_1$, $\matr{\Lambda}$ and $\grkb{\alpha}$ look like in each of our two examples (they depend of the commitment key, the set $S$ and the linear constraints expressed by 4)). 
 
 
