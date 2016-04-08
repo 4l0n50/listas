@@ -33,10 +33,10 @@ While this way of constructing range arguments has been widely used in the liter
 \else
 \begin{enumerate*}[label=\arabic*)]
 \fi
-\item Publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$.
-\item The prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$.
-\item The prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$.
-\item Finally, the prover outputs a proof that:\footnote{This is a slightly oversimplified explanation. 
+\item publish some vector of group elements $[\vecb{s}]_1 =([s_1]_1,\ldots,[s_n]_1)^\top$ (which we identify with the set $S$ of its components) in the common reference string, where $\vecb{s}$ is sampled from some distribution $\dist_{n,1}$;
+\item the prover commits to $[\vecb{x}]_1=([x_1]_1,\ldots,[x_n]_1)^\top$, a permutation of the set $S$ and proves that the commitments to $[\vecb{x}]_1$ are in $\mathcal{L}^{n}_{ck,S}$;
+\item the prover proves that $\sum_{i \in [n]} [x_i]_1 =\sum_{i \in [n]} [s_i]_1$;
+\item finally, the prover outputs a proof that:\footnote{This is a slightly oversimplified explanation. 
 Actually, a prover (a mixer) does not know the randomness nor the decryptions of the ciphertexts but only the randomness of the re-encryptions, so it cannot prove exactly this statement.} 
 \iffull
 \end{enumerate}
